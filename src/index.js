@@ -4,4 +4,4 @@ const app = new App('#root', {
   title: 'Blog',
 });
 
-console.log(app);
+app.render();

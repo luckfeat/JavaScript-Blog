@@ -1,7 +1,12 @@
+import appTemplate from './app.template';
+
 export default class App {
-  template = template;
-  constructor(container, data) {
+  template = appTemplate;
+  constructor(container) {
     this.container = document.querySelector(container);
-    this.data = data;
+  }
+
+  render() {
+    this.container.innerHTMl = this.template();
   }
 }

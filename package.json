@@ -1,8 +1,8 @@
 {
   "name": "blog-service",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel index.html"
@@ -10,8 +10,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "parcel": "^2.10.3",
-    "pug": "^3.0.2"
-  }
+  "devDependencies": {
+    "parcel": "^2.10.3"
+  },
+  "dependencies": {}
 }
