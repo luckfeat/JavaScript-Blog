@@ -1,12 +1,8 @@
-import appTemplate from './app.template';
+import template from './templates/app.template';
+import Component from './core/component';
 
-export default class App {
-  template = appTemplate;
-  constructor(container) {
-    this.container = document.querySelector(container);
-  }
-
-  render() {
-    this.container.innerHTMl = this.template();
+export default class App extends Component {
+  constructor({ tagName, state }) {
+    super({ template: template, tagName, state });
   }
 }
