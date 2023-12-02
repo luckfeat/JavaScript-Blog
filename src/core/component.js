@@ -1,12 +1,13 @@
 export default class Component {
   constructor(payload = {}) {
-    const { template, tagName, state } = payload;
-    this.template = template;
-    this.tag = document.querySelector(tagName);
-    this.state = state;
+    const { template } = payload;
+    this.template = template();
   }
 
-  render() {
-    this.tag.innerHTML = this.template();
+  render(div = 'div') {
+    const fragment = document.createElement(div);
+    fragment.innerHTML = this.template;
+
+    return fragment;
   }
 }
