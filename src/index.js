@@ -1,5 +1,3 @@
-import App from './app';
+import Router from './routes';
 
-const app = new App();
-
-app.start();
+Router.listen();

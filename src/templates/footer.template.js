@@ -1,5 +1,5 @@
 const template = `
-    <div>Hello, World</div>
+    <h1>Footer</h1>
 `;
 
 export default window.Handlebars.compile(template);
