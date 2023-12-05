@@ -1,5 +1,5 @@
 const template = `
-    <h1>This Is Nav Bar</h1>
+   <div>Feed</div> 
 `;
 
 export default window.Handlebars.compile(template);
