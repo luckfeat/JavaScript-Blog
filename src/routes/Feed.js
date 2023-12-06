@@ -11,9 +11,5 @@ export default class Feed extends Component {
     this.root.appendChild(component);
   }
 
-  initialize() {
-    /**
-     * forEach 사용해서 반복 코드 줄이기
-     *  */
-  }
+  initialize() {}
 }

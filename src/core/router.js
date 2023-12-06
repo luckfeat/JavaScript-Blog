@@ -3,23 +3,27 @@ export default class Router {
     this.root = document.querySelector('#root');
     this.routes = routes;
     this.currentPath = location.hash;
+    console.log(this.currentPath);
     this.render();
   }
 
+  loadPage(route) {
+    this.root.innerHTML = '';
+    new route().initialize();
+  }
+
+  checkHash() {
+    if (!location.hash) {
+      history.replaceState(null, null, '/#/');
+    }
+  }
+
   render() {
-    console.log('Rendered');
-    console.log(`current : ${this.currentPath}`);
-    switch (this.currentPath) {
-      case '':
-        this.root.innerHTML = '';
-        new this.routes.Home().initialize();
-        break;
-      case '#/feed':
-        this.root.innerHTML = '';
-        new this.routes.Feed().initialize();
-        break;
-      default:
-        this.root.innerHTML = '<h1>Page Not Found</h1>';
+    this.checkHash();
+    if (this.routes[this.currentPath]) {
+      this.loadPage(this.routes[this.currentPath]);
+    } else {
+      this.root.innerHTML = '<h1>Page Not Found</h1>';
     }
   }
 
@@ -27,13 +31,6 @@ export default class Router {
     window.addEventListener('hashchange', () => {
       this.currentPath = location.hash;
       this.render();
-      console.log(`location.hash : ${this.currentPath}`);
     });
   }
 }
-
-/**
- * 라우터
- * location.hash
- * # -> #author/article_number
- */
