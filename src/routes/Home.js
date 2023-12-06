@@ -16,8 +16,6 @@ export default class Home extends Component {
     /**
      * forEach 사용해서 반복 코드 줄이기
      *  */
-    // this.append(this.render());
-    // this.append(new Nav().render());
     this.append(new Header().render('header'));
     this.append(new Footer().render('footer'));
   }
