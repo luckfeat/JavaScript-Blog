@@ -1,5 +1,6 @@
 import template from '../templates/feed.template';
 import Component from '../core/component';
+import { Input, Text } from '../components';
 
 export default class Feed extends Component {
   constructor() {
@@ -11,5 +12,8 @@ export default class Feed extends Component {
     this.root.appendChild(component);
   }
 
-  initialize() {}
+  initialize() {
+    this.append(new Input().render());
+    this.append(new Text().render());
+  }
 }

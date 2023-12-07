@@ -3,7 +3,6 @@ export default class Router {
     this.root = document.querySelector('#root');
     this.routes = routes;
     this.currentPath = location.hash;
-    console.log(this.currentPath);
     this.render();
   }
 
@@ -25,6 +24,7 @@ export default class Router {
     } else {
       this.root.innerHTML = '<h1>Page Not Found</h1>';
     }
+    window.scrollTo(0, 0);
   }
 
   listen() {
