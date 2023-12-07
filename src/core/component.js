@@ -1,11 +1,17 @@
 export default class Component {
   constructor(payload = {}) {
-    const { template } = payload;
-    this.template = typeof template === 'function' ? template() : null;
+    const { template, state } = payload;
+    this.template = typeof template === 'function' ? template(state) : null;
   }
 
-  render(div = 'div') {
-    const fragment = document.createElement(div);
+  domLoaded(callBack) {
+    document.addEventListener('DOMContentLoaded', () => {
+      callBack();
+    });
+  }
+
+  render(tag = 'div') {
+    const fragment = document.createElement(tag);
     fragment.innerHTML = this.template;
     return fragment;
   }
