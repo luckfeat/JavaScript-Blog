@@ -7,13 +7,17 @@ let { state } = messageStore;
 export default class Input extends Component {
   constructor() {
     super({ template, state });
-    this.domLoaded(this.listen);
+    this.listen();
   }
 
   listen() {
-    const inputEl = document.querySelector('.title');
-    inputEl.addEventListener('input', () => {
-      state.message = inputEl.value;
+    /**
+     * 이벤트 위임
+     */
+    document.addEventListener('input', (event) => {
+      if (event.target.classList.contains('title')) {
+        state.message = event.target.value;
+      }
     });
   }
 }

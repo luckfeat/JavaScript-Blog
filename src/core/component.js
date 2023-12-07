@@ -4,12 +4,6 @@ export default class Component {
     this.template = typeof template === 'function' ? template(state) : null;
   }
 
-  domLoaded(callBack) {
-    document.addEventListener('DOMContentLoaded', () => {
-      callBack();
-    });
-  }
-
   render(tag = 'div') {
     const fragment = document.createElement(tag);
     fragment.innerHTML = this.template;
