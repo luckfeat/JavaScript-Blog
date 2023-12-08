@@ -11,9 +11,6 @@ export default class Input extends Component {
   }
 
   listen() {
-    /**
-     * 이벤트 위임
-     */
     document.addEventListener('input', (event) => {
       if (event.target.classList.contains('title')) {
         state.message = event.target.value;

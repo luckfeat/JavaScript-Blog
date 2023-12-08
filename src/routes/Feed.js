@@ -13,7 +13,7 @@ export default class Feed extends Component {
   }
 
   initialize() {
-    this.append(new Input().render());
-    this.append(new Text().render());
+    this.append(new Input().render('section'));
+    this.append(new Text().render('section'));
   }
 }
