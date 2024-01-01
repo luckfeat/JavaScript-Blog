@@ -1,4 +1,3 @@
-import template from '../templates/feed.template';
 import Component from '../core/component';
 import { Input, Text } from '../components';
 

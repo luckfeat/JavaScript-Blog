@@ -1,14 +1,16 @@
 export default class Store {
-  constructor(data = {}) {
+  constructor(payload = {}) {
     this.state = {};
     this.observers = {};
-    for (const key in data) {
+    this.initialize(payload);
+  }
+
+  initialize(payload) {
+    for (const key in payload) {
       Object.defineProperty(this.state, key, {
-        get: () => {
-          return data[key];
-        },
+        get: () => payload[key],
         set: (value) => {
-          data[key] = value;
+          payload[key] = value;
           this.observers[key].forEach((observer) => {
             observer();
           });
@@ -16,8 +18,8 @@ export default class Store {
       });
     }
   }
+
   subscribe(key, callBack) {
-    this.observers[key] = callBack;
     Array.isArray(this.observers[key])
       ? this.observers[key].push(callBack)
       : (this.observers[key] = [callBack]);
