@@ -1,4 +1,3 @@
-import template from '../templates/home.template';
 import Component from '../core/component';
 import { Footer, Header } from '../components';
 

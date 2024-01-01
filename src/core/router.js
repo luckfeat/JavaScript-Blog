@@ -19,11 +19,13 @@ export default class Router {
 
   render() {
     this.checkHash();
-    if (this.routes[this.currentPath]) {
-      this.loadPage(this.routes[this.currentPath]);
-    } else {
-      this.root.innerHTML = '<h1>Page Not Found</h1>';
-    }
+
+    const currentRoute = this.routes[this.currentPath];
+
+    currentRoute
+      ? this.loadPage(currentRoute)
+      : (this.root.innerHTML = '<h1>Page Not Found</h1>');
+
     window.scrollTo(0, 0);
   }
 
