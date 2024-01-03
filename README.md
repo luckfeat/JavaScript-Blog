@@ -2,3 +2,4 @@
 SASS
 Handlebars
 Vanila JavaScript
+Public API
