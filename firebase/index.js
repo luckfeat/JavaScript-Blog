@@ -17,7 +17,7 @@ async function fetchBlogData() {
   try {
     const querySnapshot = await getDocs(collection(db, 'blog'));
     querySnapshot.forEach((doc) => {
-      console.log(doc.data());
+      // console.log(doc.data());
     });
   } catch (error) {
     console.error('Error fetching documents: ', error);
@@ -25,3 +25,5 @@ async function fetchBlogData() {
 }
 
 fetchBlogData();
+
+fetch('http://api.mediastack.com/v1/news? access_key = e53d802a6a974c11983cd84b6e42d851');
