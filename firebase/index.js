@@ -3,7 +3,7 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import config from '../config.mjs';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBF0GSEDU9w1ELPgTRCx9b_ZNnT6rM8OlE',
+  apiKey: config.firebaseKey,
   authDomain: 'blog-f573d.firebaseapp.com',
   projectId: 'blog-f573d',
   storageBucket: 'blog-f573d.appspot.com',
@@ -24,23 +24,3 @@ async function fetchBlogData() {
     console.error('Error fetching documents: ', error);
   }
 }
-
-fetchBlogData();
-
-const baseUrl = 'https://api.stockdata.org/v1/news/all';
-const language = 'en';
-const industries = ['Technology', 'Energy'];
-const page = 1;
-const apiToken = config.apiToken;
-
-const url = `${baseUrl}?language=${language}&industries=${industries.join(
-  ','
-)}&page=${page}&api_token=${apiToken}`;
-
-fetch(url)
-  .then((data) => {
-    return data.json();
-  })
-  .then((res) => {
-    console.log(res);
-  });
