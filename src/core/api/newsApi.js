@@ -1,4 +1,4 @@
-import config from '../config.mjs';
+import config from '../../../config.mjs';
 
 export default async function fetchNewsFeed() {
   const baseUrl = 'https://gnews.io/api/v4/top-headlines';
