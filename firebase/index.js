@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import config from '../config.mjs';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBF0GSEDU9w1ELPgTRCx9b_ZNnT6rM8OlE',
@@ -26,4 +27,20 @@ async function fetchBlogData() {
 
 fetchBlogData();
 
-fetch('http://api.mediastack.com/v1/news? access_key = e53d802a6a974c11983cd84b6e42d851');
+const baseUrl = 'https://api.stockdata.org/v1/news/all';
+const language = 'en';
+const industries = ['Technology', 'Energy'];
+const page = 1;
+const apiToken = config.apiToken;
+
+const url = `${baseUrl}?language=${language}&industries=${industries.join(
+  ','
+)}&page=${page}&api_token=${apiToken}`;
+
+fetch(url)
+  .then((data) => {
+    return data.json();
+  })
+  .then((res) => {
+    console.log(res);
+  });
