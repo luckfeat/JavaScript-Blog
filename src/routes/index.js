@@ -1,9 +1,9 @@
 import Router from '../core/router';
 import Home from './Home';
-import Feed from './Feed';
+import Write from './Write';
 
 export default new Router({
   '': Home,
   '#/': Home,
-  '#/feed': Feed,
+  '#/write': Write,
 });

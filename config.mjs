@@ -3,7 +3,8 @@ import { configDotenv } from 'dotenv';
 configDotenv();
 
 const config = {
-  apiToken: process.env.API_TOKEN,
+  firebaseKey: process.env.FIREBASE,
+  apiKey: process.env.KEY,
 };
 
 export default config;

@@ -6,9 +6,9 @@ export default class Router {
     this.render();
   }
 
-  loadPage(route) {
+  loadPage(Route) {
     this.root.innerHTML = '';
-    new route().initialize();
+    new Route().initialize();
   }
 
   checkHash() {

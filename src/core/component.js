@@ -1,7 +1,9 @@
 export default class Component {
   constructor(payload = {}) {
-    const { template, state } = payload;
-    this.template = typeof template === 'function' ? template(state) : null;
+    if (payload) {
+      const { template, state } = payload;
+      this.template = typeof template === 'function' ? template(state) : null;
+    }
   }
 
   render(tag = 'div') {
