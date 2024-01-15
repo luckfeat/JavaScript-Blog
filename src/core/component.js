@@ -6,10 +6,6 @@ export default class Component {
     }
   }
 
-  buildTemplate(template, data) {
-
-  }
-
   async render(tag = 'div') {
     const fragment = document.createElement(tag);
     fragment.innerHTML = this.template;
