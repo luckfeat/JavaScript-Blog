@@ -1,10 +1,13 @@
 const template = `
-    <h3>Main</h3>
-    <ul class="carousel">
-        {{#each articles}}
-            <li>{{this}}</li>
-        {{/each}}
-    </ul>
+    <section class='carousel'>
+        <ul>
+            {{#each articles}}
+                <li>{{this.title}}</li>
+                <p>{{this.description}}</p>
+                <p>{{this.source.name}}</p>
+            {{/each}}
+        </ul>
+    </section>
 `;
 
 export default window.Handlebars.compile(template);

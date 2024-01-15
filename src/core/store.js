@@ -20,6 +20,7 @@ export default class Store {
           this.observers[key].forEach((observer) => {
             observer();
           });
+          console.log('Set');
         },
       });
     }

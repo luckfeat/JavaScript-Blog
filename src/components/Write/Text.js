@@ -6,7 +6,7 @@ const { state } = messageStore;
 
 export default class Text extends Component {
   constructor() {
-    super({ template, state });
+    super([template, state]);
     messageStore.subscribe('message', this.overWrite);
   }
 

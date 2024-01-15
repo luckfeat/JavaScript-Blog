@@ -1,11 +1,15 @@
 import template from '../../templates/Home/carousel.template';
 import Component from '../../core/component';
-import articles from '../../store/articles';
+import articlesStore, { getArticles } from '../../store/articles';
 
-console.log(articles);
+articlesStore.subscribe('articles', getArticles);
 
 export default class Carousel extends Component {
   constructor() {
-    super({ template, articles });
+    let articles = articlesStore.articles;
+    if (!articles) {
+      getArticles();
+    }
+    super([template, { articles }]);
   }
 }
