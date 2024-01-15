@@ -1,14 +1,15 @@
 import Store from '../core/store';
-import fetchNewsFeed from '../core/api/newsApi';
+import fetchArticles from '../core/api/newsApi';
 
 const store = new Store({
   articles: null,
 });
 
-export async function getArticles() {
+export async function updateArticles() {
   try {
-    let { articles } = await fetchNewsFeed();
+    let { articles } = await fetchArticles();
     store.articles = articles;
+    return articles
   } catch (err) {
     console.error(err);
   }
