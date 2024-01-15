@@ -7,7 +7,7 @@ let { state } = messageStore;
 
 export default class Input extends Component {
   constructor() {
-    super({ template, state });
+    super([template, state]);
     this.listen();
     messageStore.subscribe('message', () => {
       console.log('Input');

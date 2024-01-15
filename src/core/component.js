@@ -1,8 +1,9 @@
 export default class Component {
-  constructor(payload = {}) {
+  constructor(payload = []) {
     if (payload) {
-      const { template, state } = payload;
-      this.template = typeof template === 'function' ? template(state) : null;
+      const [template] = payload;
+      this.template =
+        typeof template === 'function' ? template(payload[1]) : null;
     }
   }
 
