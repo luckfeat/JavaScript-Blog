@@ -16,11 +16,11 @@ export default class Store {
       Object.defineProperty(this.state, key, {
         get: () => payload[key],
         set: (value) => {
+          console.log('This Is Value')
           payload[key] = value;
           this.observers[key].forEach((observer) => {
             observer();
           });
-          console.log('Set');
         },
       });
     }

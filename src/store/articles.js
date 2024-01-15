@@ -7,8 +7,10 @@ const store = new Store({
 
 export async function updateArticles() {
   try {
+    console.log(store)
     let { articles } = await fetchArticles();
     store.articles = articles;
+    console.log(store)
     return articles
   } catch (err) {
     console.error(err);
