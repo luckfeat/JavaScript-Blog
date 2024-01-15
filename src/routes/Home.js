@@ -1,5 +1,8 @@
 import Component from '../core/component';
 import { Header, Carousel, Footer } from '../components';
+import articlesStore, { updateArticles } from '../store/articles.js';
+
+articlesStore.subscribe('articles', updateArticles);
 
 export default class Home extends Component {
   constructor() {
@@ -7,27 +10,19 @@ export default class Home extends Component {
     this.root = document.querySelector('#root');
     this.button = document.createElement('button');
     this.button.textContent = 'Refresh';
-    this.updateCarousel();
   }
 
-  append(component) {
-    this.root.appendChild(component);
+  appendMany(components) {
+    components.forEach(component => {
+      this.root.appendChild(component);
+    })
   }
 
-  initialize() {
-    /**
-     * forEach 사용해서 반복 코드 줄이기
-     *  */
-    this.append(new Header().render('header'));
-    this.append(this.button);
-    this.append(new Carousel().render('section'));
-    this.append(new Footer().render('footer'));
-  }
-
-  updateCarousel() {
-    this.button.addEventListener('click', () => {
-      this.root.innerHTML = '';
-      this.initialize();
-    });
+  async initialize() {
+    const header = await new Header().render('header')
+    const articles = await updateArticles()
+    const carousel = await new Carousel(articles).render('section')
+    const footer = await new Footer().render('footer')
+    this.appendMany([header, carousel, footer])
   }
 }

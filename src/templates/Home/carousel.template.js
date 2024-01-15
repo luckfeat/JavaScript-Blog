@@ -1,7 +1,7 @@
 const template = `
     <section class='carousel'>
         <ul>
-            {{#each articles}}
+            {{#each this}}
                 <li>{{this.title}}</li>
                 <p>{{this.description}}</p>
                 <p>{{this.source.name}}</p>

@@ -1,6 +1,6 @@
 import config from '../../../config.mjs';
 
-export default async function fetchNewsFeed() {
+export default async function fetchArticles() {
   const baseUrl = 'https://gnews.io/api/v4/top-headlines';
   const apiKey = config.apiKey;
   const category = 'technology';

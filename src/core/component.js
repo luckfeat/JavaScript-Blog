@@ -1,13 +1,16 @@
 export default class Component {
-  constructor(payload = []) {
-    if (payload) {
-      const [template] = payload;
+  constructor(template, data) {
+    if (template) {
       this.template =
-        typeof template === 'function' ? template(payload[1]) : null;
+          typeof template === 'function' ? template(data) : null;
     }
   }
 
-  render(tag = 'div') {
+  buildTemplate(template, data) {
+
+  }
+
+  async render(tag = 'div') {
     const fragment = document.createElement(tag);
     fragment.innerHTML = this.template;
     return fragment;
