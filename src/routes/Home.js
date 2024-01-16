@@ -2,11 +2,7 @@ import Component from '../core/component';
 import { Header, Carousel, Footer } from '../components';
 import articlesStore, { updateArticles } from '../store/articles.js';
 
-articlesStore.subscribe('articles', ()=>{
-  console.log('Update Articles')
-});
-
-console.log('Read File')
+articlesStore.subscribe('articles', ()=>{});
 
 export default class Home extends Component {
   constructor() {
@@ -23,11 +19,11 @@ export default class Home extends Component {
   }
 
   async initialize() {
-    const header = await new Header().render('header')
+    const header =  new Header().render('header')
     const articles = await updateArticles()
-    await updateArticles()
-    const carousel = await new Carousel(articles).render('section')
-    const footer = await new Footer().render('footer')
+    const carousel =  new Carousel(articles).render('section')
+    const footer =  new Footer().render('footer')
     this.appendMany([header, carousel, footer])
+    console.log(articlesStore)
   }
 }

@@ -6,7 +6,7 @@ export default class Component {
     }
   }
 
-  async render(tag = 'div') {
+  render(tag = 'div') {
     const fragment = document.createElement(tag);
     fragment.innerHTML = this.template;
     return fragment;
