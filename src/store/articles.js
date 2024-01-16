@@ -2,15 +2,14 @@ import Store from '../core/store';
 import fetchArticles from '../core/api/newsApi';
 
 const store = new Store({
-  articles: null,
+  articles: [],
 });
 
 export async function updateArticles() {
   try {
-    console.log(store)
     let { articles } = await fetchArticles();
-    store.articles = articles;
-    console.log(store)
+    console.log('save')
+    store.state.articles = articles
     return articles
   } catch (err) {
     console.error(err);
