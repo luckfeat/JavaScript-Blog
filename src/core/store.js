@@ -9,11 +9,9 @@ export default class Store {
     for (const key in payload) {
       Object.defineProperty(this.state, key, {
         get: () => {
-          console.log('Value Get')
-          payload[key]
+          return payload[key]
         },
         set: (value) => {
-          console.log('Value Set')
           payload[key] = value;
           this.observers[key].forEach((observer) => {
             observer();

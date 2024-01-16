@@ -8,7 +8,6 @@ const store = new Store({
 export async function updateArticles() {
   try {
     let { articles } = await fetchArticles();
-    console.log('save')
     store.state.articles = articles
     return articles
   } catch (err) {
