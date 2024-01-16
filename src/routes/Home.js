@@ -10,6 +10,10 @@ export default class Home extends Component {
     this.root = document.querySelector('#root');
     this.button = document.createElement('button');
     this.button.textContent = 'Refresh';
+    this.carousel = null;
+    this.loadArticles().then((articles)=>{
+      this.replaceElement(this.carousel, new Carousel(articles).render('section'))
+    })
   }
 
   appendMany(components) {
@@ -18,12 +22,21 @@ export default class Home extends Component {
     })
   }
 
-  async initialize() {
+ replaceElement(oldElement, newElement) {
+   oldElement.parentNode.insertBefore(newElement, oldElement.nextSibling)
+   oldElement.parentNode.removeChild(oldElement)
+ }
+
+  initialize() {
     const header =  new Header().render('header')
-    const articles = await updateArticles()
-    const carousel =  new Carousel(articles).render('section')
+    const carousel = new Carousel().render('section')
     const footer =  new Footer().render('footer')
+
+    this.carousel = carousel
     this.appendMany([header, carousel, footer])
-    console.log(articlesStore)
+  }
+
+  async loadArticles() {
+    return await updateArticles()
   }
 }
