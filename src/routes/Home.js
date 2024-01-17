@@ -1,5 +1,5 @@
 import Component from '../core/component';
-import {Nav, Header, Carousel, Footer} from '../components';
+import {Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer} from '../components';
 import articlesStore, {updateArticles} from '../store/articles.js';
 
 articlesStore.subscribe('articles', () => {
@@ -32,10 +32,14 @@ export default class Home extends Component {
         const nav = new Nav().render('nav')
         const header = new Header().render('header')
         const carousel = new Carousel().render('section')
+        const keyWord = new Keyword().render('section')
+        const daily = new Daily().render('section')
+        const writer = new Writer().render('section')
+        const recommend = new Recommend().render('section')
         const footer = new Footer().render('footer')
 
         this.carousel = carousel
-        this.appendMany([nav, header, carousel, footer])
+        this.appendMany([nav, header, carousel,keyWord, daily, writer, recommend, footer])
     }
 
     async loadNotice() {
