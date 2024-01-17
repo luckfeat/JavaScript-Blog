@@ -3,16 +3,23 @@ import fetchArticles from '../core/api/newsApi';
 
 const store = new Store({
     articles: [],
+    page: 1
 });
 
-export async function updateArticles() {
+export async function loadArticles() {
     try {
         let {articles} = await fetchArticles();
+        store.state.articles = articles
+        return articles
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-        articles.forEach((article) => {
-            console.log(article.image)
-        })
-
+export async function loadNextArticles() {
+    try {
+        store.state.page++
+        let {articles} = await fetchArticles(true);
         store.state.articles = articles
         return articles
     } catch (err) {
