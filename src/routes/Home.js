@@ -1,8 +1,12 @@
 import Component from '../core/component';
 import {Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer} from '../components';
-import articlesStore, {updateArticles} from '../store/articles.js';
+import articlesStore, {loadArticles, loadNextArticles} from '../store/articles.js';
 
 articlesStore.subscribe('articles', () => {
+});
+
+articlesStore.subscribe('page', () => {
+    console.log(articlesStore.state.page)
 });
 
 export default class Home extends Component {
@@ -12,9 +16,6 @@ export default class Home extends Component {
         this.button = document.createElement('button');
         this.button.textContent = 'Refresh';
         this.carousel = null;
-        this.loadArticles().then((articles) => {
-            this.replaceElement(this.carousel, new Carousel(articles).render('section'))
-        })
     }
 
     appendMany(components) {
@@ -37,16 +38,20 @@ export default class Home extends Component {
         const writer = new Writer().render('section')
         const recommend = new Recommend().render('section')
         const footer = new Footer().render('footer')
-
+        const components = [nav, header, carousel,keyWord, daily, writer, recommend, footer]
         this.carousel = carousel
-        this.appendMany([nav, header, carousel,keyWord, daily, writer, recommend, footer])
+        this.appendMany(components)
+
+        loadArticles().then((articles) => {
+            this.replaceElement(this.carousel, new Carousel(articles).render('section'))
+        })
+
+        loadNextArticles().then((nextArticles)=>{
+            console.log(nextArticles)
+        })
     }
 
     async loadNotice() {
 
-    }
-
-    async loadArticles() {
-        return await updateArticles()
     }
 }
