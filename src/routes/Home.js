@@ -1,63 +1,57 @@
 import Component from '../core/component';
-import {Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer} from '../components';
-import articlesStore, {loadArticles, loadNextArticles, searchArticles} from '../store/articles.js';
+import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
+import articlesStore, { loadArticles, loadNextArticles, searchArticles } from '../store/articles';
 
-articlesStore.subscribe('articles', () => {
-});
+articlesStore.subscribe('articles', () => {});
 
-articlesStore.subscribe('page', () => {
-    console.log(articlesStore.state.page)
-});
+articlesStore.subscribe('page', () => {});
 
 export default class Home extends Component {
-    constructor() {
-        super();
-        this.root = document.querySelector('#root');
-        this.button = document.createElement('button');
-        this.button.textContent = 'Refresh';
-        this.carousel = null;
-    }
+  constructor() {
+    super();
+    this.root = document.querySelector('#root');
+    this.button = document.createElement('button');
+    this.button.textContent = 'Refresh';
+    this.carousel = null;
+  }
 
-    appendMany(components) {
-        components.forEach(component => {
-            this.root.appendChild(component);
-        })
-    }
+  appendMany(components) {
+    components.forEach(component => {
+      this.root.appendChild(component);
+    });
+  }
 
-    replaceElement(oldElement, newElement) {
-        oldElement.parentNode.insertBefore(newElement, oldElement.nextSibling)
-        oldElement.parentNode.removeChild(oldElement)
-    }
+  replaceElement(oldElement, newElement) {
+    oldElement.parentNode.insertBefore(newElement, oldElement.nextSibling);
+    oldElement.parentNode.removeChild(oldElement);
+  }
 
-    initialize() {
-        const nav = new Nav().render('nav')
-        const header = new Header().render('header')
-        const carousel = new Carousel().render('section')
-        const keyWord = new Keyword().render('section')
-        const daily = new Daily().render('section')
-        const writer = new Writer().render('section')
-        const recommend = new Recommend().render('section')
-        const footer = new Footer().render('footer')
-        const components = [nav, header, carousel, keyWord, daily, writer, recommend, footer]
+  initialize() {
+    const nav = new Nav().render('nav');
+    const header = new Header().render('header');
+    const carousel = new Carousel().render('section');
+    const keyWord = new Keyword().render('section');
+    const daily = new Daily().render('section');
+    const writer = new Writer().render('section');
+    const recommend = new Recommend().render('section');
+    const footer = new Footer().render('footer');
+    const components = [nav, header, carousel, keyWord, daily, writer, recommend, footer];
 
-        this.carousel = carousel
-        this.appendMany(components)
+    this.carousel = carousel;
+    this.appendMany(components);
 
-        loadArticles().then((articles) => {
-            this.replaceElement(this.carousel, new Carousel(articles).render('section'))
-        })
+    loadArticles().then(articles => {
+      this.replaceElement(this.carousel, new Carousel(articles).render('section'));
+    });
 
-        // loadNextArticles().then((nextArticles)=>{
-        //     console.log(nextArticles)
-        // })
+    // loadNextArticles().then((nextArticles)=>{
+    //     console.log(nextArticles)
+    // })
 
-        searchArticles('Elon').then((articles)=>{
-            console.log(articles)
-        })
+    // searchArticles('Elon').then(articles => {
+    //   console.log(articles);
+    // });
+  }
 
-    }
-
-    async loadNotice() {
-
-    }
+  async loadNotice() {}
 }
