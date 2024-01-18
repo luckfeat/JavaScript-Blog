@@ -1,8 +1,7 @@
 export default class Component {
   constructor(template, data) {
     if (template) {
-      this.template =
-          typeof template === 'function' ? template(data) : null;
+      this.template = typeof template === 'function' ? template(data) : null;
     }
   }
 
