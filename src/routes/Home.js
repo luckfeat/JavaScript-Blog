@@ -1,6 +1,6 @@
 import Component from '../core/component';
 import {Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer} from '../components';
-import articlesStore, {loadArticles, loadNextArticles} from '../store/articles.js';
+import articlesStore, {loadArticles, loadNextArticles, searchArticles} from '../store/articles.js';
 
 articlesStore.subscribe('articles', () => {
 });
@@ -38,7 +38,8 @@ export default class Home extends Component {
         const writer = new Writer().render('section')
         const recommend = new Recommend().render('section')
         const footer = new Footer().render('footer')
-        const components = [nav, header, carousel,keyWord, daily, writer, recommend, footer]
+        const components = [nav, header, carousel, keyWord, daily, writer, recommend, footer]
+
         this.carousel = carousel
         this.appendMany(components)
 
@@ -46,9 +47,14 @@ export default class Home extends Component {
             this.replaceElement(this.carousel, new Carousel(articles).render('section'))
         })
 
-        loadNextArticles().then((nextArticles)=>{
-            console.log(nextArticles)
+        // loadNextArticles().then((nextArticles)=>{
+        //     console.log(nextArticles)
+        // })
+
+        searchArticles('Elon').then((articles)=>{
+            console.log(articles)
         })
+
     }
 
     async loadNotice() {

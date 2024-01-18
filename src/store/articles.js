@@ -27,4 +27,14 @@ export async function loadNextArticles() {
     }
 }
 
+export async function searchArticles(keyword) {
+    try {
+        let {articles} = await fetchArticles(false, true, keyword);
+        store.state.articles = articles
+        return articles
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 export default store;
