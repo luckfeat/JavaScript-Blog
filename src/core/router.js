@@ -22,9 +22,7 @@ export default class Router {
 
     const currentRoute = this.routes[this.currentPath];
 
-    currentRoute
-      ? this.loadPage(currentRoute)
-      : (this.root.innerHTML = '<h1>Page Not Found</h1>');
+    currentRoute ? this.loadPage(currentRoute) : (this.root.innerHTML = '<h1>Page Not Found</h1>');
 
     window.scrollTo(0, 0);
   }
