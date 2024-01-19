@@ -9,21 +9,9 @@ articlesStore.subscribe('page', () => {});
 export default class Home extends Component {
   constructor() {
     super();
-    this.root = document.querySelector('#root');
     this.button = document.createElement('button');
     this.button.textContent = 'Refresh';
     this.carousel = null;
-  }
-
-  appendMany(components) {
-    components.forEach(component => {
-      this.root.appendChild(component);
-    });
-  }
-
-  replaceElement(oldElement, newElement) {
-    oldElement.parentNode.insertBefore(newElement, oldElement.nextSibling);
-    oldElement.parentNode.removeChild(oldElement);
   }
 
   initialize() {
@@ -53,5 +41,5 @@ export default class Home extends Component {
     // });
   }
 
-  async loadNotice() {}
+  // async loadNotice() {}
 }
