@@ -6,3 +6,5 @@ Handlebars
 Vanila JavaScript
 
 Public API
+
+Editor
