@@ -12,3 +12,5 @@ Editor
 Firebase Cloud Functions
 
 Firebase Firestore
+
+Firebase Auth
