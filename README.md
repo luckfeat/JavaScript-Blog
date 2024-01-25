@@ -5,7 +5,7 @@ Handlebars
 
 Vanila JavaScript
 
-Public API
+Public API - GNEWS
 
 Editor
 
