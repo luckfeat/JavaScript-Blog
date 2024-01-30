@@ -1,5 +1,5 @@
 import Store from '../core/store';
-import fetchArticles from '../core/api/newsApi';
+import fetchArticles from '../core/api/News';
 
 const store = new Store({
   articles: [],
