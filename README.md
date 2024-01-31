@@ -1,9 +1,9 @@
 # JavaScript-Blog-Service
 SASS
 
-Handlebars
+Handlebars Template
 
-Vanila JavaScript
+JavaScript
 
 Public API - GNEWS
 
