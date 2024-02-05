@@ -31,6 +31,7 @@ export async function searchArticles(keyword) {
   try {
     const { articles } = await fetchArticles(true, keyword, false);
     store.state.articles = articles;
+
     return articles;
   } catch (err) {
     alert(err);
