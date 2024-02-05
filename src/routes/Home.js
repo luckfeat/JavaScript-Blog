@@ -29,6 +29,7 @@ export default class Home extends Component {
     this.appendMany(components);
 
     loadArticles().then(articles => {
+      console.log(articles);
       this.replaceElement(this.carousel, new Carousel(articles).render('section'));
     });
 
