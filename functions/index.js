@@ -30,7 +30,7 @@ export const helloUser = functions.auth.user().onCreate(user =>
 
 export const postArticles = functions.https.onCall(async (data, context) => {
   const baseUrl = 'https://gnews.io/api/v4';
-  const apiKey = 'AIzaSyBF0GSEDU9w1ELPgTRCx9b_ZNnT6rM8OlE';
+  const { apiKey } = config;
   const categories = [
     'general',
     'world',
