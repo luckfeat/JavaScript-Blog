@@ -1,5 +1,6 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
+import { checkForUpdate } from '../core/api/News.js';
 import articlesStore, { loadArticles, loadNextArticles, searchArticles } from '../store/articles';
 
 articlesStore.subscribe('articles', () => {});
@@ -28,9 +29,11 @@ export default class Home extends Component {
     this.carousel = carousel;
     this.appendMany(components);
 
-    loadArticles().then(articles => {
-      this.replaceElement(this.carousel, new Carousel(articles).render('section'));
-    });
+    checkForUpdate();
+
+    // loadArticles().then(articles => {
+    //   this.replaceElement(this.carousel, new Carousel(articles).render('section'));
+    // });
 
     // loadNextArticles().then((nextArticles)=>{
     //     console.log(nextArticles)
@@ -41,5 +44,5 @@ export default class Home extends Component {
     // });
   }
 
-  // async loadNotice() {}
+  // eslint-disable-next-line class-methods-use-this
 }
