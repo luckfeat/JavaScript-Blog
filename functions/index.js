@@ -12,45 +12,65 @@ const firebaseConfig = {
   messagingSenderId: config.messagingSenderId,
   appId: config.appId,
 };
-
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const helloWorld = functions.https.onRequest((request, response) => {
+export const onRequestFn = functions.https.onRequest((request, response) => {
   const message = 'Hello, World';
 
   response.send(`<h1>${message}</h1>`);
 });
 
-export const helloUser = functions.auth.user().onCreate(user =>
+export const onCreateFn = functions.auth.user().onCreate(user =>
   setDoc(doc(db, 'Articles', user.uid), {
     email: user.email,
   }),
 );
 
+// eslint-disable-next-line require-await
 export const postArticles = functions.https.onCall(async (data, context) => {
-  const baseUrl = 'https://gnews.io/api/v4';
-  const { apiKey } = config;
-  const categories = [
-    'general',
-    'world',
-    'nation',
-    'business',
-    'technology',
-    'entertainment',
-    'sports',
-    'science',
-    'health',
-  ];
-
-  try {
-    const promises = categories.map(async category => {
-      const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&expand=content&apikey=${apiKey}`;
+  async function sendRequestsInBatches() {
+    const baseUrl = 'https://gnews.io/api/v4';
+    const categories = [
+      'general',
+      'world',
+      'nation',
+      'business',
+      'technology',
+      'entertainment',
+      'sports',
+      'science',
+      'health',
+    ];
+    const batchSize = 3;
+    const apiKeys = [config.secondApiKey, config.apiKey];
+    async function requestAndPostArticles(baseUrl, category, apiKey) {
+      const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&apikey=${apiKey}`;
       const response = await fetch(requestUrl);
-      const articles = await response.json();
 
-      const articlePromises = articles.map(async article => {
-        await addDoc(collection(db, 'Articles'), {
+      if (!response.ok) {
+        const error = response.status;
+        if (error === 400) {
+          throw new Error('Bad Request -- Your request is invalid.');
+        } else if (error === 401) {
+          throw new Error('Unauthorized -- Your API key is wrong.');
+        } else if (error === 403) {
+          throw new Error('Forbidden -- You have reached your daily quota, the next reset is at 00:00 UTC.');
+        } else if (error === 429) {
+          throw new Error('Too Many Requests -- You have made more requests per second than you are allowed.');
+        } else if (error === 500) {
+          throw new Error('Internal Server Error -- We had a problem with our server. Try again later.');
+        } else if (error === 503) {
+          throw new Error("Service Unavailable -- We're temporarily offline for maintenance. Please try again later.");
+        } else {
+          throw new Error('An unexpected error occurred.');
+        }
+      }
+
+      const { articles } = await response.json();
+
+      articles?.forEach(article =>
+        setDoc(doc(db, 'Articles', article.title), {
           content: article.content,
           description: article.description,
           image: article.image,
@@ -58,113 +78,35 @@ export const postArticles = functions.https.onCall(async (data, context) => {
           source: article.source,
           title: article.title,
           url: article.url,
-        });
-      });
+        }),
+      );
 
-      return Promise.all(articlePromises);
-    });
-
-    return await Promise.all(promises);
-  } catch (error) {
-    throw new functions.https.HttpsError('unknown', 'Something went wrong');
-  }
-});
-
-function sendRequestsInBatches() {
-  async function requestArticles(baseUrl, category, apiKey) {
-    const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&apikey=${apiKey}`;
-    const response = await fetch(requestUrl);
-
-    if (!response.ok) {
-      throw new Error();
+      console.log('Request Successful');
+    }
+    async function fetchArticlesWithRetry(category) {
+      for (const apiKey of apiKeys) {
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          await requestAndPostArticles(baseUrl, category, apiKey);
+          // 요청이 성공한 경우 다음 apiKey 사용하지 않고 반복문 종료
+          break;
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
     }
 
-    const { articles } = await response.json();
-
-    articles?.forEach(article =>
-      setDoc(doc(db, 'Articles', article.title), {
-        content: article.content,
-        description: article.description,
-        image: article.image,
-        publishedAt: article.publishedAt,
-        source: article.source,
-        title: article.title,
-        url: article.url,
-      }),
-    );
+    for (let i = 0; i < categories.length; i += batchSize) {
+      const batch = categories.slice(i, i + batchSize);
+      const requestPromises = batch.map(fetchArticlesWithRetry);
+      // eslint-disable-next-line no-await-in-loop
+      await Promise.all(requestPromises);
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise(resolve => {
+        setTimeout(resolve, 1500);
+      });
+    }
   }
 
-  const baseUrl = 'https://gnews.io/api/v4';
-  const categories = [
-    'general',
-    'world',
-    'nation',
-    'business',
-    // 'technology',
-    // 'entertainment',
-    // 'sports',
-    // 'science',
-    // 'health',
-  ];
-  const batchSize = 3;
-  const results = [];
-
-  for (let i = 0; i < categories.length; i += batchSize) {
-    const batch = categories.slice(i, i + batchSize);
-    batch.forEach(async category => {
-      try {
-        await requestArticles(baseUrl, category, config.secondApiKey);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-  }
-
-  return results;
-}
-
-// async function test() {
-//   const baseUrl = 'https://gnews.io/api/v4';
-//   const { apiKey } = config;
-//   const categories = [
-//     'general',
-//     'world',
-//     'nation',
-//     'business',
-//     'technology',
-//     'entertainment',
-//     'sports',
-//     'science',
-//     'health',
-//   ];
-//
-//   try {
-//     const batchSize = 3; // 각 배치의 크기를 정의
-//     const results = []; // 결과를 저장할 배열 선언
-//
-//     const promises = categories.map(async category => {
-//       const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&expand=content&apikey=${apiKey}`;
-//       const response = await fetch(requestUrl);
-//       const { articles } = await response.json();
-//
-//       const articlePromises = articles.map(async article => {
-//         await setDoc(doc(db, 'Articles', article.title), {
-//           content: article.content,
-//           description: article.description,
-//           image: article.image,
-//           publishedAt: article.publishedAt,
-//           source: article.source,
-//           title: article.title,
-//           url: article.url,
-//         });
-//       });
-//
-//       return Promise.all(articlePromises);
-//     });
-//
-//     return await Promise.all(promises);
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// }
-sendRequestsInBatches();
+  return sendRequestsInBatches();
+});
