@@ -64,3 +64,5 @@ export default async function fetchArticles(search = false, keyword = '', increm
     throw error;
   }
 }
+
+console.log('News');
