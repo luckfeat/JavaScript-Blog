@@ -17,8 +17,10 @@ const db = getFirestore(index);
 const functions = getFunctions();
 const postArticles = httpsCallable(functions, 'postArticles');
 
-async function getQuerySnapshot(db) {
+export async function getArticles() {
   const querySnapshot = await getDocs(collection(db, 'Articles'));
+
+  console.log(querySnapshot);
 
   return querySnapshot;
 }
@@ -38,6 +40,7 @@ export async function checkForUpdate() {
   console.log('Update Not Necessary');
   return false;
 }
+
 export default async function fetchArticles(search = false, keyword = '', increment = false, pageNumber = 1) {
   const baseUrl = 'https://gnews.io/api/v4';
   const { apiKey } = config;
