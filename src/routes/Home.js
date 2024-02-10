@@ -1,11 +1,7 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import { checkForUpdate } from '../core/api/News.js';
-import articlesStore, { loadArticles, loadNextArticles, searchArticles } from '../store/articles';
-
-articlesStore.subscribe('articles', () => {});
-
-articlesStore.subscribe('page', () => {});
+import { checkForUpdate, getArticles } from '../core/api/News.js';
+import { loadNextArticles, saveArticles, searchArticles } from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
@@ -30,10 +26,9 @@ export default class Home extends Component {
     this.appendMany(components);
 
     checkForUpdate();
-
-    // loadArticles().then(articles => {
-    //   this.replaceElement(this.carousel, new Carousel(articles).render('section'));
-    // });
+    saveArticles().then(articles => {
+      this.replaceElement(this.carousel, new Carousel(articles).render('section'));
+    });
 
     // loadNextArticles().then((nextArticles)=>{
     //     console.log(nextArticles)

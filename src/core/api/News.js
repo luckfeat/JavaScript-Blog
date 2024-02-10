@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDocs, setDoc, collection, doc, addDoc } from 'firebase/firestore';
+import { getFirestore, getDocs, setDoc, collection, doc, addDoc, deleteDoc } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import config from '../../../config';
 
@@ -17,12 +17,11 @@ const db = getFirestore(index);
 const functions = getFunctions();
 const postArticles = httpsCallable(functions, 'postArticles');
 
-async function getQuerySnapshot(db) {
+export async function getArticles() {
   const querySnapshot = await getDocs(collection(db, 'Articles'));
 
   return querySnapshot;
 }
-
 // eslint-disable-next-line require-await
 export async function checkForUpdate() {
   const updatedTime = new Date((await getDocs(collection(db, 'Update'))).docs[0].data().updatedTime.seconds * 1000);
@@ -38,6 +37,13 @@ export async function checkForUpdate() {
   console.log('Update Not Necessary');
   return false;
 }
+
+async function updateArticles() {
+  if (checkForUpdate()) {
+    await deleteDoc(doc(db, 'Articles', 'DC'));
+  }
+}
+
 export default async function fetchArticles(search = false, keyword = '', increment = false, pageNumber = 1) {
   const baseUrl = 'https://gnews.io/api/v4';
   const { apiKey } = config;
