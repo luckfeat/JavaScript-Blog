@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDocs, setDoc, collection, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, getDocs, setDoc, collection, doc, deleteDoc } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import config from '../../../config';
 
@@ -13,16 +13,15 @@ const firebaseConfig = {
 };
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
-
 const functions = getFunctions();
 const postArticles = httpsCallable(functions, 'postArticles');
+const deleteCollection = httpsCallable(functions, 'deleteCollection');
 
 export async function getArticles() {
   const querySnapshot = await getDocs(collection(db, 'Articles'));
 
   return querySnapshot;
 }
-// eslint-disable-next-line require-await
 export async function checkForUpdate() {
   const updatedTime = new Date((await getDocs(collection(db, 'Update'))).docs[0].data().updatedTime.seconds * 1000);
   const currentTime = new Date();
@@ -31,19 +30,17 @@ export async function checkForUpdate() {
     await setDoc(doc(db, 'Update', 'Update'), {
       updatedTime: new Date(),
     });
-    console.log('Update Time');
     return true;
   }
-  console.log('Update Not Necessary');
   return false;
 }
-
-async function updateArticles() {
-  if (checkForUpdate()) {
-    await deleteDoc(doc(db, 'Articles', 'DC'));
+export async function updateArticles() {
+  if (await checkForUpdate()) {
+    /* when update is true, delete remaining collection and update articles */
+    await deleteCollection();
+    await postArticles();
   }
 }
-
 export default async function fetchArticles(search = false, keyword = '', increment = false, pageNumber = 1) {
   const baseUrl = 'https://gnews.io/api/v4';
   const { apiKey } = config;

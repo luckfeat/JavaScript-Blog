@@ -1,7 +1,7 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import { checkForUpdate, getArticles } from '../core/api/News.js';
-import { loadNextArticles, saveArticles, searchArticles } from '../store/articles';
+import { getArticles, updateArticles } from '../core/api/newsApi.js';
+import { loadArticles, loadNextArticles, searchArticles } from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
@@ -25,8 +25,10 @@ export default class Home extends Component {
     this.carousel = carousel;
     this.appendMany(components);
 
-    checkForUpdate();
-    saveArticles().then(articles => {
+    updateArticles();
+
+    loadArticles().then(articles => {
+      // console.log(articles.length);
       this.replaceElement(this.carousel, new Carousel(articles).render('section'));
     });
 
@@ -38,6 +40,4 @@ export default class Home extends Component {
     //   console.log(articles);
     // });
   }
-
-  // eslint-disable-next-line class-methods-use-this
 }

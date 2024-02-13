@@ -1,12 +1,11 @@
 import Store from '../core/store';
-import fetchArticles, { getArticles, checkForArticles } from '../core/api/News';
-import articles from './articles.js';
+import fetchArticles, { getArticles } from '../core/api/newsApi';
 
 const articlesStore = new Store({
   articles: [],
 });
 
-export async function saveArticles() {
+export async function loadArticles() {
   try {
     const querySnapshot = await getArticles();
     querySnapshot.forEach(doc => {
@@ -18,7 +17,6 @@ export async function saveArticles() {
     console.error(err);
   }
 }
-
 export async function loadNextArticles() {
   try {
     store.state.page++;
@@ -29,7 +27,6 @@ export async function loadNextArticles() {
     alert(err);
   }
 }
-
 export async function searchArticles(keyword) {
   try {
     const { articles } = await fetchArticles(true, keyword, false);
@@ -40,5 +37,4 @@ export async function searchArticles(keyword) {
     alert(err);
   }
 }
-
 export default articlesStore;

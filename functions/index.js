@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, addDoc, getDocs, deleteDoc } from 'firebase/firestore';
 // eslint-disable-next-line import/extensions
 import config from './config.mjs';
 
@@ -28,7 +28,7 @@ export const onCreateFn = functions.auth.user().onCreate(user =>
 );
 
 // eslint-disable-next-line require-await
-export const postArticles = functions.https.onCall(async (data, context) => {
+export const postArticles = functions.https.onCall(() => {
   async function sendRequestsInBatches() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
@@ -109,4 +109,28 @@ export const postArticles = functions.https.onCall(async (data, context) => {
   }
 
   return sendRequestsInBatches();
+});
+
+export const deleteCollection = functions.https.onCall(() => {
+  async function deleteQueryBatch(db, query, resolve) {
+    const snapshot = await getDocs(collection(db, 'Articles'));
+    const batchSize = snapshot.size;
+
+    if (batchSize === 0) {
+      resolve();
+      return;
+    }
+    snapshot.docs.forEach(doc => {
+      deleteDoc(doc.ref);
+    });
+  }
+  function clearCollection(db) {
+    const collectionRef = collection(db, 'Articles');
+
+    return new Promise((resolve, reject) => {
+      deleteQueryBatch(db, collectionRef, resolve).catch(reject);
+    });
+  }
+
+  return clearCollection(db);
 });
