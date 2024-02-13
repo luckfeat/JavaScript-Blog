@@ -1,6 +1,6 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import { getArticles, updateArticles } from '../core/api/newsApi.js';
+import { updateArticles } from '../core/api/newsApi.js';
 import { loadArticles, loadNextArticles, searchArticles } from '../store/articles';
 
 export default class Home extends Component {
@@ -26,9 +26,7 @@ export default class Home extends Component {
     this.appendMany(components);
 
     updateArticles();
-
     loadArticles().then(articles => {
-      // console.log(articles.length);
       this.replaceElement(this.carousel, new Carousel(articles).render('section'));
     });
 

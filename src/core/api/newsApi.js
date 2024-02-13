@@ -41,23 +41,16 @@ export async function updateArticles() {
     await postArticles();
   }
 }
-export default async function fetchArticles(search = false, keyword = '', increment = false, pageNumber = 1) {
+export default async function searchArticles(keyword = '') {
   const baseUrl = 'https://gnews.io/api/v4';
   const { apiKey } = config;
-  const category = 'technology';
-  const max = 25;
-  const page = increment ? pageNumber : 1;
+  const category = keyword;
 
-  const requestUrl = { url: '' };
-
-  if (!search) {
-    requestUrl.url = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&expand=content&max=${max}&page=${page}&apikey=${apiKey}`;
-  } else {
-    requestUrl.url = `${baseUrl}/search?q=${keyword}&lang=en&country=us&expand=content&max=${max}&apikey=${apiKey}`;
-  }
+  const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&expand=content&apikey=${apiKey}`;
 
   try {
-    const response = await fetch(requestUrl.url);
+    const response = await fetch(requestUrl);
+
     return await response.json();
   } catch (error) {
     console.error('기사를 불러오는 데 실패했습니다.', error);
