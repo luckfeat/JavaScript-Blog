@@ -15,8 +15,8 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const postArticles = functions.https.onCall((search = false) => {
-  async function sendRequestsInBatches() {
+export const postArticles = functions.https.onCall(() => {
+  async function getArticlesInBatches() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
       'general',
@@ -30,7 +30,11 @@ export const postArticles = functions.https.onCall((search = false) => {
       'health',
     ];
     const batchSize = 3;
-    const apiKeys = [config.secondApiKey, config.apiKey];
+    const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
+
+    const date = new Date();
+    const today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+
     async function requestAndPostArticles(baseUrl, category, apiKey) {
       const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&apikey=${apiKey}`;
       const response = await fetch(requestUrl);
@@ -57,7 +61,7 @@ export const postArticles = functions.https.onCall((search = false) => {
       const { articles } = await response.json();
 
       articles?.forEach(article =>
-        setDoc(doc(db, 'Articles', article.title), {
+        setDoc(doc(db, today, article.title), {
           content: article.content,
           description: article.description,
           image: article.image,
@@ -95,12 +99,13 @@ export const postArticles = functions.https.onCall((search = false) => {
       });
     }
   }
-  async function searchRequestsInBatches(search) {
-    const baseUrl = 'https://gnews.io/api/v4';
+  async function searchArticlesInBatches() {
+    const baseUrl = 'https://gnews.io/api/v4/search';
+    const keywords = ['elon', 'meta', 'nft', 'crypto', 'ai', 'youtube', 'korea', 'hiphop', 'programming'];
     const batchSize = 3;
-    const apiKeys = [config.secondApiKey, config.apiKey];
+    const apiKeys = [config.thirdApiKey];
     async function requestAndPostArticles(baseUrl, search, apiKey) {
-      const requestUrl = `${baseUrl}/top-headlines?search=${search}&lang=en&country=us&apikey=${apiKey}`;
+      const requestUrl = `${baseUrl}/?q=${search}&lang=en&country=us&apikey=${apiKey}`;
       const response = await fetch(requestUrl);
 
       if (!response.ok) {
@@ -136,7 +141,7 @@ export const postArticles = functions.https.onCall((search = false) => {
         }),
       );
 
-      console.log('Request Successful');
+      console.log(`${search} : successfully loaded`);
     }
     async function fetchArticlesWithRetry(search) {
       for (const apiKey of apiKeys) {
@@ -145,21 +150,33 @@ export const postArticles = functions.https.onCall((search = false) => {
           await requestAndPostArticles(baseUrl, search, apiKey);
           break;
         } catch (error) {
-          console.log(error.message);
+          console.log('Search Failed');
         }
       }
     }
+
+    for (let i = 0; i < keywords.length; i += batchSize) {
+      const batch = keywords.slice(i, i + batchSize);
+      const requestPromises = batch.map(fetchArticlesWithRetry);
+      // eslint-disable-next-line no-await-in-loop
+      await Promise.all(requestPromises);
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise(resolve => {
+        setTimeout(resolve, 1500);
+      });
+    }
   }
 
-  if (search) {
-    searchRequestsInBatches(); /* Categories - Search(Keywords) 대체 */
-  } else {
-    sendRequestsInBatches();
-  }
+  getArticlesInBatches();
+  searchArticlesInBatches();
 });
 export const deleteCollection = functions.https.onCall(() => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const collectionName = `${yesterday.getFullYear()}.${yesterday.getMonth() + 1}.${yesterday.getDate()}`;
   async function deleteQueryBatch(db, query, resolve) {
-    const snapshot = await getDocs(collection(db, 'Articles'));
+    const snapshot = await getDocs(collection(db, collectionName));
     const batchSize = snapshot.size;
 
     if (batchSize === 0) {
@@ -171,7 +188,7 @@ export const deleteCollection = functions.https.onCall(() => {
     });
   }
   function clearCollection(db) {
-    const collectionRef = collection(db, 'Articles');
+    const collectionRef = collection(db, collectionName);
 
     return new Promise((resolve, reject) => {
       deleteQueryBatch(db, collectionRef, resolve).catch(reject);

@@ -4,7 +4,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import config from '../../../config';
 
 const firebaseConfig = {
-  apiKey: config.firebaseKey,
+  firebaseKey: config.firebaseKey,
   authDomain: config.autoDomain,
   projectId: config.projectId,
   storageBucket: config.storageBucket,
@@ -18,7 +18,9 @@ const postArticles = httpsCallable(functions, 'postArticles');
 const deleteCollection = httpsCallable(functions, 'deleteCollection');
 
 export async function getArticles() {
-  const querySnapshot = await getDocs(collection(db, 'Articles'));
+  const date = new Date();
+  const today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+  const querySnapshot = await getDocs(collection(db, today));
 
   return querySnapshot;
 }
@@ -36,24 +38,7 @@ export async function checkForUpdate() {
 }
 export async function updateArticles() {
   if (await checkForUpdate()) {
-    /* when update is true, delete remaining collection and update articles */
     await deleteCollection();
     await postArticles();
-  }
-}
-export default async function searchArticles(keyword = '') {
-  const baseUrl = 'https://gnews.io/api/v4';
-  const { apiKey } = config;
-  const category = keyword;
-
-  const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&expand=content&apikey=${apiKey}`;
-
-  try {
-    const response = await fetch(requestUrl);
-
-    return await response.json();
-  } catch (error) {
-    console.error('기사를 불러오는 데 실패했습니다.', error);
-    throw error;
   }
 }
