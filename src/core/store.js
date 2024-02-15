@@ -6,6 +6,7 @@ export default class Store {
   }
 
   initialize(payload) {
+    // eslint-disable-next-line guard-for-in
     for (const key in payload) {
       Object.defineProperty(this.state, key, {
         get: () => payload[key],
