@@ -32,26 +32,5 @@ export default class Home extends Component {
     await updateArticles();
     const articles = await loadArticles();
     this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
-
-    function getWeekDates() {
-      const today = new Date();
-      const dayOfWeek = today.getDay(); // 오늘의 요일 인덱스 (일요일 = 0)
-      const dayOfMonth = today.getDate();
-      const month = today.getMonth() + 1; // 월 (0부터 시작하므로 +1 필요)
-      const year = today.getFullYear();
-
-      const differenceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-
-      const weekDates = [];
-      const monday = dayOfMonth + differenceToMonday;
-      for (let i = 0; i <= 6; i++) {
-        const date = new Date(year, month, monday + i);
-        weekDates.push(`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`);
-      }
-
-      return weekDates;
-    }
-
-    getWeekDates();
   }
 }

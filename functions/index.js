@@ -96,7 +96,7 @@ export const postArticles = functions.https.onCall(() => {
       await Promise.all(requestPromises);
       // eslint-disable-next-line no-await-in-loop
       await new Promise(resolve => {
-        setTimeout(resolve, 1500);
+        setTimeout(resolve, 2000);
       });
     }
   }
@@ -168,26 +168,30 @@ export const postArticles = functions.https.onCall(() => {
     }
   }
   async function findArticlesByDates() {
-    const baseUrl = 'https://gnews.io/api/v4';
-    const categories = [
-      'general',
-      'world',
-      'nation',
-      'business',
-      'technology',
-      'entertainment',
-      'sports',
-      'science',
-      'health',
-    ];
+    const getWeekDates = () => {
+      const dates = [];
+      const today = new Date();
+      const dayOfWeek = today.getDay(); // 오늘의 요일 인덱스 (일요일 = 0)
+      const dayOfMonth = today.getDate();
+      const month = today.getMonth() + 1; // 월 (0부터 시작하므로 +1 필요)
+      const year = today.getFullYear();
+
+      const differenceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+
+      const monday = dayOfMonth + differenceToMonday;
+      for (let i = 0; i <= 6; i++) {
+        const date = new Date(year, month, monday + i);
+        dates.push(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
+      }
+
+      return dates;
+    };
+    const baseUrl = 'https://gnews.io/api/v4/search';
+    const dates = getWeekDates();
     const batchSize = 3;
     const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
-
-    const date = new Date();
-    const today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-
-    async function requestAndPostArticles(baseUrl, category, apiKey) {
-      const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&apikey=${apiKey}`;
+    async function requestAndPostArticles(baseUrl, date, apiKey) {
+      const requestUrl = `${baseUrl}/?&q=and&from=${''}T20:00:00Z&to=${date}:T24:00:00Z&in=description,content&lang=en&country=us&apikey=${apiKey}`;
       const response = await fetch(requestUrl);
 
       if (!response.ok) {
@@ -212,8 +216,7 @@ export const postArticles = functions.https.onCall(() => {
       const { articles } = await response.json();
 
       articles?.forEach(article =>
-        setDoc(doc(db, today, article.title), {
-          category,
+        setDoc(doc(db, `date-${date}`, article.title), {
           content: article.content,
           description: article.description,
           image: article.image,
@@ -223,25 +226,21 @@ export const postArticles = functions.https.onCall(() => {
           url: article.url,
         }),
       );
-
-      console.log('Request Successful');
     }
-    async function fetchArticlesWithRetry(category) {
+    async function fetchArticlesWithRetry(search) {
       for (const apiKey of apiKeys) {
         try {
           // eslint-disable-next-line no-await-in-loop
-          await requestAndPostArticles(baseUrl, category, apiKey);
-          // if request fails, loop continues
-          // if request succeed, loop breaks
+          await requestAndPostArticles(baseUrl, search, apiKey);
           break;
         } catch (error) {
-          console.log(error.message);
+          console.log('Date Search Failed');
         }
       }
     }
 
-    for (let i = 0; i < categories.length; i += batchSize) {
-      const batch = categories.slice(i, i + batchSize);
+    for (let i = 0; i < dates.length; i += batchSize) {
+      const batch = dates.slice(i, i + batchSize);
       const requestPromises = batch.map(fetchArticlesWithRetry);
       // eslint-disable-next-line no-await-in-loop
       await Promise.all(requestPromises);

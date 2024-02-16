@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDocs, setDoc, collection, doc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, getDocs, setDoc, collection, doc } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import config from '../../../config';
 
@@ -18,9 +18,18 @@ const postArticles = httpsCallable(functions, 'postArticles');
 const deleteCollection = httpsCallable(functions, 'deleteCollection');
 
 export async function getArticles() {
-  const date = new Date();
-  const today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-  const querySnapshot = await getDocs(collection(db, today));
+  const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+  const today = new Date();
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  const todayCollection = formatDate(today);
+  const yesterdayCollection = formatDate(yesterday);
+
+  let querySnapshot = await getDocs(collection(db, todayCollection));
+
+  querySnapshot =
+    querySnapshot.docs.length < 0
+      ? await getDocs(collection(db, yesterdayCollection))
+      : await getDocs(collection(db, todayCollection));
 
   return querySnapshot;
 }
@@ -38,7 +47,7 @@ export async function checkForUpdate() {
 }
 export async function updateArticles() {
   if (await checkForUpdate()) {
-    await deleteCollection();
     await postArticles();
+    await deleteCollection();
   }
 }
