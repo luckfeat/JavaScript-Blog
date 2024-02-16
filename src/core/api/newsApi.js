@@ -46,7 +46,7 @@ export async function checkForUpdate() {
   return false;
 }
 export async function updateArticles() {
-  if (await checkForUpdate()) {
+  if (!(await checkForUpdate())) {
     await postArticles();
     await deleteCollection();
   }

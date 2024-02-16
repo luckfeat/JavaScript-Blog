@@ -227,14 +227,14 @@ export const postArticles = functions.https.onCall(() => {
         }),
       );
     }
-    async function fetchArticlesWithRetry(search) {
+    async function fetchArticlesWithRetry(date) {
       for (const apiKey of apiKeys) {
         try {
           // eslint-disable-next-line no-await-in-loop
-          await requestAndPostArticles(baseUrl, search, apiKey);
+          await requestAndPostArticles(baseUrl, date, apiKey);
           break;
         } catch (error) {
-          console.log('Date Search Failed');
+          console.log(`${error.message} failed - date`);
         }
       }
     }
