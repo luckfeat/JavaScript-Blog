@@ -45,9 +45,3 @@ export async function checkForUpdate() {
   }
   return false;
 }
-
-export async function updateArticles() {
-  if (await checkForUpdate()) {
-    await deleteCollection();
-  }
-}

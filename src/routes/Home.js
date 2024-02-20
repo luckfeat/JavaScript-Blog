@@ -29,7 +29,6 @@ export default class Home extends Component {
     });
 
     this.carousel = document.querySelector('.carousel');
-    await updateArticles();
     const articles = await loadArticles();
     this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
   }
