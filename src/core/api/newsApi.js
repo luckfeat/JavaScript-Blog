@@ -26,10 +26,9 @@ export async function getArticles() {
 
   let querySnapshot = await getDocs(collection(db, todayCollection));
 
-  querySnapshot =
-    querySnapshot.docs.length < 0
-      ? await getDocs(collection(db, yesterdayCollection))
-      : await getDocs(collection(db, todayCollection));
+  querySnapshot = querySnapshot.docs.length
+    ? await getDocs(collection(db, todayCollection))
+    : await getDocs(collection(db, yesterdayCollection));
 
   return querySnapshot;
 }
