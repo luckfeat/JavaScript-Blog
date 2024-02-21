@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, getDocs, setDoc, collection, doc } from 'firebase/firestore';
-import { getFunctions, httpsCallable } from 'firebase/functions';
+// import { getFunctions, httpsCallable } from 'firebase/functions';
 import config from '../../../config';
 
 const firebaseConfig = {
@@ -13,9 +13,9 @@ const firebaseConfig = {
 };
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
-const functions = getFunctions();
-const postArticles = httpsCallable(functions, 'postArticles');
-const deleteCollection = httpsCallable(functions, 'deleteCollection');
+// const functions = getFunctions();
+// const postArticles = httpsCallable(functions, 'postArticles');
+// const deleteCollection = httpsCallable(functions, 'deleteCollection');
 
 export async function getArticles() {
   const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;

@@ -1,6 +1,5 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import { updateArticles } from '../core/api/newsApi';
 import { loadArticles } from '../store/articles';
 
 export default class Home extends Component {
