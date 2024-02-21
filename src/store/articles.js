@@ -1,5 +1,5 @@
 import Store from '../core/store';
-import { getArticles } from '../core/api/newsApi';
+import { getTodayNews } from '../core/api/newsApi';
 
 const articlesStore = new Store({
   articles: [],
@@ -7,7 +7,7 @@ const articlesStore = new Store({
 
 export async function loadArticles() {
   try {
-    const querySnapshot = await getArticles();
+    const querySnapshot = await getTodayNews();
     querySnapshot.forEach(doc => {
       articlesStore.state.articles.push(doc.data());
     });

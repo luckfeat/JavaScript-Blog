@@ -10,6 +10,7 @@ export default class Home extends Component {
     this.carousel = null;
   }
 
+  // eslint-disable-next-line require-await
   async initialize() {
     const components = [
       { type: Nav, target: 'nav' },
@@ -27,8 +28,15 @@ export default class Home extends Component {
       this.root.appendChild(new type().render(target));
     });
 
+    /* Carousel 컴포넌트 안에서 데이터를 수신하는 게 컴포넌트로서의 의미를 갖는 게 아닌지 */
     this.carousel = document.querySelector('.carousel');
-    const articles = await loadArticles();
-    this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
+    // const articles = await loadArticles();
+    // this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
+
+    document.querySelector('.keywords').addEventListener('click', event => {
+      if (event.target.tagName === 'TD') {
+        console.log(event.target.textContent);
+      }
+    });
   }
 }

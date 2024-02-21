@@ -17,7 +17,33 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-// eslint-disable-next-line import/prefer-default-export
+export const deleteCollection = onSchedule('0 0 * * *', () => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const collectionName = `${yesterday.getFullYear()}.${yesterday.getMonth() + 1}.${yesterday.getDate()}`;
+  async function deleteQueryBatch(db, query, resolve) {
+    const snapshot = await getDocs(collection(db, collectionName));
+    const batchSize = snapshot.size;
+
+    if (batchSize === 0) {
+      resolve();
+      return;
+    }
+    snapshot.docs.forEach(doc => {
+      deleteDoc(doc.ref);
+    });
+  }
+  function clearCollection(db) {
+    const collectionRef = collection(db, collectionName);
+
+    return new Promise((resolve, reject) => {
+      deleteQueryBatch(db, collectionRef, resolve).catch(reject);
+    });
+  }
+
+  return clearCollection(db);
+});
 export const setUp = onSchedule('0 3,15 * * *', async () => {
   async function getArticlesInBatches() {
     const baseUrl = 'https://gnews.io/api/v4';
@@ -253,36 +279,8 @@ export const setUp = onSchedule('0 3,15 * * *', async () => {
       });
     }
   }
-  function deleteCollection() {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const collectionName = `${yesterday.getFullYear()}.${yesterday.getMonth() + 1}.${yesterday.getDate()}`;
-    async function deleteQueryBatch(db, query, resolve) {
-      const snapshot = await getDocs(collection(db, collectionName));
-      const batchSize = snapshot.size;
-
-      if (batchSize === 0) {
-        resolve();
-        return;
-      }
-      snapshot.docs.forEach(doc => {
-        deleteDoc(doc.ref);
-      });
-    }
-    function clearCollection(db) {
-      const collectionRef = collection(db, collectionName);
-
-      return new Promise((resolve, reject) => {
-        deleteQueryBatch(db, collectionRef, resolve).catch(reject);
-      });
-    }
-
-    return clearCollection(db);
-  }
 
   await getArticlesInBatches();
   await searchArticlesInBatches();
   await findArticlesByDates();
-  await deleteCollection();
 });
