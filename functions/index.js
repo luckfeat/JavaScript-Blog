@@ -17,7 +17,7 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const deleteCollection = onSchedule('0 0 * * *', () => {
+export const deleteCollection = onSchedule('0 23 * * *', () => {
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
@@ -42,9 +42,9 @@ export const deleteCollection = onSchedule('0 0 * * *', () => {
     });
   }
 
-  return clearCollection(db);
+  clearCollection(db);
 });
-export const setUp = onSchedule('0 3,15 * * *', async () => {
+export const setUp = onSchedule('0 1,16 * * *', async () => {
   async function getArticlesInBatches() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
@@ -89,9 +89,22 @@ export const setUp = onSchedule('0 3,15 * * *', async () => {
 
       const { articles } = await response.json();
 
-      articles?.forEach(article =>
-        setDoc(doc(db, today, article.title), {
-          category,
+      function chunkArray(array, size) {
+        const chunkedArr = [];
+        const copied = [...array]; // ES6 문법을 사용하여 배열을 복사
+        const numOfChild = Math.ceil(copied.length / size); // 필요한 페이지 수 계산
+        for (let i = 0; i < numOfChild; i++) {
+          chunkedArr.push(copied.splice(0, size));
+        }
+        return chunkedArr;
+      }
+
+      const articleGroups = chunkArray(articles, 10);
+
+      articleGroups.forEach((group, index) => {
+        const pageNumber = index + 1; // 페이지 번호 (1부터 시작)
+        const pageData = group.map(article => ({
+          category: article.category,
           content: article.content,
           description: article.description,
           image: article.image,
@@ -99,16 +112,29 @@ export const setUp = onSchedule('0 3,15 * * *', async () => {
           source: article.source,
           title: article.title,
           url: article.url,
-        }),
-      );
+        }));
+
+        setDoc(doc(db, today, `${pageNumber}`), { articles: pageData });
+
+        // articles?.forEach(article =>
+        //   setDoc(doc(db, today, article.title), {
+        //     category,
+        //     content: article.content,
+        //     description: article.description,
+        //     image: article.image,
+        //     publishedAt: article.publishedAt,
+        //     source: article.source,
+        //     title: article.title,
+        //     url: article.url,
+        //   }),
+        // );
+      });
     }
     async function fetchArticlesWithRetry(category) {
       for (const apiKey of apiKeys) {
         try {
           // eslint-disable-next-line no-await-in-loop
           await requestAndPostArticles(baseUrl, category, apiKey);
-          // if request fails, loop continues
-          // if request succeed, loop breaks
           break;
         } catch (error) {
           console.log(error.message);
