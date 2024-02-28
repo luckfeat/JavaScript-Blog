@@ -60,9 +60,10 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
     ];
     const batchSize = 3;
     const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
-
     const date = new Date();
     const today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+
+    let pageNumber = 1;
 
     async function requestAndPostArticles(baseUrl, category, apiKey) {
       const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&apikey=${apiKey}`;
@@ -87,54 +88,27 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
         }
       }
 
-      const { articles } = await response.json();
+      const { articles } = await response.json(); // 10개
 
-      function chunkArray(array, size) {
-        const chunkedArr = [];
-        const copied = [...array]; // ES6 문법을 사용하여 배열을 복사
-        const numOfChild = Math.ceil(copied.length / size); // 필요한 페이지 수 계산
-        for (let i = 0; i < numOfChild; i++) {
-          chunkedArr.push(copied.splice(0, size));
-        }
-        return chunkedArr;
-      }
+      // function spliceArray(array, size) {
+      //   const chunkedArr = [];
+      //   const copied = [...array];
+      //   const numOfChild = Math.ceil(copied.length / size);
+      //   for (let i = 0; i < numOfChild; i++) {
+      //     chunkedArr.push(copied.splice(0, size));
+      //   }
+      //   return chunkedArr;
+      // }
 
-      const articleGroups = chunkArray(articles, 10);
-
-      articleGroups.forEach((group, index) => {
-        const pageNumber = index + 1; // 페이지 번호 (1부터 시작)
-        const pageData = group.map(article => ({
-          category: article.category,
-          content: article.content,
-          description: article.description,
-          image: article.image,
-          publishedAt: article.publishedAt,
-          source: article.source,
-          title: article.title,
-          url: article.url,
-        }));
-
-        setDoc(doc(db, today, `${pageNumber}`), { articles: pageData });
-
-        // articles?.forEach(article =>
-        //   setDoc(doc(db, today, article.title), {
-        //     category,
-        //     content: article.content,
-        //     description: article.description,
-        //     image: article.image,
-        //     publishedAt: article.publishedAt,
-        //     source: article.source,
-        //     title: article.title,
-        //     url: article.url,
-        //   }),
-        // );
-      });
+      await setDoc(doc(db, today, 'pageNumber', `${pageNumber}`, 'Articles'), { articles });
+      pageNumber++;
     }
     async function fetchArticlesWithRetry(category) {
       for (const apiKey of apiKeys) {
         try {
           // eslint-disable-next-line no-await-in-loop
           await requestAndPostArticles(baseUrl, category, apiKey);
+          console.log('TEST');
           break;
         } catch (error) {
           console.log(error.message);
