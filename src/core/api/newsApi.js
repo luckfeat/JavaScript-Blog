@@ -13,9 +13,6 @@ const firebaseConfig = {
 };
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
-// const functions = getFunctions();
-// const postArticles = httpsCallable(functions, 'postArticles');
-// const deleteCollection = httpsCallable(functions, 'deleteCollection');
 
 export async function getTodayNews() {
   const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
@@ -32,7 +29,9 @@ export async function getTodayNews() {
 
   return querySnapshot;
 }
-export async function getKeywordNews() {}
+export async function getKeywordNews() {
+  //
+}
 export async function checkForUpdate() {
   const updatedTime = new Date((await getDocs(collection(db, 'Update'))).docs[0].data().updatedTime.seconds * 1000);
   const currentTime = new Date();

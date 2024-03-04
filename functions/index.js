@@ -88,17 +88,7 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
         }
       }
 
-      const { articles } = await response.json(); // 10개
-
-      // function spliceArray(array, size) {
-      //   const chunkedArr = [];
-      //   const copied = [...array];
-      //   const numOfChild = Math.ceil(copied.length / size);
-      //   for (let i = 0; i < numOfChild; i++) {
-      //     chunkedArr.push(copied.splice(0, size));
-      //   }
-      //   return chunkedArr;
-      // }
+      const { articles } = await response.json();
 
       await setDoc(doc(db, today, 'pageNumber', `${pageNumber}`, 'Articles'), { articles });
       pageNumber++;
@@ -108,7 +98,6 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
         try {
           // eslint-disable-next-line no-await-in-loop
           await requestAndPostArticles(baseUrl, category, apiKey);
-          console.log('TEST');
           break;
         } catch (error) {
           console.log(error.message);
