@@ -8,6 +8,7 @@ const articlesStore = new Store({
 export async function loadArticles() {
   try {
     const querySnapshot = await getTodayNews();
+
     querySnapshot.forEach(doc => {
       articlesStore.state.articles.push(doc.data());
     });

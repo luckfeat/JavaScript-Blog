@@ -30,8 +30,8 @@ export default class Home extends Component {
 
     /* Carousel 컴포넌트 안에서 데이터를 수신하는 게 컴포넌트로서의 의미를 갖는 게 아닌지 */
     this.carousel = document.querySelector('.carousel');
-    // const articles = await loadArticles();
-    // this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
+    const articles = await loadArticles();
+    this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
 
     document.querySelector('.keywords').addEventListener('click', event => {
       if (event.target.tagName === 'TD') {
@@ -40,10 +40,13 @@ export default class Home extends Component {
     });
 
     /* weekdates 값을 HTML value 값으로 넘기기 */
+    /* 클릭시 화면 이동 -> Article */
     document.querySelector('.daily').addEventListener('click', event => {
       if (event.target.tagName === 'LI') {
         console.log(event.target.textContent);
       }
     });
   }
+
+  // eslint-disable-next-line class-methods-use-this
 }

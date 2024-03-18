@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDocs, setDoc, collection, doc } from 'firebase/firestore';
+import { getFirestore, getDoc, getDocs, setDoc, collection, doc, deleteDoc } from 'firebase/firestore';
 // import { getFunctions, httpsCallable } from 'firebase/functions';
 import config from '../../../config';
 
@@ -21,7 +21,15 @@ export async function getTodayNews() {
   const todayCollection = formatDate(today);
   const yesterdayCollection = formatDate(yesterday);
 
+  // const test = await getDocs(collection(db, yesterdayCollection, 'pageNumber', `${i}`));
+
+  // test.forEach(doc => {
+  //   // console.log(doc.data().articles);
+  // });
+
   let querySnapshot = await getDocs(collection(db, todayCollection));
+
+  /* 페이지 단위로 넘어 오기 때문에, 반복문을 사용해서 state 저장 */
 
   querySnapshot = querySnapshot.docs.length
     ? await getDocs(collection(db, todayCollection))

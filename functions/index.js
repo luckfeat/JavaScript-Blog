@@ -17,35 +17,9 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const deleteCollection = onSchedule('0 23 * * *', () => {
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  const collectionName = `${yesterday.getFullYear()}.${yesterday.getMonth() + 1}.${yesterday.getDate()}`;
-  async function deleteQueryBatch(db, query, resolve) {
-    const snapshot = await getDocs(collection(db, collectionName));
-    const batchSize = snapshot.size;
-
-    if (batchSize === 0) {
-      resolve();
-      return;
-    }
-    snapshot.docs.forEach(doc => {
-      deleteDoc(doc.ref);
-    });
-  }
-  function clearCollection(db) {
-    const collectionRef = collection(db, collectionName);
-
-    return new Promise((resolve, reject) => {
-      deleteQueryBatch(db, collectionRef, resolve).catch(reject);
-    });
-  }
-
-  clearCollection(db);
-});
-export const setUp = onSchedule('0 1,16 * * *', async () => {
+export const setUp = onSchedule('0 6,12,18,22 * * *', async () => {
   async function getArticlesInBatches() {
+    console.log('test');
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
       'general',
@@ -62,8 +36,6 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
     const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
     const date = new Date();
     const today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-
-    let pageNumber = 1;
 
     async function requestAndPostArticles(baseUrl, category, apiKey) {
       const requestUrl = `${baseUrl}/top-headlines?category=${category}&lang=en&country=us&apikey=${apiKey}`;
@@ -90,8 +62,29 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
 
       const { articles } = await response.json();
 
-      await setDoc(doc(db, today, 'pageNumber', `${pageNumber}`, 'Articles'), { articles });
-      pageNumber++;
+      articles?.forEach(article =>
+        setDoc(doc(db, category, article.title), {
+          content: article.content,
+          description: article.description,
+          image: article.image,
+          publishedAt: article.publishedAt,
+          source: article.source,
+          title: article.title,
+          url: article.url,
+        }),
+      );
+
+      articles?.forEach(article =>
+        setDoc(doc(db, today, article.title), {
+          content: article.content,
+          description: article.description,
+          image: article.image,
+          publishedAt: article.publishedAt,
+          source: article.source,
+          title: article.title,
+          url: article.url,
+        }),
+      );
     }
     async function fetchArticlesWithRetry(category) {
       for (const apiKey of apiKeys) {
@@ -189,7 +182,7 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
       const today = new Date();
       const dayOfWeek = today.getDay(); // 오늘의 요일 인덱스 (일요일 = 0)
       const dayOfMonth = today.getDate();
-      const month = today.getMonth(); // 월은 0부터 시작하므로 변경하지 않음
+      const month = today.getMonth();
       const year = today.getFullYear();
       const differenceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
       const monday = new Date(year, month, dayOfMonth + differenceToMonday);
@@ -199,11 +192,12 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
         if (date > today) {
           date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
         }
-        dates.push(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`); // 월을 정확히 표시하기 위해 +1
+        dates.push(`${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`);
       }
 
       return dates;
     };
+
     const baseUrl = 'https://gnews.io/api/v4/search';
     const dates = getWeekDates();
     const batchSize = 3;
@@ -234,7 +228,7 @@ export const setUp = onSchedule('0 1,16 * * *', async () => {
       const { articles } = await response.json();
 
       articles?.forEach(article =>
-        setDoc(doc(db, `date-${date}`, article.title), {
+        setDoc(doc(db, `${date}`, article.title), {
           content: article.content,
           description: article.description,
           image: article.image,
