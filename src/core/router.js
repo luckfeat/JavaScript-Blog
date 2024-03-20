@@ -16,7 +16,6 @@ export default class Router {
   checkHash() {
     // eslint-disable-next-line no-restricted-globals
 
-    console.log(location.hash);
     if (!location.hash) {
       // eslint-disable-next-line no-restricted-globals
       history.replaceState(null, null, '/#/');

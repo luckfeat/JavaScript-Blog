@@ -19,7 +19,7 @@ export default class Component {
     oldElement.parentNode.removeChild(oldElement);
   }
 
-  render(tag = 'div') {
+  render(tag = 'div', cs, id) {
     const fragment = document.createElement(tag);
     fragment.innerHTML = this.template;
     return fragment;

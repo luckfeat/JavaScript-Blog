@@ -5,8 +5,6 @@ import { loadArticles } from '../store/articles';
 export default class Home extends Component {
   constructor() {
     super();
-    this.button = document.createElement('button');
-    this.button.textContent = 'Refresh';
     this.carousel = null;
   }
 
