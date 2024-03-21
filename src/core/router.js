@@ -4,6 +4,7 @@ export default class Router {
     this.routes = routes;
     // eslint-disable-next-line no-restricted-globals
     this.currentPath = location.hash;
+    console.log('a');
     this.render();
   }
 
@@ -15,23 +16,10 @@ export default class Router {
   // eslint-disable-next-line class-methods-use-this
   checkHash() {
     // eslint-disable-next-line no-restricted-globals
-
     if (!location.hash) {
       // eslint-disable-next-line no-restricted-globals
       history.replaceState(null, null, '/#/');
-    }
-  }
-
-  render() {
-    this.checkHash();
-    const currentRoute = this.routes[this.currentPath];
-    currentRoute ? this.loadPage(currentRoute) : (this.root.innerHTML = '<h1>Page Not Found</h1>');
-    window.scrollTo(0, 0);
-  }
-
-  listen() {
-    window.addEventListener('hashchange', () => {
-      /* hash - querystring 분리 */
+    } else {
       // eslint-disable-next-line no-restricted-globals
       const [hash, queryString] = location.hash.split('?');
       const query = queryString?.split('&').reduce((acc, cur) => {
@@ -43,6 +31,20 @@ export default class Router {
       // eslint-disable-next-line no-restricted-globals
       history.replaceState(query, '');
       this.currentPath = hash;
+    }
+  }
+
+  render() {
+    this.checkHash();
+    console.log(this.currentPath);
+    const currentRoute = this.routes[this.currentPath];
+    currentRoute ? this.loadPage(currentRoute) : (this.root.innerHTML = '<h1>Page Not Found</h1>');
+    window.scrollTo(0, 0);
+  }
+
+  listen() {
+    window.addEventListener('hashchange', () => {
+      this.checkHash();
       this.render();
     });
   }
