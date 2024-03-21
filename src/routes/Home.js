@@ -38,7 +38,7 @@ export default class Home extends Component {
     });
 
     /* weekdates 값을 HTML value 값으로 넘기기 */
-    /* 클릭시 화면 이동 -> Article */
+    /* 클릭시 화면 이동 -> Detail */
     document.querySelector('.daily').addEventListener('click', event => {
       if (event.target.tagName === 'LI') {
         console.log(event.target.textContent);

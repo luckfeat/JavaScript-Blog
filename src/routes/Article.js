@@ -1,5 +1,5 @@
 import Component from '../core/component';
-import { Aritlce } from '../components';
+import { Detail } from '../components';
 
 export default class Article extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -11,7 +11,6 @@ export default class Article extends Component {
   initialize() {
     // eslint-disable-next-line no-restricted-globals
     console.log(history.state);
-
-    this.root.appendChild(new Aritlce().render('section', 'article'));
+    this.root.appendChild(new Detail().render('section', 'article'));
   }
 }
