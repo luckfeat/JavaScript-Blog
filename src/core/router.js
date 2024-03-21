@@ -31,8 +31,18 @@ export default class Router {
 
   listen() {
     window.addEventListener('hashchange', () => {
+      /* hash - querystring 분리 */
       // eslint-disable-next-line no-restricted-globals
-      this.currentPath = location.hash;
+      const [hash, queryString] = location.hash.split('?');
+      const query = queryString?.split('&').reduce((acc, cur) => {
+        const [key, value] = cur.split('=');
+        acc[key] = value;
+
+        return acc;
+      }, {});
+      // eslint-disable-next-line no-restricted-globals
+      history.replaceState(query, '');
+      this.currentPath = hash;
       this.render();
     });
   }

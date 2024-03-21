@@ -19,9 +19,12 @@ export default class Component {
     oldElement.parentNode.removeChild(oldElement);
   }
 
-  render(tag = 'div', cs, id) {
+  render(tag = 'div', cs = '', id = '') {
     const fragment = document.createElement(tag);
     fragment.innerHTML = this.template;
+    cs && (fragment.className = cs);
+    id && (fragment.id = id);
+
     return fragment;
   }
 }

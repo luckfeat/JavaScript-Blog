@@ -9,6 +9,6 @@ export default class Article extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   initialize() {
-    this.root.appendChild(new Aritlce().render('section'));
+    this.root.appendChild(new Aritlce().render('section', 'article'));
   }
 }
