@@ -27,13 +27,26 @@ export function getDetail(title) {
 export async function getKeyword(category) {
   try {
     const querySnapshot = await getKeywordNews(category);
-    console.log(querySnapshot);
     articlesStore.state[category] = [];
     querySnapshot.forEach(doc => {
       articlesStore.state[category].push(doc.data());
     });
 
     return articlesStore.state[category];
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function getDate(date) {
+  try {
+    const querySnapshot = await getKeywordNews(date);
+    articlesStore.state[date] = [];
+    querySnapshot.forEach(doc => {
+      articlesStore.state[date].push(doc.data());
+    });
+
+    return articlesStore.state[date];
   } catch (err) {
     console.error(err);
   }

@@ -49,8 +49,13 @@ export async function getNewsDetail(title) {
 }
 
 export async function getKeywordNews(category) {
-  console.log(category);
   const querySnapshot = await getDocs(collection(db, category));
+
+  return querySnapshot;
+}
+
+export async function getDateNews(date) {
+  const querySnapshot = await getDocs(collection(db, date));
 
   return querySnapshot;
 }

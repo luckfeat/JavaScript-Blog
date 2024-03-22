@@ -43,6 +43,29 @@ export default class Home extends Component {
         console.log(event.target.textContent);
       }
     });
+
+    const getWeekDates = () => {
+      const dates = [];
+      const today = new Date();
+      const dayOfWeek = today.getDay(); // 오늘의 요일 인덱스 (일요일 = 0)
+      const dayOfMonth = today.getDate();
+      const month = today.getMonth();
+      const year = today.getFullYear();
+      const differenceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+      const monday = new Date(year, month, dayOfMonth + differenceToMonday);
+
+      for (let i = 0; i <= 6; i++) {
+        let date = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
+        if (date > today) {
+          date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+        }
+        dates.push(`${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`);
+      }
+
+      return dates;
+    };
+
+    console.log(getWeekDates());
   }
 
   // eslint-disable-next-line class-methods-use-this

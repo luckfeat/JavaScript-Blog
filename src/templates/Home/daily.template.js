@@ -1,12 +1,13 @@
 const template = `
     <ul class="daily">
-      <li>월</li>
-      <li>화</li>
-      <li>수</li>
-      <li>목</li>
-      <li>금</li>
-      <li>토</li>
-      <li>일</li>
+      
+      <a href="#/article?date={{this}}"><li>월</li></a>
+      <a><li>화</li></a>
+      <a><li>수</li></a>
+      <a><li>목</li></a>
+      <a><li>금</li></a>
+      <a><li>토</li></a>
+      <a><li>일</li></a>
     </ul>
 `;
 

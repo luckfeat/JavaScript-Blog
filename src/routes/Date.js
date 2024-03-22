@@ -1,6 +1,6 @@
 import Component from '../core/component';
-import { KeywordMain } from '../components/index';
-import { getKeyword } from '../store/articles';
+import { DateMain } from '../components/index';
+import { getDate } from '../store/articles';
 
 export default class Keyword extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -11,11 +11,9 @@ export default class Keyword extends Component {
   // eslint-disable-next-line class-methods-use-this,require-await
   async initialize() {
     // eslint-disable-next-line no-restricted-globals
-    const { category } = history.state;
-    const keywordNews = await getKeyword(category);
+    const { date } = history.state;
+    const keywordNews = await getDate(date);
 
-    console.log(keywordNews);
-
-    this.root.appendChild(new KeywordMain(keywordNews).render('section', 'keyword'));
+    this.root.appendChild(new DateMain(keywordNews).render('section', 'keyword'));
   }
 }
