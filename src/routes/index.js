@@ -1,11 +1,11 @@
 import Router from '../core/router';
 import Home from './Home';
-import Write from './Write';
+import Keyword from './Keyword';
 import Article from './Article';
 
 export default new Router({
   '': Home,
   '#/': Home,
-  '#/write': Write,
   '#/article': Article,
+  '#/keyword': Keyword,
 });

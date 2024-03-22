@@ -38,6 +38,7 @@ export async function getNewsDetail(title) {
   const [todayCollection, yesterdayCollection] = getToday();
   try {
     const searchTitle = decodeURIComponent(title);
+    /* category 검색 추가 */
     const docRef = doc(db, todayCollection, searchTitle) || doc(db, yesterdayCollection, searchTitle);
     const querySnapshot = await getDoc(docRef);
 
@@ -47,9 +48,13 @@ export async function getNewsDetail(title) {
   }
 }
 
-export async function getKeywordNews() {
-  //
+export async function getKeywordNews(category) {
+  console.log(category);
+  const querySnapshot = await getDocs(collection(db, category));
+
+  return querySnapshot;
 }
+
 export async function checkForUpdate() {
   const updatedTime = new Date((await getDocs(collection(db, 'Update'))).docs[0].data().updatedTime.seconds * 1000);
   const currentTime = new Date();

@@ -8,7 +8,7 @@ JavaScript
 
 Public API - GNEWS
 
-Editor
+Main
 
 Firebase Cloud Functions
 

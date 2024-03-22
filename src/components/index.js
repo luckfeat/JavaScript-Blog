@@ -7,3 +7,4 @@ export { default as Writer } from './Home/Writer';
 export { default as Recommend } from './Home/Recommend';
 export { default as Footer } from './Home/Footer';
 export { default as Detail } from './Article/Detail';
+export { default as Main } from './Keyword/Main';
