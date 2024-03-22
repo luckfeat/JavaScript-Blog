@@ -3,12 +3,12 @@ import { getTodayNews } from '../core/api/newsApi';
 
 const articlesStore = new Store({
   articles: [],
+  article: {},
 });
 
-export async function loadArticles() {
+export async function getArticles() {
   try {
     const querySnapshot = await getTodayNews();
-
     querySnapshot.forEach(doc => {
       articlesStore.state.articles.push(doc.data());
     });
@@ -18,4 +18,5 @@ export async function loadArticles() {
     console.error(err);
   }
 }
+
 export default articlesStore;

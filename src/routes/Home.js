@@ -1,6 +1,6 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import { loadArticles } from '../store/articles';
+import articlesStore, { getArticles } from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
@@ -19,7 +19,6 @@ export default class Home extends Component {
       { type: Writer, target: 'section' },
       { type: Recommend, target: 'section' },
       { type: Footer, target: 'footer' },
-      // render template 클래스 추가 - 현재 태그만 생성
     ];
     components.forEach(({ type, target }) => {
       // eslint-disable-next-line new-cap
@@ -28,8 +27,8 @@ export default class Home extends Component {
 
     /* Carousel 컴포넌트 안에서 데이터를 수신하는 게 컴포넌트로서의 의미를 갖는 게 아닌지 */
     this.carousel = document.querySelector('.carousel');
-    const articles = await loadArticles();
-    this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
+    // const articles = await getArticles();
+    // this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
 
     document.querySelector('.keywords').addEventListener('click', event => {
       if (event.target.tagName === 'TD') {

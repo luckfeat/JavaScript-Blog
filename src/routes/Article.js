@@ -1,5 +1,6 @@
 import Component from '../core/component';
 import { Detail } from '../components';
+import { getNewsDetail } from '../core/api/newsApi';
 
 export default class Article extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -8,8 +9,9 @@ export default class Article extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  initialize() {
+  async initialize() {
     // eslint-disable-next-line no-restricted-globals
-    this.root.appendChild(new Detail().render('section', 'article'));
+    const articleDetail = await getNewsDetail(history.state.title);
+    this.root.appendChild(new Detail(articleDetail).render('section', 'article'));
   }
 }

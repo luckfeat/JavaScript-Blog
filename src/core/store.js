@@ -21,7 +21,7 @@ export default class Store {
   }
 
   subscribe(key, callBack) {
-    /* store 값을 할당하는 경우 실행 시킬 함수 구독 */
+    /* store - 값을 할당하는 경우 실행 시킬 함수 구독 */
     Array.isArray(this.observers[key]) ? this.observers[key].push(callBack) : (this.observers[key] = [callBack]);
   }
 }

@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDoc, getDocs, setDoc, collection, doc, deleteDoc } from 'firebase/firestore';
-// import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getFirestore, getDoc, getDocs, setDoc, collection, doc } from 'firebase/firestore';
 import config from '../../../config';
 
 const firebaseConfig = {
@@ -14,22 +13,19 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export async function getTodayNews() {
+function getToday() {
   const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
   const today = new Date();
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
   const todayCollection = formatDate(today);
   const yesterdayCollection = formatDate(yesterday);
 
-  // const test = await getDocs(collection(db, yesterdayCollection, 'pageNumber', `${i}`));
+  return [todayCollection, yesterdayCollection];
+}
 
-  // test.forEach(doc => {
-  //   // console.log(doc.data().articles);
-  // });
-
+export async function getTodayNews() {
+  const [todayCollection, yesterdayCollection] = getToday();
   let querySnapshot = await getDocs(collection(db, todayCollection));
-
-  /* 페이지 단위로 넘어 오기 때문에, 반복문을 사용해서 state 저장 */
 
   querySnapshot = querySnapshot.docs.length
     ? await getDocs(collection(db, todayCollection))
@@ -37,6 +33,20 @@ export async function getTodayNews() {
 
   return querySnapshot;
 }
+
+export async function getNewsDetail(title) {
+  const [todayCollection, yesterdayCollection] = getToday();
+  try {
+    const searchTitle = decodeURIComponent(title);
+    const docRef = doc(db, todayCollection, searchTitle) || doc(db, yesterdayCollection, searchTitle);
+    const querySnapshot = await getDoc(docRef);
+
+    return querySnapshot.data();
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
 export async function getKeywordNews() {
   //
 }
