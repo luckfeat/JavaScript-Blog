@@ -4,7 +4,6 @@ export default class Router {
     this.routes = routes;
     // eslint-disable-next-line no-restricted-globals
     this.currentPath = location.hash;
-    console.log('a');
     this.render();
   }
 
@@ -36,7 +35,6 @@ export default class Router {
 
   render() {
     this.checkHash();
-    console.log(this.currentPath);
     const currentRoute = this.routes[this.currentPath];
     currentRoute ? this.loadPage(currentRoute) : (this.root.innerHTML = '<h1>Page Not Found</h1>');
     window.scrollTo(0, 0);
