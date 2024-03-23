@@ -34,11 +34,17 @@ export async function getTodayNews() {
   return querySnapshot;
 }
 
-export async function getNewsDetail(title) {
+export async function getNewsDetail(title, category) {
   const [todayCollection, yesterdayCollection] = getToday();
   try {
     const searchTitle = decodeURIComponent(title);
     /* category 검색 추가 */
+    if (category) {
+      const docRef = doc(db, category, searchTitle);
+      const querySnapshot = await getDoc(docRef);
+
+      return querySnapshot.data();
+    }
     const docRef = doc(db, todayCollection, searchTitle) || doc(db, yesterdayCollection, searchTitle);
     const querySnapshot = await getDoc(docRef);
 
