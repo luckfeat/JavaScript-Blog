@@ -1,7 +1,6 @@
 import Component from '../core/component';
 import { Detail } from '../components';
-import articlesStore, { getDetail } from '../store/articles';
-import articles from '../store/articles';
+import { getDetail } from '../store/articles';
 
 export default class Article extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -10,8 +9,7 @@ export default class Article extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async initialize() {
-    const category = Object.keys(articlesStore.state)[0];
+  checkQueryString() {
     // eslint-disable-next-line no-restricted-globals
     const [, queryString] = location.hash.split('?');
     const query = queryString?.split('&').reduce((acc, cur) => {
@@ -21,7 +19,12 @@ export default class Article extends Component {
       return acc;
     }, {});
 
-    const { title } = query;
+    return query;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async initialize() {
+    const { category, title } = this.checkQueryString();
 
     const articleDetail = await getDetail(title, category);
     this.root.appendChild(new Detail(articleDetail).render('section', 'article'));
