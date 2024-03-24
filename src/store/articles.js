@@ -24,8 +24,8 @@ export async function getArticles() {
 }
 
 // eslint-disable-next-line require-await
-export function getDetail(title, category) {
-  return getNewsDetail(title, category);
+export function getDetail(title, data) {
+  return getNewsDetail(title, data);
 }
 
 export async function getKeyword(category) {

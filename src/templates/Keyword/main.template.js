@@ -1,5 +1,4 @@
 const template = `
-  <h1>{{category}}</h1>
   <ul>   
         {{#each keywordNews}}
             <a href="#/article?&category={{../category}}&title={{this.title}}">

@@ -1,11 +1,31 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import articlesStore, { getArticles } from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
     super();
     this.carousel = null;
+  }
+
+  getWeekDates() {
+    const dates = [];
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 오늘의 요일 인덱스 (일요일 = 0)
+    const dayOfMonth = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+    const differenceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    const monday = new Date(year, month, dayOfMonth + differenceToMonday);
+
+    for (let i = 0; i <= 6; i++) {
+      let date = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
+      if (date > today) {
+        date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+      }
+      dates.push(`${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`);
+    }
+
+    return dates;
   }
 
   // eslint-disable-next-line require-await
@@ -21,8 +41,16 @@ export default class Home extends Component {
       { type: Footer, target: 'footer' },
     ];
     components.forEach(({ type, target }) => {
-      // eslint-disable-next-line new-cap
-      this.root.appendChild(new type().render(target));
+      if (type.name === 'Daily') {
+        const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
+
+        this.root.appendChild(
+          new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday }).render(target),
+        );
+      } else {
+        // eslint-disable-next-line new-cap
+        this.root.appendChild(new type().render(target));
+      }
     });
 
     /* Carousel 컴포넌트 안에서 데이터를 수신하는 게 컴포넌트로서의 의미를 갖는 게 아닌지 */
@@ -43,29 +71,6 @@ export default class Home extends Component {
         console.log(event.target.textContent);
       }
     });
-
-    const getWeekDates = () => {
-      const dates = [];
-      const today = new Date();
-      const dayOfWeek = today.getDay(); // 오늘의 요일 인덱스 (일요일 = 0)
-      const dayOfMonth = today.getDate();
-      const month = today.getMonth();
-      const year = today.getFullYear();
-      const differenceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-      const monday = new Date(year, month, dayOfMonth + differenceToMonday);
-
-      for (let i = 0; i <= 6; i++) {
-        let date = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
-        if (date > today) {
-          date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
-        }
-        dates.push(`${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`);
-      }
-
-      return dates;
-    };
-
-    console.log(getWeekDates());
   }
 
   // eslint-disable-next-line class-methods-use-this

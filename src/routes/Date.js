@@ -12,8 +12,7 @@ export default class Keyword extends Component {
   async initialize() {
     // eslint-disable-next-line no-restricted-globals
     const { date } = history.state;
-    const keywordNews = await getDate(date);
-
-    this.root.appendChild(new DateMain(keywordNews).render('section', 'keyword'));
+    const dateNews = await getDate(date);
+    this.root.appendChild(new DateMain({ dateNews, date }).render('section', 'date'));
   }
 }
