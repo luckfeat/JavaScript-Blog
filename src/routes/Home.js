@@ -1,5 +1,6 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
+import { getArticles, getKeyword } from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
@@ -7,6 +8,7 @@ export default class Home extends Component {
     this.carousel = null;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getWeekDates() {
     const dates = [];
     const today = new Date();
@@ -40,38 +42,30 @@ export default class Home extends Component {
       { type: Recommend, target: 'section' },
       { type: Footer, target: 'footer' },
     ];
-    components.forEach(({ type, target }) => {
-      if (type.name === 'Daily') {
-        const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
-
-        this.root.appendChild(
-          new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday }).render(target),
-        );
-      } else {
-        // eslint-disable-next-line new-cap
-        this.root.appendChild(new type().render(target));
+    for (const { type, target } of components) {
+      switch (type.name) {
+        case 'Carousel':
+          // eslint-disable-next-line no-case-declarations,no-await-in-loop
+          const articles = await getArticles();
+          this.root.appendChild(new Carousel(articles.slice(0, 2)).render(target));
+          break;
+        case 'Daily':
+          // eslint-disable-next-line no-case-declarations
+          const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
+          this.root.appendChild(
+            new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday }).render(target),
+          );
+          break;
+        case 'Recommend':
+          // eslint-disable-next-line no-case-declarations,no-await-in-loop
+          const recommendation = await getKeyword('ai');
+          this.root.appendChild(new Recommend(recommendation.slice(0, 2)).render(target));
+          break;
+        default:
+          // eslint-disable-next-line new-cap
+          this.root.appendChild(new type().render(target));
+          break;
       }
-    });
-
-    /* Carousel 컴포넌트 안에서 데이터를 수신하는 게 컴포넌트로서의 의미를 갖는 게 아닌지 */
-    this.carousel = document.querySelector('.carousel');
-    // const articles = await getArticles();
-    // this.replaceElement(this.carousel, new Carousel(articles.slice(0, 25)).render());
-
-    document.querySelector('.keywords').addEventListener('click', event => {
-      if (event.target.tagName === 'TD') {
-        console.log(event.target.textContent);
-      }
-    });
-
-    /* weekdates 값을 HTML value 값으로 넘기기 */
-    /* 클릭시 화면 이동 -> Detail */
-    document.querySelector('.daily').addEventListener('click', event => {
-      if (event.target.tagName === 'LI') {
-        console.log(event.target.textContent);
-      }
-    });
+    }
   }
-
-  // eslint-disable-next-line class-methods-use-this
 }
