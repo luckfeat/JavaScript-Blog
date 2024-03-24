@@ -1,6 +1,6 @@
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import { getArticles, getKeyword } from '../store/articles';
+import articlesStore, { getArticles, getKeyword } from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
@@ -28,6 +28,11 @@ export default class Home extends Component {
     }
 
     return dates;
+  }
+
+  appendNews() {
+    const increment = 0;
+    articlesStore;
   }
 
   // eslint-disable-next-line require-await
@@ -59,7 +64,11 @@ export default class Home extends Component {
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const recommendation = await getKeyword('ai');
+          /* 무한 Carousel - 50개 끊어서 추가 */
+          /* 50개 다  */
           this.root.appendChild(new Recommend(recommendation.slice(0, 2)).render(target));
+          this.recommend = document.querySelector('.carousel');
+          this.next = document.querySelector('.next');
           break;
         default:
           // eslint-disable-next-line new-cap
@@ -67,5 +76,9 @@ export default class Home extends Component {
           break;
       }
     }
+
+    this.next.addEventListener('click', () => {
+      console.log('Hello');
+    });
   }
 }
