@@ -5,6 +5,9 @@ import articlesStore, { getArticles, getKeyword } from '../store/articles';
 export default class Home extends Component {
   constructor() {
     super();
+    this.recommendIncrement = 0;
+    this.recommendStart = 0;
+    this.recommendEnd = 50;
     this.carousel = null;
   }
 
@@ -31,8 +34,15 @@ export default class Home extends Component {
   }
 
   appendNews() {
-    const increment = 0;
-    articlesStore;
+    this.recommendIncrement++;
+    if (this.recommendIncrement === 8) {
+      this.recommendIncrement = 0;
+      this.recommendStart += 51;
+      this.recommendEnd += 51;
+
+      console.log('Return Articles');
+      return articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
+    }
   }
 
   // eslint-disable-next-line require-await
@@ -64,10 +74,9 @@ export default class Home extends Component {
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const recommendation = await getKeyword('ai');
-          /* 무한 Carousel - 50개 끊어서 추가 */
-          /* 50개 다  */
-          this.root.appendChild(new Recommend(recommendation.slice(0, 2)).render(target));
-          this.recommend = document.querySelector('.carousel');
+
+          this.root.appendChild(new Recommend(recommendation.slice(0, 1)).render(target));
+          this.recommend = document.querySelector('.recommend');
           this.next = document.querySelector('.next');
           break;
         default:
@@ -78,7 +87,18 @@ export default class Home extends Component {
     }
 
     this.next.addEventListener('click', () => {
-      console.log('Hello');
+      this.recommendIncrement++;
+      if (this.recommendIncrement === 8) {
+        this.recommendIncrement = 0;
+        this.recommendStart += 51;
+        this.recommendEnd += 51;
+
+        const moreArticles = articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
+
+        console.log(moreArticles);
+
+        this.recommend.appendChild(new Recommend(moreArticles, true).render());
+      }
     });
   }
 }

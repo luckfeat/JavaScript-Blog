@@ -1,7 +1,4 @@
-const template = `
-      <h1>Recommended Articles <span>AI</span></h1>
-      <a class="prev" href="javascript:void(0);">이전</a>
-      <ul class="recommend">
+const articles = `
           {{#each this}}
               <a href="#/article?category=ai&title={{this.title}}">
                 <li>{{this.title}}</li>
@@ -10,8 +7,6 @@ const template = `
                 <p>{{this.source.name}}</p>
               </a>
           {{/each}}
-     </ul>
-     <a class="next" href="javascript:void(0);">이후</a>
 `;
 
-export default window.Handlebars.compile(template);
+export default window.Handlebars.compile(articles);
