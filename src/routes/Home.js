@@ -33,18 +33,6 @@ export default class Home extends Component {
     return dates;
   }
 
-  appendNews() {
-    this.recommendIncrement++;
-    if (this.recommendIncrement === 8) {
-      this.recommendIncrement = 0;
-      this.recommendStart += 51;
-      this.recommendEnd += 51;
-
-      console.log('Return Articles');
-      return articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
-    }
-  }
-
   // eslint-disable-next-line require-await
   async initialize() {
     const components = [
@@ -75,7 +63,7 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const recommendation = await getKeyword('ai');
 
-          this.root.appendChild(new Recommend(recommendation.slice(0, 1)).render(target));
+          this.root.appendChild(new Recommend(recommendation.slice(0, 50)).render(target));
           this.recommend = document.querySelector('.recommend');
           this.next = document.querySelector('.next');
           break;
@@ -95,7 +83,9 @@ export default class Home extends Component {
 
         const moreArticles = articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
 
-        console.log(moreArticles);
+        if (moreArticles.length === 0) {
+          return;
+        }
 
         this.recommend.appendChild(new Recommend(moreArticles, true).render());
       }
