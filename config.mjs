@@ -12,6 +12,7 @@ const config = {
   firstApiKey: process.env.KEY,
   secondApiKey: process.env.SECONDKEY,
   thirdApiKey: process.env.THIRDKEY,
+  gptApiKey: process.env.GPTAPIKEY
 };
 
 export default config;
