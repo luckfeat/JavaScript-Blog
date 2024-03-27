@@ -17,9 +17,9 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const setUp = onSchedule('0 6,12,18,22 * * *', async () => {
-  async function getArticlesInBatches() {
-    console.log('test');
+export const setUp = onSchedule('', async () => {});
+export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
+  async function createArticlesInBatches() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
       'general',
@@ -63,18 +63,6 @@ export const setUp = onSchedule('0 6,12,18,22 * * *', async () => {
       const { articles } = await response.json();
 
       articles?.forEach(article =>
-        setDoc(doc(db, category, article.title), {
-          content: article.content,
-          description: article.description,
-          image: article.image,
-          publishedAt: article.publishedAt,
-          source: article.source,
-          title: article.title,
-          url: article.url,
-        }),
-      );
-
-      articles?.forEach(article =>
         setDoc(doc(db, today, article.title), {
           content: article.content,
           description: article.description,
@@ -109,7 +97,7 @@ export const setUp = onSchedule('0 6,12,18,22 * * *', async () => {
       });
     }
   }
-  async function searchArticlesInBatches() {
+  async function createSearchesInBatches() {
     const baseUrl = 'https://gnews.io/api/v4/search';
     const keywords = ['elon', 'meta', 'nft', 'crypto', 'ai', 'youtube', 'korea', 'hiphop', 'programming'];
     const batchSize = 3;
@@ -176,7 +164,7 @@ export const setUp = onSchedule('0 6,12,18,22 * * *', async () => {
       });
     }
   }
-  async function findArticlesByDates() {
+  async function createArticlesByDates() {
     const getWeekDates = () => {
       const dates = [];
       const today = new Date();
@@ -263,7 +251,7 @@ export const setUp = onSchedule('0 6,12,18,22 * * *', async () => {
     }
   }
 
-  await getArticlesInBatches();
-  await searchArticlesInBatches();
-  await findArticlesByDates();
+  await createArticlesInBatches();
+  await createSearchesInBatches();
+  await createArticlesByDates();
 });
