@@ -111,8 +111,7 @@ async function test() {
         console.log(document.data().title);
         try {
           const content = await generateText(document.data().content);
-          console.log(content.choices[0].message.content);
-          await setDoc(doc(db, '2024.03.27', document.data().title), {
+          await setDoc(doc(db, querySnapshot.query._path.segments[0], document.data().title), {
             content: content.choices[0].message.content,
             description: document.data().description,
             image: document.data().image,
@@ -131,7 +130,6 @@ async function test() {
   const [todayCollection, yesterdayCollection] = getToday();
 
   let querySnapshot = await getDocs(collection(db, todayCollection));
-
   querySnapshot = querySnapshot.docs.length
     ? await getDocs(collection(db, todayCollection))
     : await getDocs(collection(db, yesterdayCollection));
@@ -139,4 +137,4 @@ async function test() {
   updateDocuments(querySnapshot.docs);
 }
 
-test();
+// test();
