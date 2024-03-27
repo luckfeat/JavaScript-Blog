@@ -1,6 +1,8 @@
+import { OpenAI } from 'openai';
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
 import articlesStore, { getArticles, getKeyword } from '../store/articles';
+import config from '../../config';
 
 export default class Home extends Component {
   constructor() {
@@ -90,5 +92,19 @@ export default class Home extends Component {
         this.recommend.appendChild(new Recommend(moreArticles, true).render());
       }
     });
+
+    async function generateText() {
+      console.log(config.gptApiKey);
+
+      const openai = new OpenAI({ apiKey: config.gptApiKey, dangerouslyAllowBrowser: true });
+      const chatCompletion = await openai.chat.completions.create({
+        messages: [{ role: 'user', content: 'Who is the tallest man in the world?' }],
+        model: 'gpt-3.5-turbo',
+      });
+
+      return chatCompletion;
+    }
+
+    // generateText().then(r => console.log(r.choices[0].message.content));
   }
 }

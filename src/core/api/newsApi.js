@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, getDoc, getDocs, setDoc, collection, doc } from 'firebase/firestore';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { OpenAI } from 'openai';
 import config from '../../../config';
 
 const firebaseConfig = {
@@ -80,26 +79,3 @@ export async function checkForUpdate() {
   }
   return false;
 }
-
-export async function generateText(promptText) {
-  const openaiClient = new OpenAI({
-    apiKey: config.gptApiKey,
-    dangerouslyAllowBrowser: true,
-  });
-
-  console.dir(openaiClient);
-
-  try {
-    const response = await openaiClient.fetch({
-      model: 'text-davinci-003',
-      prompt: promptText,
-      max_tokens: 50,
-      temperature: 0.7,
-    });
-    console.log(response.data.choices[0].text);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-generateText('Once upon a time');
