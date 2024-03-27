@@ -92,26 +92,5 @@ export default class Home extends Component {
         this.recommend.appendChild(new Recommend(moreArticles, true).render());
       }
     });
-
-    console.log(articlesStore.state.ai[0].content);
-
-    async function generateText() {
-      console.log(config.gptApiKey);
-
-      const openai = new OpenAI({ apiKey: config.gptApiKey, dangerouslyAllowBrowser: true });
-      const chatCompletion = await openai.chat.completions.create({
-        messages: [
-          {
-            role: 'user',
-            content: `Based on the information given by the article, extend it match over 2,000 words. The article : ${articlesStore.state.ai[0].content}`,
-          },
-        ],
-        model: 'gpt-3.5-turbo',
-      });
-
-      return chatCompletion;
-    }
-
-    generateText().then(r => console.log(r.choices[0].message.content));
   }
 }

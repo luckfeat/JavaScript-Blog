@@ -1,9 +1,10 @@
 // import * as functions from 'firebase-functions';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, getDocs } from 'firebase/firestore';
 // eslint-disable-next-line import/no-unresolved
 import { onSchedule } from 'firebase-functions/v2/scheduler';
-// eslint-disable-next-line import/extensions
+// eslint-disable-next-line import/extensions,import/no-extraneous-dependencies
+import { OpenAI } from 'openai';
 import config from './config.mjs';
 
 const firebaseConfig = {
@@ -17,9 +18,56 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const setUp = onSchedule('', async () => {});
+// export const setUp = onSchedule('0 6 * * *', async () => {
+//   const getToday = () => {
+//     const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+//     const today = new Date();
+//     const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+//     const todayCollection = formatDate(today);
+//     const yesterdayCollection = formatDate(yesterday);
+//
+//     return [todayCollection, yesterdayCollection];
+//   };
+//   const generateText = async content => {
+//     const openai = new OpenAI({ apiKey: config.gptApiKey, dangerouslyAllowBrowser: true });
+//     const chatCompletion = await openai.chat.completions.create({
+//       messages: [
+//         {
+//           role: 'user',
+//           content: `Based on the information given by the article, extend it match over 2,000 words. The article : ${content}`,
+//         },
+//       ],
+//       model: 'gpt-3.5-turbo',
+//     });
+//
+//     return chatCompletion;
+//   };
+//
+//   const [todayCollection, yesterdayCollection] = getToday();
+//
+//   let querySnapshot = await getDocs(collection(db, todayCollection));
+//
+//   querySnapshot = querySnapshot.docs.length
+//     ? await getDocs(collection(db, todayCollection))
+//     : await getDocs(collection(db, yesterdayCollection));
+//
+//   querySnapshot.forEach(doc => {
+//     if (doc.data().extend) {
+//       setDoc(doc(db, querySnapshot.query._path.segments[0], doc.title), {
+//         /* 여기서 GPT */
+//         content: generateText(doc.content),
+//         description: doc.description,
+//         image: doc.image,
+//         publishedAt: doc.publishedAt,
+//         source: doc.source,
+//         title: doc.title,
+//         url: doc.url,
+//       });
+//     }
+//   });
+// });
 export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
-  async function createArticlesInBatches() {
+  async function postArticles() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
       'general',
@@ -62,17 +110,32 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
 
       const { articles } = await response.json();
 
-      articles?.forEach(article =>
-        setDoc(doc(db, today, article.title), {
-          content: article.content,
-          description: article.description,
-          image: article.image,
-          publishedAt: article.publishedAt,
-          source: article.source,
-          title: article.title,
-          url: article.url,
-        }),
-      );
+      console.log(articles);
+
+      articles?.forEach((article, index) => {
+        if (index <= 5) {
+          setDoc(doc(db, today, article.title), {
+            content: article.content,
+            description: article.description,
+            image: article.image,
+            publishedAt: article.publishedAt,
+            source: article.source,
+            title: article.title,
+            url: article.url,
+            extend: true,
+          });
+        } else {
+          setDoc(doc(db, today, article.title), {
+            content: article.content,
+            description: article.description,
+            image: article.image,
+            publishedAt: article.publishedAt,
+            source: article.source,
+            title: article.title,
+            url: article.url,
+          });
+        }
+      });
     }
     async function fetchArticlesWithRetry(category) {
       for (const apiKey of apiKeys) {
@@ -97,7 +160,7 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
       });
     }
   }
-  async function createSearchesInBatches() {
+  async function postSearches() {
     const baseUrl = 'https://gnews.io/api/v4/search';
     const keywords = ['elon', 'meta', 'nft', 'crypto', 'ai', 'youtube', 'korea', 'hiphop', 'programming'];
     const batchSize = 3;
@@ -164,7 +227,7 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
       });
     }
   }
-  async function createArticlesByDates() {
+  async function postDates() {
     const getWeekDates = () => {
       const dates = [];
       const today = new Date();
@@ -251,7 +314,7 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
     }
   }
 
-  await createArticlesInBatches();
-  await createSearchesInBatches();
-  await createArticlesByDates();
+  await postArticles();
+  await postSearches();
+  await postDates();
 });
