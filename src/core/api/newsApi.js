@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, getDoc, getDocs, setDoc, collection, doc } from 'firebase/firestore';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { OpenAI } from 'openai';
 import config from '../../../config';
 
 const firebaseConfig = {
@@ -80,61 +79,3 @@ export async function checkForUpdate() {
   }
   return false;
 }
-
-async function test() {
-  const getToday = () => {
-    const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-    const today = new Date();
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    const todayCollection = formatDate(today);
-    const yesterdayCollection = formatDate(yesterday);
-
-    return [todayCollection, yesterdayCollection];
-  };
-  const generateText = async content => {
-    const openai = new OpenAI({ apiKey: config.gptApiKey, dangerouslyAllowBrowser: true });
-    const chatCompletion = await openai.chat.completions.create({
-      messages: [
-        {
-          role: 'user',
-          content: `Based on the information given by the article, extend the article to over 3,000 words like a professional journalist. The article : ${content}`,
-        },
-      ],
-      model: 'gpt-3.5-turbo',
-    });
-
-    return chatCompletion;
-  };
-  const updateDocuments = async querySnapshot => {
-    for (const document of querySnapshot) {
-      if (document.data().extend) {
-        console.log(document.data().title);
-        try {
-          const content = await generateText(document.data().content);
-          await setDoc(doc(db, querySnapshot.query._path.segments[0], document.data().title), {
-            content: content.choices[0].message.content,
-            description: document.data().description,
-            image: document.data().image,
-            publishedAt: document.data().publishedAt,
-            source: document.data().source,
-            title: document.data().title,
-            url: document.data().url,
-          });
-        } catch (e) {
-          console.error(e.message);
-        }
-      }
-    }
-  };
-
-  const [todayCollection, yesterdayCollection] = getToday();
-
-  let querySnapshot = await getDocs(collection(db, todayCollection));
-  querySnapshot = querySnapshot.docs.length
-    ? await getDocs(collection(db, todayCollection))
-    : await getDocs(collection(db, yesterdayCollection));
-
-  updateDocuments(querySnapshot.docs);
-}
-
-// test();
