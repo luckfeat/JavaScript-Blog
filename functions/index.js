@@ -18,66 +18,7 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const setUp = onSchedule('0 6 * * *', async () => {
-  const getToday = () => {
-    const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-    const today = new Date();
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    const todayCollection = formatDate(today);
-    const yesterdayCollection = formatDate(yesterday);
-
-    return [todayCollection, yesterdayCollection];
-  };
-  const generateText = async content => {
-    const openai = new OpenAI({ apiKey: config.gptApiKey, dangerouslyAllowBrowser: true });
-    const chatCompletion = await openai.chat.completions.create({
-      messages: [
-        {
-          role: 'user',
-          content: `Based on the information given by the article, extend the article to over 3,000 words like a professional journalist. The article : ${content}`,
-        },
-      ],
-      model: 'gpt-3.5-turbo',
-    });
-
-    return chatCompletion;
-  };
-  const updateDocuments = async querySnapshot => {
-    for (const document of querySnapshot.docs) {
-      if (document.data().extend) {
-        try {
-          const article = document.data();
-          console.log(article.title);
-          // eslint-disable-next-line no-await-in-loop
-          const content = await generateText(article.content);
-          // eslint-disable-next-line no-await-in-loop
-          await setDoc(doc(db, querySnapshot.query._path.segments[0], article.title), {
-            content: content.choices[0].message.content,
-            description: article.description,
-            image: article.image,
-            publishedAt: article.publishedAt,
-            source: article.source,
-            title: article.title,
-            url: article.url,
-          });
-          console.log(article.content);
-        } catch (e) {
-          console.error(e.message);
-        }
-      }
-    }
-  };
-
-  const [todayCollection, yesterdayCollection] = getToday();
-
-  let querySnapshot = await getDocs(collection(db, todayCollection));
-  querySnapshot = querySnapshot.docs.length
-    ? await getDocs(collection(db, todayCollection))
-    : await getDocs(collection(db, yesterdayCollection));
-
-  updateDocuments(querySnapshot);
-});
-export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
+export const createArticles = onSchedule('0 4,12,20 * * *', async () => {
   async function postArticles() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
@@ -153,7 +94,7 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
           await requestAndPostArticles(baseUrl, category, apiKey);
           break;
         } catch (error) {
-          console.log(error.message);
+          console.error(error.message);
         }
       }
     }
@@ -208,10 +149,9 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
           source: article.source,
           title: article.title,
           url: article.url,
+          success: true,
         }),
       );
-
-      console.log(`${search} : successfully loaded`);
     }
     async function fetchArticlesWithRetry(search) {
       for (const apiKey of apiKeys) {
@@ -220,7 +160,7 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
           await requestAndPostArticles(baseUrl, search, apiKey);
           break;
         } catch (error) {
-          console.log('Search Failed');
+          console.error('Search Failed');
         }
       }
     }
@@ -306,7 +246,7 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
           await requestAndPostArticles(baseUrl, date, apiKey);
           break;
         } catch (error) {
-          console.log(`${error.message} failed - date`);
+          console.error(`${error.message} failed - date`);
         }
       }
     }
@@ -326,4 +266,61 @@ export const createArticles = onSchedule('0 6,12,18,22 * * *', async () => {
   await postArticles();
   await postSearches();
   await postDates();
+});
+export const setUp = onSchedule('0 22 * * *', async () => {
+  const getToday = () => {
+    const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+    const today = new Date();
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    const todayCollection = formatDate(today);
+    const yesterdayCollection = formatDate(yesterday);
+
+    return [todayCollection, yesterdayCollection];
+  };
+  const generateText = async content => {
+    const openai = new OpenAI({ apiKey: config.gptApiKey, dangerouslyAllowBrowser: true });
+    const chatCompletion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: 'user',
+          content: `Based on the information given by the article, extend the article to over 3,000 words like a professional journalist. The article : ${content}`,
+        },
+      ],
+      model: 'gpt-3.5-turbo',
+    });
+
+    return chatCompletion;
+  };
+  const updateDocuments = async querySnapshot => {
+    for (const document of querySnapshot.docs) {
+      if (document.data().extend) {
+        try {
+          const article = document.data();
+          // eslint-disable-next-line no-await-in-loop
+          const content = await generateText(article.content);
+          // eslint-disable-next-line no-await-in-loop
+          await setDoc(doc(db, querySnapshot.query._path.segments[0], article.title), {
+            content: content.choices[0].message.content,
+            description: article.description,
+            image: article.image,
+            publishedAt: article.publishedAt,
+            source: article.source,
+            title: article.title,
+            url: article.url,
+          });
+        } catch (e) {
+          console.error(e.message);
+        }
+      }
+    }
+  };
+
+  const [todayCollection, yesterdayCollection] = getToday();
+
+  let querySnapshot = await getDocs(collection(db, todayCollection));
+  querySnapshot = querySnapshot.docs.length
+    ? await getDocs(collection(db, todayCollection))
+    : await getDocs(collection(db, yesterdayCollection));
+
+  updateDocuments(querySnapshot);
 });

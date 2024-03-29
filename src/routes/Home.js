@@ -52,6 +52,8 @@ export default class Home extends Component {
         case 'Carousel':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await getArticles();
+          /* 여기서 기사 분류해서 게시 */
+          /* firebase 조건문 사용하기 success=true */
           this.root.appendChild(new Carousel(articles.slice(0, 2)).render(target));
           break;
         case 'Daily':

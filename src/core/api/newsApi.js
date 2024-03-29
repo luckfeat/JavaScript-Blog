@@ -37,6 +37,8 @@ export async function getTodayNews() {
 
 export async function getNewsDetail(title, data) {
   const [todayCollection, yesterdayCollection] = getToday();
+
+  console.log(todayCollection, yesterdayCollection);
   try {
     const searchTitle = decodeURIComponent(title);
     /* category 검색 추가 */
@@ -46,10 +48,12 @@ export async function getNewsDetail(title, data) {
 
       return querySnapshot.data();
     }
-    const docRef = doc(db, todayCollection, searchTitle) || doc(db, yesterdayCollection, searchTitle);
-    const querySnapshot = await getDoc(docRef);
 
-    return querySnapshot.data();
+    const documentData =
+      (await getDoc(doc(db, todayCollection, searchTitle))).data() ||
+      (await getDoc(doc(db, yesterdayCollection, searchTitle))).data();
+
+    return documentData;
   } catch (err) {
     console.error(err.message);
   }
