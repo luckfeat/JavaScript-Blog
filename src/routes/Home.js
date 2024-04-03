@@ -38,42 +38,42 @@ export default class Home extends Component {
   // eslint-disable-next-line require-await
   async initialize() {
     const components = [
-      { type: Nav, target: 'nav' },
-      { type: Header, target: 'header' },
-      { type: Carousel, target: 'section' },
-      { type: Keyword, target: 'section' },
-      { type: Daily, target: 'section' },
-      { type: Writer, target: 'section' },
-      { type: Recommend, target: 'section' },
-      { type: Footer, target: 'footer' },
+      { type: Nav, tag: 'nav' },
+      { type: Header, tag: 'header' },
+      { type: Carousel, tag: 'section', cls: 'trend' },
+      { type: Keyword, tag: 'section', cls: 'keyword' },
+      { type: Daily, tag: 'section', cls: 'daily' },
+      { type: Writer, tag: 'section', cls: 'writer' },
+      { type: Recommend, tag: 'section', cls: 'recommend' },
+      { type: Footer, tag: 'footer' },
     ];
-    for (const { type, target } of components) {
+    for (const { type, tag, cls } of components) {
       switch (type.name) {
         case 'Carousel':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await getArticles();
           /* 여기서 기사 분류해서 게시 */
           /* firebase 조건문 사용하기 success=true */
-          this.root.appendChild(new Carousel(articles.slice(0, 2)).render(target));
+          this.root.appendChild(new Carousel(articles.slice(0, 2)).render(tag, cls));
           break;
         case 'Daily':
           // eslint-disable-next-line no-case-declarations
           const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
           this.root.appendChild(
-            new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday }).render(target),
+            new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday }).render(tag, cls),
           );
           break;
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const recommendation = await getKeyword('ai');
 
-          this.root.appendChild(new Recommend(recommendation.slice(0, 50)).render(target));
+          this.root.appendChild(new Recommend(recommendation.slice(0, 50)).render(tag, cls));
           this.recommend = document.querySelector('.recommend');
           this.next = document.querySelector('.next');
           break;
         default:
           // eslint-disable-next-line new-cap
-          this.root.appendChild(new type().render(target));
+          this.root.appendChild(new type().render(tag, cls));
           break;
       }
     }
