@@ -2,7 +2,7 @@
 This project is a tribute to the popular Korean content platform, Brunch (https://brunch.co.kr/), known for its rich collection of articles and unique user interface. The goal was to recreate the essence of Brunch, utilizing modern web development practices and technologies. This document serves as a guide to the structure, technologies used, and features of the project.
 
 ## Overview
-JavaScript Blog project is a web application built entirely using pure JavaScript, with no reliance on jQuery or any other JavaScript library for DOM manipulations. The goal was to challenge ourselves by sticking to vanilla JavaScript and employing a range of technologies to mimic the functionality and design of the original site as closely as possible.
+JavaScript Blog project is a web application built entirely using pure JavaScript, with no reliance on jQuery or any other JavaScript library for DOM manipulations.
 
 ## Technologies Used
 Here's a list of the main technologies and methodologies used in this project:
