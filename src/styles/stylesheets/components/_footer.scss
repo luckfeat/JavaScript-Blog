@@ -1,0 +1,27 @@
+footer {
+  width: 100%;
+  height: 417px;
+  margin: 0;
+  background-color: $footer-bgc;
+  font-family: "Noto Sans Light", sans-serif;
+  color: #fff;
+
+  .footer__inner {
+    position: relative;
+    width: 960px;
+    padding: 39px 0;
+    margin: 0 auto;
+  }
+
+  .footer__info {
+    display: flex;
+    padding-bottom: 45px;
+  }
+
+  .footer__policy {}
+
+  .footer__policy--bold {
+    font-family: "Noto Sans Medium", sans-serif;
+    font-weight: bold;
+  }
+}
