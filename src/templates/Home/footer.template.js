@@ -4,11 +4,11 @@ const template = `
         <div class="footer__quotation">
           <span class="footer__logo"></span>
           <p class="footer__slogan">
-            "You can make anything"
+            "You can make anything "
             <br>
             "by writing."
           </p>
-          <p class="footer__writer">C.S.Lewis</p>>
+          <p class="footer__writer">C.S.Lewis</p>
         </div>  
         <ul class="footer__service">
           <li><a>블로그 이용안내</a></li>
@@ -32,7 +32,26 @@ const template = `
           <li><a>공식 페이스북</a></li>
         </ul>
       </div>
-      <div class="footer__corp"></div>
+      <div class="footer__corp">
+        <small class="footer__copyright">
+          <div class="footer__corp-link">© Kakao Corp.</div>
+          <div class="footer__corp-info">
+            <ul>
+              <li>대표이사 : 이지훈 |&nbsp;</li>
+              <li>사업자등록번호 : |&nbsp;</li>
+              <li>통신판매업신고번호 : |&nbsp;</li>
+              <li>주소 : 제주특별자치도 제주시 첨단로 242(영평동) |&nbsp;</li>
+              <li>호스팅서비스사업자 : (주)이지훈 |&nbsp;</li>
+              <li>고객센터 : 1577-0000</li>
+              <li>이메일 : luckfeat@gmail.com</li>
+            </ul>
+          </div>
+        </small>      
+        <ul class="footer__download">
+          <li><a href=""><span class="footer__android"></span></a></li>
+          <li><a href=""><span class="footer__apple"></span></a></li>
+        </ul>
+      </div>
     </div>
 `;
 

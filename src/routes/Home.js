@@ -38,13 +38,13 @@ export default class Home extends Component {
   // eslint-disable-next-line require-await
   async initialize() {
     const components = [
-      { type: Nav, tag: 'nav' },
-      { type: Header, tag: 'header' },
-      { type: Carousel, tag: 'section', cls: 'trend' },
-      { type: Keyword, tag: 'section', cls: 'keyword' },
-      { type: Daily, tag: 'section', cls: 'daily' },
-      { type: Writer, tag: 'section', cls: 'writer' },
-      { type: Recommend, tag: 'section', cls: 'recommend' },
+      // { type: Nav, tag: 'nav' },
+      // { type: Header, tag: 'header' },
+      // { type: Carousel, tag: 'section', cls: 'trend' },
+      // { type: Keyword, tag: 'section', cls: 'keyword' },
+      // { type: Daily, tag: 'section', cls: 'daily' },
+      // { type: Writer, tag: 'section', cls: 'writer' },
+      // { type: Recommend, tag: 'section', cls: 'recommend' },
       { type: Footer, tag: 'footer' },
     ];
     for (const { type, tag, cls } of components) {

@@ -16,12 +16,117 @@ footer {
   .footer__info {
     display: flex;
     padding-bottom: 45px;
+
+    ul {
+      margin-left: 104px;
+
+      li {
+        line-height: 33px;
+        a {
+          padding: 0;
+          color: #bfbfbf;
+          font-family: "Noto Sans Light", sans-serif;
+          font-size: 13px;
+          letter-spacing: -.25px;
+        }
+      }
+    }
   }
+
+  .footer__quotation {
+    overflow: hidden;
+    margin-right: auto;
+  }
+
+  .footer__logo {
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin-top: 12px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    background: url(//t1.daumcdn.net/brunch9/static/images/pc/ico_brunch_v9_230901.png) no-repeat -320px -112px;
+    text-indent: -9999px;
+  }
+
+  .footer__slogan {
+    @include footer-slogan;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .footer__writer {
+    margin-top: 7px;
+    @include footer-slogan;
+    font-size: 11px;
+    letter-spacing: .55px;
+  }
+
+  .footer__service {}
 
   .footer__policy {}
 
   .footer__policy--bold {
     font-family: "Noto Sans Medium", sans-serif;
     font-weight: bold;
+  }
+
+  .footer__sns {}
+
+  .footer__corp {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 22px;
+    border-top: 1px solid rgb(225 255 255 / .1);
+  }
+
+  .footer__corp-link {
+    @include footer-slogan;
+    font-size: 11px;
+    opacity: 0.4;
+  }
+
+  .footer__corp-info {
+    font-family: $font-default;
+    font-size: smaller;
+    width: 730px;
+    margin-top: 10px;
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      color: #595959;
+
+      li {
+        line-height: 20px;
+      }
+    }
+  }
+
+  .footer__download {
+    display: flex;
+    margin-right: 5px;
+    margin-left: auto;
+
+    li {
+      margin-left: 25px;
+
+      span {
+        display: inline-block;
+        width: 20px;
+        height: 22px;
+        overflow: hidden;
+        text-indent: -9999;
+        line-height: 0;
+        vertical-align: top;
+      }
+      .footer__android {
+        background: url(//t1.daumcdn.net/brunch9/static/images/pc/ico_brunch_v9_230901.png) no-repeat -260px -100px;
+      }
+      .footer__apple {
+        background: url(//t1.daumcdn.net/brunch9/static/images/pc/ico_brunch_v9_230901.png) no-repeat -290px -100px;
+      }
+    }
   }
 }
