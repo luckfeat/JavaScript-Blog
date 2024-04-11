@@ -1,8 +1,6 @@
-import { OpenAI } from 'openai';
 import Component from '../core/component';
 import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
 import articlesStore, { getArticles, getKeyword } from '../store/articles';
-import config from '../../config';
 
 export default class Home extends Component {
   constructor() {
@@ -39,13 +37,13 @@ export default class Home extends Component {
   async initialize() {
     const components = [
       // { type: Nav, tag: 'nav' },
-      // { type: Header, tag: 'header' },
+      { type: Header, tag: 'header' },
       // { type: Carousel, tag: 'section', cls: 'trend' },
       // { type: Keyword, tag: 'section', cls: 'keyword' },
       // { type: Daily, tag: 'section', cls: 'daily' },
       // { type: Writer, tag: 'section', cls: 'writer' },
       // { type: Recommend, tag: 'section', cls: 'recommend' },
-      { type: Footer, tag: 'footer' },
+      // { type: Footer, tag: 'footer' },
     ];
     for (const { type, tag, cls } of components) {
       switch (type.name) {

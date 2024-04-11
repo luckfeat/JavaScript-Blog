@@ -1,0 +1,41 @@
+header {
+  .header__top {
+    height: 60px;
+  }
+
+  .header__navigation {
+    position: static;
+    float: left;
+    height: 40px;
+    width: 100%;
+  }
+
+  .header__inner {}
+
+  .header__logo {}
+
+  .header__intro {
+    width: 960px;
+    margin: 0 auto;
+  }
+
+  .header__title {
+    margin-top: 0;
+    color: #1a1a1a;
+    font-family: $font-header;
+    font-size: 40px;
+    font-weight: 400;
+    letter-spacing: -.05em;
+    text-align: left;
+  }
+
+  .header__description {
+    padding-bottom: 16px;
+    margin-top: -3px;
+    color: #cacaca;
+    font-family: $font-header;
+    font-size: 32px;
+    letter-spacing: -.05em;
+    line-height: 46px;
+  }
+}
