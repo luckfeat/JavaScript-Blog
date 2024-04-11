@@ -2,14 +2,21 @@ const template = `
     <div class="header__top">
       <div class="header__navigation">
         <div class="header__inner">
-          <div>
+          <div class="header__inner-left">
             <button></button>
             <h1>
               <a class="header__logo" href=""></a>
             </h1>
           </div>
-          <div></div>
-          <div></div>
+          <div class="header__inner-right">
+            <div>
+              <form action=""></form>
+              <button type="button"></button>
+            </div>  
+          </div>
+          <div class="header__inner-right">
+            <a href="">시작하기</a>
+          </div>
         </div>     
       </div>
     </div>

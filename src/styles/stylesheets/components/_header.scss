@@ -10,7 +10,60 @@ header {
     width: 100%;
   }
 
-  .header__inner {}
+  .header__inner {
+    margin: 30px 30px 0;
+
+    .header__inner-left {
+      float: left;
+
+      button {
+        border-radius: 0;
+        height: 20px;
+        margin-right: 14px;
+        width: 27px;
+        background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat 0 0;
+      }
+
+      h1 {
+        display: inline-block;
+
+        .header__logo {
+          width: 120px;
+          background: url(//t1.daumcdn.net/brunch9/static/images/pc/logo_brunch_v1_221221.png) no-repeat 0 -80px;
+          display: block;
+          height: 22px;
+          margin-top: -1px;
+        }
+      }
+    }
+
+    .header__inner-right {
+      float: right;
+
+      button {
+        margin: 0 0 0 16px;
+        display: inline-block;
+        background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat -30px 0;
+        height: 22px;
+        width: 22px;
+      }
+
+      a {
+        display: inline-block;
+        width: 64px;
+        height: 28px;
+        border: 1px solid #959595;
+        border-radius: 16px;
+        margin-top: -5px;
+        color: #666;
+        font-family: "Noto Sans Light", sans-serif;
+        font-size: 12px;
+        line-height: 28px;
+        text-align: center;
+        text-decoration: none;
+      }
+    }
+  }
 
   .header__logo {}
 
@@ -27,6 +80,18 @@ header {
     font-weight: 400;
     letter-spacing: -.05em;
     text-align: left;
+
+    span {
+      width: 40px;
+      height: 40px;
+      margin: 1px 6px 0 5px;
+      overflow: hidden;
+      background: url(//t1.daumcdn.net/brunch9/static/images/pc/ico_brunch_v9_230901.png) no-repeat -80px -230px;
+      text-indent: -9999px;
+      display: inline-block;
+      line-height: 0;
+      vertical-align: top;
+    };
   }
 
   .header__description {
