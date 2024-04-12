@@ -1,0 +1,57 @@
+.keyword {
+  .keyword__title {
+    width: 266px;
+    height: 13px;
+    display: block;
+    overflow: hidden;
+    margin: 152px auto 0;
+    background: url(//t1.daumcdn.net/brunch9/static/images/pc/txt_brunch_v6_221227.png) no-repeat -101px -300px;
+    text-indent: -9999px;
+  }
+
+  .keyword__description {
+    width: 960px;
+    margin: 0 auto;
+
+    span {
+      width: 149px;
+      height: 11px;
+      display: block;
+      overflow: hidden;
+      margin: 17px auto 0;
+      background: url(//t1.daumcdn.net/brunch9/static/images/pc/txt_brunch_v6_221227.png) no-repeat -175px 0;
+      background-size: 380px 640px;
+      text-indent: -9999px;
+    }
+  }
+
+  .keyword__list-wrap {
+    width: 100%;
+    overflow-x: auto;
+
+    .keyword__list {
+      display: grid;
+      grid-template-columns: repeat(8, 121px);
+      grid-template-rows: repeat(3, 121px);
+      height: 363px;
+      width: 960px;
+      margin: 46px auto 0;
+    }
+
+    .keyword__item {
+      position: relative;
+      text-align: center;
+      border: 1px solid #eee;
+      font-size: 14px;
+      line-height: 18px;
+
+      span {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}

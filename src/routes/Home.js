@@ -37,9 +37,9 @@ export default class Home extends Component {
   async initialize() {
     const components = [
       // { type: Nav, tag: 'nav' },
-      { type: Header, tag: 'header' },
+      // { type: Header, tag: 'header' },
       // { type: Carousel, tag: 'section', cls: 'trend' },
-      // { type: Keyword, tag: 'section', cls: 'keyword' },
+      { type: Keyword, tag: 'section', cls: 'keyword' },
       // { type: Daily, tag: 'section', cls: 'daily' },
       // { type: Writer, tag: 'section', cls: 'writer' },
       // { type: Recommend, tag: 'section', cls: 'recommend' },
