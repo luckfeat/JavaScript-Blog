@@ -1,6 +1,6 @@
 export { default as Nav } from './Home/Nav';
 export { default as Header } from './Home/Header';
-export { default as Carousel } from './Home/Carousel';
+export { default as Trend } from './Home/Trend';
 export { default as Keyword } from './Home/Keyword';
 export { default as Daily } from './Home/Daily';
 export { default as Writer } from './Home/Writer';

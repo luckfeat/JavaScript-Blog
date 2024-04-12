@@ -2,3 +2,10 @@
   font-family: $font-quotation;
   font-style: italic;
 }
+
+@mixin text-background {
+  display: block;
+  overflow: hidden;
+  background: url(//t1.daumcdn.net/brunch9/static/images/pc/txt_brunch_v6_221227.png) no-repeat;
+  text-indent: -9999px;
+}

@@ -1,12 +1,16 @@
 const articles = `
-          {{#each this}}
-              <a href="#/article?category=ai&title={{this.title}}">
-                <li>{{this.title}}</li>
-                <p>{{this.description}}</p>
-                <img width="200" height="200" src="{{this.image}}" alt="{{this.title}}">
-                <p>{{this.source.name}}</p>
-              </a>
-          {{/each}}
+  {{#each this}}
+  <li>
+    <a href="#/article?category=ai&title={{this.title}}">
+      <div class="recommend__image">
+        <img src="{{this.image}}" alt="{{this.title}}">
+      </div>
+      <strong class="recommend__subject">{{this.title}}</strong>
+      <p class="recommend__content">{{this.description}}</p>
+      <span class="recommend__source"><span class="recommend__by">by</span>&nbsp{{this.source.name}}</span>  
+    </a>
+  </li>
+  {{/each}}
 `;
 
 export default window.Handlebars.compile(articles);

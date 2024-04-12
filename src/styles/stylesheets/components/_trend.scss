@@ -1,0 +1,21 @@
+.trend {
+  position: relative;
+  z-index: 99;
+  margin-top: 22px;
+
+  .trend__carousel-wrap {
+    overflow: visible;
+    width: 960px;
+    height: 520px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .trend__carousel {
+    width: 1000%;
+    transform: translateX(-480px);
+    transition: -webkit-transform 0.3s ease 0s;
+    position: absolute;
+    top: 0;
+  }
+}

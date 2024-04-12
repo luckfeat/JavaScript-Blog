@@ -1,0 +1,102 @@
+.recommend {
+  .recommend__title {
+    width: 380px;
+    height: 13px;
+    @include text-background;
+    background-position: 0 -225px;
+    margin: 152px auto 0;
+  }
+
+  .recommend__description {
+    width: 960px;
+    margin: 0 auto;
+
+    span {
+      width: 162px;
+      height: 11px;
+      @include text-background;
+      background-position: 0 -75px;
+      margin: 17px auto 47px;
+    }
+  }
+
+  .recommend__carousel-wrap {
+    overflow: visible;
+    width: 960px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .recommend__carousel {
+    width: 7800px;
+    transform: translateX(0px);
+    transition: -webkit-transform 0.5s ease 0s;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 180px;
+
+    li {
+      display: inline-block;
+      overflow: hidden;
+      width: 240px;
+      padding: 0 10px;
+      font-family: Noto Sans Light, sans-serif;
+      vertical-align: top;
+      float: left;
+
+      a {
+        display: block;
+
+        .recommend__image {
+          overflow: hidden;
+          max-height: 320px;
+          margin-bottom: 22px;
+
+          img {
+            width: 240px;
+          }
+        }
+
+        .recommend__subject {
+          display: inline;
+          font-size: 16px;
+          font-weight: 400;
+          letter-spacing: -.025em;
+          word-break: break-all;
+          word-wrap: break-word;
+        }
+
+        .recommend__content {
+          display: block;
+          padding-top: 10px;
+          color: #959595;
+          font-family: Noto Sans Light, sans-serif;
+          font-size: 12px;
+          letter-spacing: -.025em;
+          line-height: 20px;
+          text-align: justify;
+          word-break: break-all;
+        }
+
+        .recommend__source {
+          padding-top: 22px;
+          color: #959595;
+          display: block;
+          overflow: hidden;
+          margin: 0 auto;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 12px;
+
+          .recommend__by {
+            margin-top: 3px;
+            opacity: 1;
+            color: #bfbfbf;
+            font-family: Georgia, sans-serif;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+}

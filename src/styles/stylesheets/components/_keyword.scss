@@ -2,11 +2,9 @@
   .keyword__title {
     width: 266px;
     height: 13px;
-    display: block;
-    overflow: hidden;
     margin: 152px auto 0;
-    background: url(//t1.daumcdn.net/brunch9/static/images/pc/txt_brunch_v6_221227.png) no-repeat -101px -300px;
-    text-indent: -9999px;
+    @include text-background;
+    background-position: -101px -300px;
   }
 
   .keyword__description {
@@ -16,12 +14,10 @@
     span {
       width: 149px;
       height: 11px;
-      display: block;
-      overflow: hidden;
       margin: 17px auto 0;
-      background: url(//t1.daumcdn.net/brunch9/static/images/pc/txt_brunch_v6_221227.png) no-repeat -175px 0;
+      @include text-background;
+      background-position: -175px 0;
       background-size: 380px 640px;
-      text-indent: -9999px;
     }
   }
 

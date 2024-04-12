@@ -1,5 +1,5 @@
 import Component from '../core/component';
-import { Nav, Header, Carousel, Keyword, Daily, Writer, Recommend, Footer } from '../components';
+import { Nav, Header, Trend, Keyword, Daily, Writer, Recommend, Footer } from '../components';
 import articlesStore, { getArticles, getKeyword } from '../store/articles';
 
 export default class Home extends Component {
@@ -38,8 +38,8 @@ export default class Home extends Component {
     const components = [
       // { type: Nav, tag: 'nav' },
       // { type: Header, tag: 'header' },
-      // { type: Carousel, tag: 'section', cls: 'trend' },
-      { type: Keyword, tag: 'section', cls: 'keyword' },
+      { type: Trend, tag: 'section', cls: 'trend' },
+      // { type: Keyword, tag: 'section', cls: 'keyword' },
       // { type: Daily, tag: 'section', cls: 'daily' },
       // { type: Writer, tag: 'section', cls: 'writer' },
       // { type: Recommend, tag: 'section', cls: 'recommend' },
@@ -47,12 +47,12 @@ export default class Home extends Component {
     ];
     for (const { type, tag, cls } of components) {
       switch (type.name) {
-        case 'Carousel':
+        case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await getArticles();
           /* 여기서 기사 분류해서 게시 */
           /* firebase 조건문 사용하기 success=true */
-          this.root.appendChild(new Carousel(articles.slice(0, 2)).render(tag, cls));
+          this.root.appendChild(new Trend(articles.slice(0, 2)).render(tag, cls));
           break;
         case 'Daily':
           // eslint-disable-next-line no-case-declarations
@@ -64,8 +64,7 @@ export default class Home extends Component {
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const recommendation = await getKeyword('ai');
-
-          this.root.appendChild(new Recommend(recommendation.slice(0, 50)).render(tag, cls));
+          this.root.appendChild(new Recommend(recommendation.slice(0, 10)).render(tag, cls));
           this.recommend = document.querySelector('.recommend');
           this.next = document.querySelector('.next');
           break;
@@ -76,21 +75,21 @@ export default class Home extends Component {
       }
     }
 
-    this.next.addEventListener('click', () => {
-      this.recommendIncrement++;
-      if (this.recommendIncrement === 8) {
-        this.recommendIncrement = 0;
-        this.recommendStart += 51;
-        this.recommendEnd += 51;
-
-        const moreArticles = articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
-
-        if (moreArticles.length === 0) {
-          return;
-        }
-
-        this.recommend.appendChild(new Recommend(moreArticles, true).render());
-      }
-    });
+    // this.next.addEventListener('click', () => {
+    //   this.recommendIncrement++;
+    //   if (this.recommendIncrement === 8) {
+    //     this.recommendIncrement = 0;
+    //     this.recommendStart += 51;
+    //     this.recommendEnd += 51;
+    //
+    //     const moreArticles = articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
+    //
+    //     if (moreArticles.length === 0) {
+    //       return;
+    //     }
+    //
+    //     this.recommend.appendChild(new Recommend(moreArticles, true).render());
+    //   }
+    // });
   }
 }
