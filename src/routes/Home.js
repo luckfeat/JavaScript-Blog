@@ -38,7 +38,7 @@ export default class Home extends Component {
     const components = [
       // { type: Nav, tag: 'nav' },
       // { type: Header, tag: 'header' },
-      { type: Trend, tag: 'section', cls: 'trend' },
+      { type: Trend, tag: 'article', cls: 'trend' },
       // { type: Keyword, tag: 'section', cls: 'keyword' },
       // { type: Daily, tag: 'section', cls: 'daily' },
       // { type: Writer, tag: 'section', cls: 'writer' },
@@ -50,9 +50,25 @@ export default class Home extends Component {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await getArticles();
-          /* 여기서 기사 분류해서 게시 */
-          /* firebase 조건문 사용하기 success=true */
-          this.root.appendChild(new Trend(articles.slice(0, 2)).render(tag, cls));
+          /* 여기서 장문 기사 분류해서 게시 */
+          /* firebase 조건문 사용하기, success=true */
+          /* 각자 스타일이 다른 div 클래스 넘기기 */
+          // eslint-disable-next-line no-case-declarations
+          const gridType = [
+            { type: 'trend__grid-main', articles: articles.slice(0, 2) },
+            { type: 'trend__grid-three', articles: articles.slice(2, 5) },
+            { type: 'trend__grid-four', articles: articles.slice(5, 9) },
+            { type: 'trend__grid-vertical', articles: articles.slice(9, 12) },
+            { type: 'trend__grid-horizontal', articles: articles.slice(12, 16) },
+            { type: 'trend__grid-three', articles: articles.slice(16, 19) },
+            { type: 'trend__grid-four', articles: articles.slice(19, 23) },
+            { type: 'trend__grid-three', articles: articles.slice(23, 26) },
+            { type: 'trend__grid-vertical', articles: articles.slice(26, 29) },
+          ];
+
+          console.log(gridType);
+
+          this.root.appendChild(new Trend(gridType).render(tag, cls));
           break;
         case 'Daily':
           // eslint-disable-next-line no-case-declarations

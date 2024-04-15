@@ -305,6 +305,7 @@ export const setUp = onSchedule('0 22 * * *', async () => {
             image: article.image,
             publishedAt: article.publishedAt,
             source: article.source,
+            success: true,
             title: article.title,
             url: article.url,
           });

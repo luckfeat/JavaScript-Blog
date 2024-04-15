@@ -18,4 +18,12 @@
     position: absolute;
     top: 0;
   }
+
+  .trend__grid {
+    &-main {}
+    &-three {}
+    &-four {}
+    &-vertical {}
+    &-horizontal {}
+  }
 }

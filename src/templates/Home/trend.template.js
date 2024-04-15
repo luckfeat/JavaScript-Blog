@@ -1,12 +1,15 @@
 const template = `
   <div class="trend__carousel-wrap">
     <ul class="trend__carousel">
+      /* loop here */
+      {{#each this}}
       <li>
-        <div>
-          {{#each this}}
-            <div class="trend__item">
+        /* each div has different style */
+        <div class={{this.type}}>
+            {{#each this.articles}}
+            <div class="trend__article">
               <a href="#/article?title={{this.title}}">
-                <img class="trend__img" width="200" height="200" src="{{this.image}}" alt="{{this.title}}">
+                <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                 <div class="trend__info-wrap">
                   <div class="trend__info">
                     <strong class="trend__title">{{this.title}}</strong>
@@ -16,9 +19,10 @@ const template = `
                 </div>
               </a>
             </div>
-          {{/each}}
+            {{/each}}
         </div>
       </li>
+      {{/each}}
       <li></li>
     </ul>
   </div>
