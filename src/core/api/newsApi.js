@@ -49,7 +49,6 @@ export async function getYesterdayNews() {
 export async function getNewsDetail(title, data) {
   const [todayCollection, yesterdayCollection] = getToday();
 
-  console.log(todayCollection, yesterdayCollection);
   try {
     const searchTitle = decodeURIComponent(title);
     /* category 검색 추가 */

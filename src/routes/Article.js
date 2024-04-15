@@ -25,9 +25,6 @@ export default class Article extends Component {
   // eslint-disable-next-line class-methods-use-this
   async initialize() {
     const { category, title, date } = this.checkQueryString();
-
-    console.log(history.state);
-    console.log(category, title, date);
     const articleDetail = await renderNewsDetail(title, category || date);
 
     this.root.appendChild(new Detail(articleDetail).render('section', 'article'));

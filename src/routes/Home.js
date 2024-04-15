@@ -54,15 +54,15 @@ export default class Home extends Component {
           /* firebase 조건문 사용하기, success=true */
           // eslint-disable-next-line no-case-declarations
           const gridType = [
-            { type: 'trend__grid-main', articles: articles.slice(0, 2) },
-            { type: 'trend__grid-three', articles: articles.slice(2, 5) },
-            { type: 'trend__grid-four', articles: articles.slice(5, 9) },
-            { type: 'trend__grid-vertical', articles: articles.slice(9, 12) },
-            { type: 'trend__grid-horizontal', articles: articles.slice(12, 16) },
-            { type: 'trend__grid-three', articles: articles.slice(16, 19) },
-            { type: 'trend__grid-four', articles: articles.slice(19, 23) },
-            { type: 'trend__grid-three', articles: articles.slice(23, 26) },
-            { type: 'trend__grid-vertical', articles: articles.slice(26, 29) },
+            // { type: 'trend__grid--main', articles: articles.slice(0, 2) },
+            { type: 'trend__grid--three', articles: articles.slice(2, 5) },
+            { type: 'trend__grid--four', articles: articles.slice(5, 9) },
+            // { type: 'trend__grid--vertical', articles: articles.slice(9, 12) },
+            // { type: 'trend__grid--horizontal', articles: articles.slice(12, 16) },
+            { type: 'trend__grid--three', articles: articles.slice(16, 19) },
+            { type: 'trend__grid--four', articles: articles.slice(19, 23) },
+            { type: 'trend__grid--three', articles: articles.slice(23, 26) },
+            // { type: 'trend__grid--vertical', articles: articles.slice(26, 29) },
           ];
 
           this.root.appendChild(new Trend(gridType).render(tag, cls));

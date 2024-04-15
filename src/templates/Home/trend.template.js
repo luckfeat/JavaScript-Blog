@@ -1,11 +1,9 @@
 const template = `
   <div class="trend__carousel-wrap">
     <ul class="trend__carousel">
-      /* loop here */
       {{#each this}}
       <li>
-        /* each div has different style */
-        <div class={{this.type}}>
+        <div class="trend__grid {{this.type}}">
             {{#each this.articles}}
             <div class="trend__article">
               <a href="#/article?title={{this.title}}">
@@ -16,7 +14,9 @@ const template = `
                     <span class="trend__description">{{this.description}}</span>
                     <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                   </div>
+                  <div class='trend__align'></div>
                 </div>
+                <div class="trend__mask"></div>
               </a>
             </div>
             {{/each}}
@@ -26,7 +26,15 @@ const template = `
       <li></li>
     </ul>
   </div>
- 
 `;
 
 export default window.Handlebars.compile(template);
+
+/*
+ * if (type)
+ * each
+ * if (index1)
+ * if (index2)
+ * if (index3)
+ * end
+ * */
