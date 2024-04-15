@@ -1,6 +1,6 @@
 import Component from '../core/component';
 import { Detail } from '../components';
-import { getDetail } from '../store/articles';
+import { renderNewsDetail } from '../store/articles';
 
 export default class Article extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -28,7 +28,7 @@ export default class Article extends Component {
 
     console.log(history.state);
     console.log(category, title, date);
-    const articleDetail = await getDetail(title, category || date);
+    const articleDetail = await renderNewsDetail(title, category || date);
 
     this.root.appendChild(new Detail(articleDetail).render('section', 'article'));
   }

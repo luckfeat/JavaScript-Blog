@@ -1,6 +1,6 @@
 import Component from '../core/component';
 import { Nav, Header, Trend, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import articlesStore, { getArticles, getKeyword } from '../store/articles';
+import articlesStore, { renderNews, renderKeywordNews, renderYesterdayNews } from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
@@ -49,10 +49,9 @@ export default class Home extends Component {
       switch (type.name) {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
-          const articles = await getArticles();
+          const articles = await renderYesterdayNews();
           /* 여기서 장문 기사 분류해서 게시 */
           /* firebase 조건문 사용하기, success=true */
-          /* 각자 스타일이 다른 div 클래스 넘기기 */
           // eslint-disable-next-line no-case-declarations
           const gridType = [
             { type: 'trend__grid-main', articles: articles.slice(0, 2) },
@@ -66,8 +65,6 @@ export default class Home extends Component {
             { type: 'trend__grid-vertical', articles: articles.slice(26, 29) },
           ];
 
-          console.log(gridType);
-
           this.root.appendChild(new Trend(gridType).render(tag, cls));
           break;
         case 'Daily':
@@ -79,7 +76,7 @@ export default class Home extends Component {
           break;
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
-          const recommendation = await getKeyword('ai');
+          const recommendation = await renderKeywordNews('ai');
           this.root.appendChild(new Recommend(recommendation.slice(0, 10)).render(tag, cls));
           this.recommend = document.querySelector('.recommend');
           this.next = document.querySelector('.next');

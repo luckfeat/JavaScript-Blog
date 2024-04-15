@@ -35,6 +35,17 @@ export async function getTodayNews() {
   return querySnapshot;
 }
 
+export async function getYesterdayNews() {
+  const [todayCollection, yesterdayCollection] = getToday();
+  let querySnapshot = await getDocs(collection(db, yesterdayCollection));
+
+  querySnapshot = querySnapshot.docs.length
+    ? await getDocs(collection(db, yesterdayCollection))
+    : await getDocs(collection(db, todayCollection));
+
+  return querySnapshot;
+}
+
 export async function getNewsDetail(title, data) {
   const [todayCollection, yesterdayCollection] = getToday();
 
