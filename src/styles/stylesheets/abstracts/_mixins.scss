@@ -9,3 +9,16 @@
   background: url(//t1.daumcdn.net/brunch9/static/images/pc/txt_brunch_v6_221227.png) no-repeat;
   text-indent: -9999px;
 }
+
+@mixin multi-ellipsis($line:2, $type:ellipsis) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line; /* 표시할 줄의 수를 3으로 설정 */
+  overflow: hidden;
+}
+
+@mixin title-ellipsis($height:4.5em) {
+  display: block;
+  height: $height;
+  overflow: hidden;
+}

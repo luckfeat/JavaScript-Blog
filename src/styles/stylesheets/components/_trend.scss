@@ -29,6 +29,17 @@
     display: flex;
     flex-wrap: wrap;
 
+    .trend__title {
+      display: block;
+      padding-top: 12px;
+      font-family: Nanum Myeongjo, sans-serif;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: -.025em;
+      line-height: 36px;
+      @include title-ellipsis
+    }
+
     &--main {}
 
     &--three {
@@ -50,19 +61,62 @@
     }
 
     &--vertical {
+      display: block;
+
       .trend__article-wrap {
         position: relative;
         float: left;
 
-        &--type1 {}
+        &--type1 {
+          width: 520px;
+          height: 520px;
 
-        &--type2, &--type3 {}
+          .trend__title {
+            font-size: 32px;
+            line-height: 40px;
+            @include title-ellipsis(4.3em)
+          }
+        }
+
+        &--type2, &--type3 {
+          width: 440px;
+          height: 260px;
+        }
       }
     }
 
-    &--horizontal {}
+    &--horizontal {
+      display: block;
 
-   .trend__article {
+      .trend__article-wrap {
+        position: relative;
+        float: left;
+
+        &--type1 {
+          width: 100%;
+          height: 320px;
+
+          .trend__title {
+            font-size: 32px;
+            line-height: 40px;
+            @include title-ellipsis(4.3em)
+          }
+        }
+
+        &--type2, &--type3, &--type4 {
+          width: 320px;
+          height: 200px;
+
+          .trend__title {
+            font-size: 22px;
+            line-height: 28px;
+            @include title-ellipsis(4.5em)
+          }
+        }
+      }
+    }
+
+    .trend__article {
       display: block;
       overflow: hidden;
       width: 100%;
@@ -91,18 +145,8 @@
         text-align: center;
 
         .trend__info {
-          display: inline-block;
-          vertical-align: middle;
-
-          .trend__title {
-            display: block;
-            padding-top: 12px;
-            font-family: Nanum Myeongjo, sans-serif;
-            font-size: 28px;
-            font-weight: 400;
-            letter-spacing: -.025em;
-            line-height: 36px;
-          }
+          width: 200px;
+          margin: 0 auto;
         }
 
         .trend__description {
@@ -110,6 +154,8 @@
           padding-top: 9px;
           font-family: Noto Sans Light, sans-serif;
           line-height: 20px;
+          font-size: 12px;
+          @include multi-ellipsis
         }
 
         .trend__source {
@@ -129,6 +175,7 @@
             //background-position: -38px -130px;
             font-family: Georgia, sans-serif;
             font-style: italic;
+            margin-right: 2px;
           }
         }
       }
