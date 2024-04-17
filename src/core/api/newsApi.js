@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDoc, getDocs, setDoc, collection, doc } from 'firebase/firestore';
+import { collection, doc, getFirestore, getDoc, getDocs, limit, orderBy, query, setDoc } from 'firebase/firestore';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import config from '../../../config';
 
@@ -23,7 +23,6 @@ export function getToday() {
 
   return [todayCollection, yesterdayCollection];
 }
-
 export async function getTodayNews() {
   const [todayCollection, yesterdayCollection] = getToday();
   let querySnapshot = await getDocs(collection(db, todayCollection));
@@ -34,7 +33,6 @@ export async function getTodayNews() {
 
   return querySnapshot;
 }
-
 export async function getYesterdayNews() {
   const [todayCollection, yesterdayCollection] = getToday();
   let querySnapshot = await getDocs(collection(db, yesterdayCollection));
@@ -45,7 +43,6 @@ export async function getYesterdayNews() {
 
   return querySnapshot;
 }
-
 export async function getNewsDetail(title, data) {
   const [todayCollection, yesterdayCollection] = getToday();
 
@@ -68,19 +65,22 @@ export async function getNewsDetail(title, data) {
     console.error(err.message);
   }
 }
-
 export async function getKeywordNews(category) {
   const querySnapshot = await getDocs(collection(db, category));
 
   return querySnapshot;
 }
-
 export async function getDateNews(date) {
   const querySnapshot = await getDocs(collection(db, date));
 
   return querySnapshot;
 }
+export async function getDateNewsWithLimit(date) {
+  const fireStoreQuery = await query(collection(db, date), limit(7));
+  const dateNews = getDocs(fireStoreQuery);
 
+  return dateNews;
+}
 export async function checkForUpdate() {
   const updatedTime = new Date((await getDocs(collection(db, 'Update'))).docs[0].data().updatedTime.seconds * 1000);
   const currentTime = new Date();

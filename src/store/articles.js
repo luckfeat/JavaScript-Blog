@@ -1,5 +1,12 @@
 import Store from '../core/store';
-import { getNewsDetail, getTodayNews, getKeywordNews, getYesterdayNews } from '../core/api/newsApi';
+import {
+  getNewsDetail,
+  getTodayNews,
+  getKeywordNews,
+  getYesterdayNews,
+  getDateNews,
+  getDateNewsWithLimit,
+} from '../core/api/newsApi';
 
 const articlesStore = new Store({
   articles: [],
@@ -22,7 +29,6 @@ export async function renderNews() {
     console.error(err);
   }
 }
-
 export async function renderYesterdayNews() {
   try {
     const news = [];
@@ -38,12 +44,10 @@ export async function renderYesterdayNews() {
     console.error(err);
   }
 }
-
 // eslint-disable-next-line require-await
 export function renderNewsDetail(title, data) {
   return getNewsDetail(title, data);
 }
-
 export async function renderKeywordNews(category) {
   try {
     articlesStore.state = {};
@@ -58,10 +62,9 @@ export async function renderKeywordNews(category) {
     console.error(err);
   }
 }
-
-export async function getDate(date) {
+export async function renderDateNews(date) {
   try {
-    const querySnapshot = await getKeywordNews(date);
+    const querySnapshot = await getDateNews(date);
     articlesStore.state[date] = [];
     querySnapshot.forEach(doc => {
       articlesStore.state[date].push(doc.data());
@@ -72,5 +75,17 @@ export async function getDate(date) {
     console.error(err);
   }
 }
+export async function renderDateNewsWithLimit(date) {
+  try {
+    const querySnapshot = await getDateNewsWithLimit(date);
+    articlesStore.state[date] = [];
+    querySnapshot.forEach(doc => {
+      articlesStore.state[date].push(doc.data());
+    });
 
+    return articlesStore.state[date];
+  } catch (err) {
+    console.error(err);
+  }
+}
 export default articlesStore;

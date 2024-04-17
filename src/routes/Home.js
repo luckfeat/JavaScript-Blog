@@ -1,6 +1,11 @@
 import Component from '../core/component';
 import { Nav, Header, Trend, Keyword, Daily, Writer, Recommend, Footer } from '../components';
-import articlesStore, { renderNews, renderKeywordNews, renderYesterdayNews } from '../store/articles';
+import articlesStore, {
+  renderNews,
+  renderDateNewsWithLimit,
+  renderKeywordNews,
+  renderYesterdayNews,
+} from '../store/articles';
 
 export default class Home extends Component {
   constructor() {
@@ -38,10 +43,9 @@ export default class Home extends Component {
     const components = [
       // { type: Nav, tag: 'nav' },
       // { type: Header, tag: 'header' },
-      { type: Trend, tag: 'article', cls: 'trend' },
+      // { type: Trend, tag: 'article', cls: 'trend' },
       // { type: Keyword, tag: 'section', cls: 'keyword' },
-      // { type: Daily, tag: 'section', cls: 'daily' },
-      // { type: Writer, tag: 'section', cls: 'writer' },
+      { type: Daily, tag: 'article', cls: 'daily' },
       // { type: Recommend, tag: 'section', cls: 'recommend' },
       // { type: Footer, tag: 'footer' },
     ];
@@ -70,8 +74,29 @@ export default class Home extends Component {
         case 'Daily':
           // eslint-disable-next-line no-case-declarations
           const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
+          // eslint-disable-next-line no-case-declarations
+          const daysOfWeek = [
+            { monday },
+            // { tuesday },
+            // { wednesday },
+            // { thursday },
+            // { friday },
+            // { saturday },
+            // { sunday },
+          ];
+          // eslint-disable-next-line no-case-declarations
+          const newsArray = [];
+
+          for (const day of daysOfWeek) {
+            const key = Object.keys(day)[0];
+            const date = day[key];
+            // eslint-disable-next-line no-await-in-loop
+            const news = await renderDateNewsWithLimit(date);
+            newsArray.push({ [key]: news });
+          }
+
           this.root.appendChild(
-            new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday }).render(tag, cls),
+            new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday, newsArray }).render(tag, cls),
           );
           break;
         case 'Recommend':

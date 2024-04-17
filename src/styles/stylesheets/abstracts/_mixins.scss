@@ -13,7 +13,7 @@
 @mixin multi-ellipsis($line:2, $type:ellipsis) {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: $line; /* 표시할 줄의 수를 3으로 설정 */
+  -webkit-line-clamp: $line;
   overflow: hidden;
 }
 

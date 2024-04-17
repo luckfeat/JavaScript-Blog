@@ -1,0 +1,55 @@
+.daily {
+  .daily__wrap {
+    width: 960px;
+    margin: 0 auto;
+  }
+
+  .daily__title {
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 25px;
+    text-align: center;
+  }
+
+  .daily__description {
+    display: block;
+    margin-top: 10px;
+    color: #959595;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  .daily__week {
+    margin-top: 32px;
+
+    ul {
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid #eee;
+
+      li {
+        padding-right: 62px;
+
+        a {
+          /* 선택된 경우 after 요소로 하이라이트 */
+          position: relative;
+          display: inline-block;
+          padding: 0 14px 12px;
+          color: #959595;
+          font-size: 14px;
+          line-height: 22px;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  img {
+    width: 80px;
+    aspect-ratio: auto 80 / 80;
+    height: 80px;
+  }
+}
