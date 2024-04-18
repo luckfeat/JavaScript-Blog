@@ -96,6 +96,7 @@
       display: flex;
       align-items: center;
       padding-right: 11px;
+      width: 330px;
 
       strong {
         @include title-ellipsis(30);
@@ -137,5 +138,20 @@
         aspect-ratio: auto 80 / 80;
       }
     }
+  }
+  .daily__all {
+    display: flex;
+    width: 180px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 23px;
+    border: 1px solid #bbb;
+    border-radius: 30px;
+    margin: 40px auto 0;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
   }
 }

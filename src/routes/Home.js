@@ -42,12 +42,12 @@ export default class Home extends Component {
   async initialize() {
     const components = [
       // { type: Nav, tag: 'nav' },
-      // { type: Header, tag: 'header' },
-      // { type: Trend, tag: 'article', cls: 'trend' },
-      // { type: Keyword, tag: 'section', cls: 'keyword' },
+      { type: Header, tag: 'header' },
+      { type: Trend, tag: 'article', cls: 'trend' },
+      { type: Keyword, tag: 'section', cls: 'keyword' },
       { type: Daily, tag: 'article', cls: 'daily' },
-      // { type: Recommend, tag: 'section', cls: 'recommend' },
-      // { type: Footer, tag: 'footer' },
+      { type: Recommend, tag: 'section', cls: 'recommend' },
+      { type: Footer, tag: 'footer' },
     ];
     for (const { type, tag, cls } of components) {
       switch (type.name) {

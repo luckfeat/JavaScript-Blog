@@ -76,7 +76,7 @@ export async function getDateNews(date) {
   return querySnapshot;
 }
 export async function getDateNewsWithLimit(date) {
-  const fireStoreQuery = await query(collection(db, date), limit(7));
+  const fireStoreQuery = await query(collection(db, date), limit(8));
   const dateNews = getDocs(fireStoreQuery);
 
   return dateNews;

@@ -45,6 +45,7 @@ const template = `
                       <span class="daily__article-date">{{this.publishedAt}}</span>
                       <span class="daily__article-title">
                         <strong>{{this.title}}</strong>
+                        <span class="daily__article-new"></span>
                       </span>
                       <div class="daily__article-info">
                         <span>
@@ -63,7 +64,7 @@ const template = `
           {{/each}}
         </ul>
       </div>
-      <a href=""></a>
+<!--      <a class="daily__all" href="">All<span></span></a>-->
     </div>
 `;
 
