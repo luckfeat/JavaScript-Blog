@@ -28,26 +28,32 @@ const template = `
         </ul>
       </div>
       <div>
-        <div class="daily__sort"></div>
+        <div class="daily__sort">
+          <div class="daily__filter">
+            <a href="">최신순</a>
+            <a href="">응원순</a>
+            <a href="">라이킷순</a>
+          </div>
+        </div>
         <ul class="daily__news">
           {{#each this.newsArray}}
             {{#each this}}
               {{#each this}}
-                <li>
-                  <a href="">
-                    <div class="daily__text">
-                      <span>{{this.publishedAt}}</span>
-                      <span>
+                <li class="daily__item">
+                  <a class="daily__link" href="">
+                    <div class="daily__article-text">
+                      <span class="daily__article-date">{{this.publishedAt}}</span>
+                      <span class="daily__article-title">
                         <strong>{{this.title}}</strong>
                       </span>
-                      <div>
+                      <div class="daily__article-info">
                         <span>
-                          <span>by</span>
+                          <span class="daily__article-by">by</span>
                           {{this.source.name}}
                         </span>
                       </div>
                     </div>
-                    <div class="daily__image">
+                    <div class="daily__article-image">
                       <img src="{{this.image}}" alt="">
                     </div>
                   </a>

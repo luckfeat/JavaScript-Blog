@@ -3,7 +3,6 @@
     width: 960px;
     margin: 0 auto;
   }
-
   .daily__title {
     color: #000;
     font-size: 18px;
@@ -11,7 +10,6 @@
     line-height: 25px;
     text-align: center;
   }
-
   .daily__description {
     display: block;
     margin-top: 10px;
@@ -21,7 +19,6 @@
     line-height: 20px;
     text-align: center;
   }
-
   .daily__week {
     margin-top: 32px;
 
@@ -46,10 +43,99 @@
       }
     }
   }
+  .daily__sort {
+    display: flex;
+    padding: 30px 25px 20px;
 
-  img {
-    width: 80px;
-    aspect-ratio: auto 80 / 80;
-    height: 80px;
+    .daily__filter {
+      display: flex;
+      margin-left: auto;
+
+      /* Before:: 클래스로 하이라이트 요소 표시 */
+      a {
+        display: inline-flex;
+        align-items: center;
+        padding-left: 12px;
+        color: #959595;
+        font-size: 13px;
+        line-height: 20px;
+        vertical-align: top;
+        margin-left: 8px;
+      }
+    }
+  }
+  .daily__news {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+
+    .daily__item {
+      width: calc((100% - 20px) / 2);
+      margin-bottom: 20px;
+
+      &:nth-child(2n) {
+        margin-left: 20px;
+      }
+    }
+
+    .daily__link {
+      display: flex;
+      width: 100%;
+      min-height: 120px;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: space-between;
+      padding: 19px;
+      border: 1px solid #eee;
+      text-decoration: none;
+    }
+
+    .daily__article-text {}
+    .daily__article-date {}
+    .daily__article-title {
+      display: flex;
+      align-items: center;
+      padding-right: 11px;
+
+      strong {
+        @include title-ellipsis(30);
+        max-width: 92%;
+        max-height: 52px;
+        color: #111;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 26px;
+        text-overflow: ellipsis;
+        //word-break: break-all;
+      }
+
+      /* new 아이콘 추가 */
+      span {}
+    }
+    .daily__article-info {
+      display: flex;
+      width: 330px;
+      align-items: center;
+      margin-top: 9px;
+      color: #959595;
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .daily__article-by {
+      font-family: Georgia, sans-serif;
+      font-style: italic;
+    }
+
+    .daily__article-image {
+      width: 80px;
+      height: 80px;
+      aspect-ratio: auto 80 / 80;
+
+      img {
+        width: 80px;
+        height: 80px;
+        aspect-ratio: auto 80 / 80;
+      }
+    }
   }
 }
