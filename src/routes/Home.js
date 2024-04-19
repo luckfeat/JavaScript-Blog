@@ -1,10 +1,12 @@
 import Component from '../core/component';
 import { Nav, Header, Trend, Keyword, Daily, Writer, Recommend, Footer } from '../components';
 import articlesStore, {
-  renderNews,
+  renderTodayNews,
   renderDateNewsWithLimit,
   renderKeywordNews,
+  renderKeywordNewsWithLimit,
   renderYesterdayNews,
+  renderTodayNewsExtended,
 } from '../store/articles';
 
 export default class Home extends Component {
@@ -53,7 +55,7 @@ export default class Home extends Component {
       switch (type.name) {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
-          const articles = await renderYesterdayNews();
+          const articles = await renderTodayNewsExtended();
           /* 여기서 장문 기사 분류해서 게시 */
           /* firebase 조건문 사용하기, success=true */
           // eslint-disable-next-line no-case-declarations
@@ -101,7 +103,7 @@ export default class Home extends Component {
           break;
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
-          const recommendation = await renderKeywordNews('ai');
+          const recommendation = await renderKeywordNewsWithLimit('ai');
           this.root.appendChild(new Recommend(recommendation.slice(0, 10)).render(tag, cls));
           this.recommend = document.querySelector('.recommend');
           this.next = document.querySelector('.next');

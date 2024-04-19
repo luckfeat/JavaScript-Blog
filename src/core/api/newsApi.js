@@ -1,5 +1,16 @@
 import { initializeApp } from 'firebase/app';
-import { collection, doc, getFirestore, getDoc, getDocs, limit, orderBy, query, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getFirestore,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import config from '../../../config';
 
@@ -33,6 +44,13 @@ export async function getTodayNews() {
 
   return querySnapshot;
 }
+export async function getTodayNewsExtended() {
+  const [todayCollection] = getToday();
+  const fireStoreQuery = await query(collection(db, todayCollection), where('success', '==', true));
+  const todayNewsExtended = await getDocs(fireStoreQuery);
+
+  return todayNewsExtended;
+}
 export async function getYesterdayNews() {
   const [todayCollection, yesterdayCollection] = getToday();
   let querySnapshot = await getDocs(collection(db, yesterdayCollection));
@@ -42,6 +60,13 @@ export async function getYesterdayNews() {
     : await getDocs(collection(db, todayCollection));
 
   return querySnapshot;
+}
+export async function getYesterdayNewsExtended() {
+  const [, yesterdayCollection] = getToday();
+  const fireStoreQuery = await query(collection(db, yesterdayCollection), where('success', '==', true));
+  const yesterdayNewsExtended = await getDocs(fireStoreQuery);
+
+  return yesterdayNewsExtended;
 }
 export async function getNewsDetail(title, data) {
   const [todayCollection, yesterdayCollection] = getToday();
@@ -69,6 +94,12 @@ export async function getKeywordNews(category) {
   const querySnapshot = await getDocs(collection(db, category));
 
   return querySnapshot;
+}
+export async function getKeywordNewsWithLimit(category) {
+  const fireStoreQuery = await query(collection(db, category), limit(101));
+  const dateNews = getDocs(fireStoreQuery);
+
+  return dateNews;
 }
 export async function getDateNews(date) {
   const querySnapshot = await getDocs(collection(db, date));

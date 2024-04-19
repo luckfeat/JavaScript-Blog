@@ -22,3 +22,9 @@
   height: $height;
   overflow: hidden;
 }
+
+@mixin detail-header-icon {
+  height: 22px;
+  width: 22px;
+  display: block;
+}

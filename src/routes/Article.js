@@ -23,10 +23,31 @@ export default class Article extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  divideIntoParagraphs(content) {
+    const paragraphs = content
+      .split('.')
+      .map(sentence => sentence.trim())
+      .filter(sentence => sentence)
+      .reduce((acc, sentence, index) => {
+        const number = Math.floor(index / 4);
+        acc[number] = acc[number] || [];
+        acc[number].push(sentence + '.');
+
+        return acc;
+      }, [])
+      .map(paragraph => paragraph.join(' '));
+
+    return paragraphs;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   async initialize() {
     const { category, title, date } = this.checkQueryString();
     const articleDetail = await renderNewsDetail(title, category || date);
+    const articleContent = this.divideIntoParagraphs(articleDetail.content);
 
-    this.root.appendChild(new Detail(articleDetail).render('section', 'article'));
+    articleDetail.content = articleContent;
+
+    this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
   }
 }

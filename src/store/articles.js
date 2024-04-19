@@ -3,9 +3,12 @@ import {
   getNewsDetail,
   getTodayNews,
   getKeywordNews,
+  getKeywordNewsWithLimit,
   getYesterdayNews,
   getDateNews,
   getDateNewsWithLimit,
+  getYesterdayNewsExtended,
+  getTodayNewsExtended,
 } from '../core/api/newsApi';
 
 const articlesStore = new Store({
@@ -14,10 +17,25 @@ const articlesStore = new Store({
   keyword: {},
 });
 
-export async function renderNews() {
+export async function renderTodayNews() {
   try {
     const news = [];
     const querySnapshot = await getTodayNews();
+    querySnapshot.forEach(doc => {
+      // articlesStore.state.articles.push(doc.data());
+      news.push(doc.data());
+    });
+
+    // return articlesStore.state.articles;
+    return news;
+  } catch (err) {
+    console.error(err);
+  }
+}
+export async function renderTodayNewsExtended() {
+  try {
+    const news = [];
+    const querySnapshot = await getTodayNewsExtended();
     querySnapshot.forEach(doc => {
       // articlesStore.state.articles.push(doc.data());
       news.push(doc.data());
@@ -44,6 +62,21 @@ export async function renderYesterdayNews() {
     console.error(err);
   }
 }
+export async function renderYesterdayNewsExtended() {
+  try {
+    const news = [];
+    const querySnapshot = await getYesterdayNewsExtended();
+    querySnapshot.forEach(doc => {
+      // articlesStore.state.articles.push(doc.data());
+      news.push(doc.data());
+    });
+
+    // return articlesStore.state.articles;
+    return news;
+  } catch (err) {
+    console.error(err);
+  }
+}
 // eslint-disable-next-line require-await
 export function renderNewsDetail(title, data) {
   return getNewsDetail(title, data);
@@ -52,6 +85,19 @@ export async function renderKeywordNews(category) {
   try {
     articlesStore.state = {};
     const querySnapshot = await getKeywordNews(category);
+    articlesStore.state[category] = [];
+    querySnapshot.forEach(doc => {
+      articlesStore.state[category].push(doc.data());
+    });
+
+    return articlesStore.state[category];
+  } catch (err) {
+    console.error(err);
+  }
+}
+export async function renderKeywordNewsWithLimit(category) {
+  try {
+    const querySnapshot = await getKeywordNewsWithLimit(category);
     articlesStore.state[category] = [];
     querySnapshot.forEach(doc => {
       articlesStore.state[category].push(doc.data());
