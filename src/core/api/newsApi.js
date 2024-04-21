@@ -123,4 +123,5 @@ export async function checkForUpdate() {
     return true;
   }
   return false;
+  ß;
 }

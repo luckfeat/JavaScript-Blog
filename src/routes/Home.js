@@ -7,6 +7,7 @@ import articlesStore, {
   renderKeywordNewsWithLimit,
   renderYesterdayNews,
   renderTodayNewsExtended,
+  renderYesterdayNewsExtended,
 } from '../store/articles';
 
 export default class Home extends Component {
@@ -55,7 +56,7 @@ export default class Home extends Component {
       switch (type.name) {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
-          const articles = await renderTodayNewsExtended();
+          const articles = await renderYesterdayNewsExtended();
           /* 여기서 장문 기사 분류해서 게시 */
           /* firebase 조건문 사용하기, success=true */
           // eslint-disable-next-line no-case-declarations

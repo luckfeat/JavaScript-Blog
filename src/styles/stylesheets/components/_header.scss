@@ -106,31 +106,31 @@ header {
     top: 0;
     width: 100%;
     z-index: 10000;
+    background-color: black;
   }
   .detail-header__inner {
     margin: 30px 30px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #333333;
 
     .detail-header__inner-left {
       //float: left;
 
       button {
-        border-radius: 0;
-        height: 20px;
-        margin-right: 14px;
+        height: 22px;
         width: 27px;
+        margin-right: 14px;
         background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat 0 0;
+        background-position: -30px -58px;
+        margin-top: -2px;
       }
 
       h1 {
         display: inline-block;
-
         .detail-header__logo {
           width: 120px;
-          background: url(//t1.daumcdn.net/brunch9/static/images/pc/logo_brunch_v1_221221.png) no-repeat 0 -80px;
+          background: url(//t1.daumcdn.net/brunch9/static/images/pc/logo_brunch_v1_221221.png) no-repeat -120px -80px;
           display: block;
           height: 22px;
           margin-top: -1px;
