@@ -108,6 +108,7 @@ header {
     z-index: 10000;
     background-color: black;
   }
+
   .detail-header__inner {
     margin: 30px 30px 0;
     display: flex;
@@ -116,7 +117,6 @@ header {
 
     .detail-header__inner-left {
       //float: left;
-
       button {
         height: 22px;
         width: 27px;
@@ -125,7 +125,6 @@ header {
         background-position: -30px -58px;
         margin-top: -2px;
       }
-
       h1 {
         display: inline-block;
         .detail-header__logo {
@@ -140,10 +139,53 @@ header {
 
     .detail-header__inner-right {
       //float: right;
+      display: flex;
       margin-right: -8px;
       margin-top: -5px;
 
-      display: flex;
+      .detail-header__button-wrap {
+        display: flex;
+        padding-top: 0;
+        position: absolute;
+        font-family: "SF Pro Light", sans-serif !important;
+        font-size: 14px;
+        right: 63px;
+        z-index: 10011;
+
+        a {
+          margin-left: 18px;
+          height: 20px;
+          padding: 5px 0 5px 5px;
+        }
+
+        .detail-header__donation {
+          .detail-header__icon {
+            @include detail-header-icon;
+            background-image: url(https://t1.daumcdn.net/brunch9/static/imgs/icons/white_donation.svg);
+          }
+        }
+
+        .detail-header__like {
+          .detail-header__icon {
+            @include detail-header-icon;
+            background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat -60px -90px;
+          }
+        }
+
+        .detail-header__comment {
+          .detail-header__icon {
+            @include detail-header-icon;
+            background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat -30px -120px;
+          }
+        }
+
+        .detail-header__share {
+          .detail-header__icon {
+            @include detail-header-icon;
+            background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat -90px -121px;
+          }
+        }
+      }
 
       button {
         display: inline-block;
@@ -154,58 +196,16 @@ header {
         width: 20px;
         background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat -180px 0;
       }
-
-      .detail-header__button-wrap {
-        font-family: "SF Pro Light", sans-serif !important;
-        font-size: 14px;
-        padding-top: 0;
-        position: absolute;
-        right: 63px;
-        z-index: 10011;
-
-        display: flex;
-
-        a {
-          margin-left: 18px;
-          height: 20px;
-          padding: 5px 0 5px 5px;
-        }
-
-        .detail-header__donation {
-          span {
-            @include detail-header-icon;
-            background-image: url(https://t1.daumcdn.net/brunch9/static/imgs/icons/white_donation.svg);
-          }
-        }
-        .detail-header__like {
-          span {
-            @include detail-header-icon;
-            background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat -60px -90px;
-          }
-
-        }
-        .detail-header__comment {
-          span {
-            @include detail-header-icon;
-            background-image: url(https://t1.daumcdn.net/brunch9/static/imgs/icons/white_donation.svg);
-          }
-
-        }
-        .detail-header__share {
-          span {
-            @include detail-header-icon;
-            background-image: url(https://t1.daumcdn.net/brunch9/static/imgs/icons/white_donation.svg);
-          }
-
-        }
-      }
     }
   }
+
   .detail-header {}
+
   .detail-header__intro {
     width: 960px;
     margin: 0 auto;
   }
+
   .detail-header__title {
     margin-top: 0;
     color: #1a1a1a;
@@ -227,6 +227,7 @@ header {
       vertical-align: top;
     };
   }
+
   .detail-header__description {
     padding-bottom: 16px;
     margin-top: -3px;

@@ -12,31 +12,41 @@ const template = `
           <button type="button"></button>
           <div class="detail-header__button-wrap">
             <a class="detail-header__donation" href="">
-              <span></span>
+              <span class="detail-header__icon"></span>
             </a>
             <a class="detail-header__like" href="">
-              <span></span>
+              <span class="detail-header__icon"></span>
             </a>
             <a class="detail-header__comment" href="">
-              <span></span>
+              <span class="detail-header__icon"></span>
             </a>
             <a class="detail-header__share" href="">
-              <span></span>
+              <span class="detail-header__icon"></span>
             </a>
           </div>
         </div>
       </div>     
     </div>
   </header>
-  <div class="article__body">
-    <div class="article__text">
-      {{#each this.content}}
-        <h4>
-          <span class="article__sentence">{{this}}</span>
-        </h4>
-      {{/each}}
+  <main>
+    <div class="article__cover">
+      <div class="article__cover-item">
+        <img class="article__cover-image" src="{{this.image}}" alt="">
+        <div class="article__cover-inner"></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-  </div>
+    <div class="article__body">
+      <div class="article__text">
+        {{#each this.content}}
+          <h4>
+            <span class="article__sentence">{{this}}</span>
+          </h4>
+        {{/each}}
+      </div>
+    </div>
+  </main>
 `;
 
 export default window.Handlebars.compile(template);
