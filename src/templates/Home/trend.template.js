@@ -12,7 +12,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__description">{{this.description}}</span>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
@@ -28,7 +28,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
   <!--                  <div class='trend__align'></div>-->
@@ -42,7 +42,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
   <!--                  <div class='trend__align'></div>-->
@@ -64,7 +64,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
   <!--                  <div class='trend__align'></div>-->
@@ -79,7 +79,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
   <!--                  <div class='trend__align'></div>-->
@@ -94,7 +94,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
   <!--                  <div class='trend__align'></div>-->
@@ -108,7 +108,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
   <!--                  <div class='trend__align'></div>-->
@@ -130,7 +130,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
                   </div>
@@ -147,7 +147,7 @@ const template = `
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">
-                      <strong class="trend__title">{{this.title}}</strong>
+                      <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__description">{{this.description}}</span>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>

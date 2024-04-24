@@ -28,3 +28,12 @@
   width: 22px;
   display: block;
 }
+
+@mixin article-next-prev {
+  color: #959595;
+  font-family: "Noto Sans Light", "Malgun Gothic", sans-serif;
+  font-size: 12px;
+  line-height: 60px;
+  margin-right: 13px;
+  margin-top: -1px;
+}

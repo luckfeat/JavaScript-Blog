@@ -31,9 +31,12 @@ const template = `
   <main>
     <div class="article__cover">
       <div class="article__cover-item">
-        <img class="article__cover-image" src="{{this.image}}" alt="">
+        <div class="article__image" style="background-image:url({{this.image}})">
+          <div class="article__cover-title">
+            <h1>{{stripQuote this.title}}</h1>
+          </div>
+        </div>
         <div class="article__cover-inner"></div>
-        <div></div>
         <div></div>
       </div>
     </div>
@@ -47,6 +50,16 @@ const template = `
       </div>
     </div>
   </main>
+  <div class="article__footer">
+    <a class="article__prev" href="">
+      <span>previous article</span>
+      <strong></strong>
+    </a>
+    <a class="article__next" href="">
+      <span>next article</span>
+      <strong></strong>
+    </a>
+  </div>
 `;
 
 export default window.Handlebars.compile(template);

@@ -1,7 +1,18 @@
 import Router from './routes';
 
-// eslint-disable-next-line no-undef
 Handlebars.registerHelper('equalTo', (a, b) => a === b);
+Handlebars.registerHelper('stripQuote', str => {
+  const startsWithQuote = str.startsWith("'") || str.startsWith('"');
+  const endsWithQuote = str.endsWith("'") || str.endsWith('"');
 
-/* Router[routes] 생성 -> 초기 화면 -> eventListener -> 콜백 실행 */
+  if (startsWithQuote && endsWithQuote) {
+    const midContent = str.substring(1, str.length - 1);
+    if (!midContent.includes("'") && !midContent.includes('"')) {
+      return midContent;
+    }
+  }
+
+  return str;
+});
+
 Router.listen();

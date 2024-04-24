@@ -40,13 +40,21 @@ export default class Article extends Component {
     return paragraphs;
   }
 
+  /* 기사 다음, 이전 배열 넘기기 */
+
   // eslint-disable-next-line class-methods-use-this
   async initialize() {
     const { category, title, date } = this.checkQueryString();
+
     const articleDetail = await renderNewsDetail(title, category || date);
+
+    console.log(articleDetail);
+
     const articleContent = this.divideIntoParagraphs(articleDetail.content);
 
     articleDetail.content = articleContent;
+
+    /* state 에서 previous or next article 가져오기 */
 
     this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
   }

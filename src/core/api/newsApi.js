@@ -73,6 +73,7 @@ export async function getNewsDetail(title, data) {
 
   try {
     const searchTitle = decodeURIComponent(title);
+
     /* category 검색 추가 */
     if (data) {
       const docRef = doc(db, data, searchTitle);
