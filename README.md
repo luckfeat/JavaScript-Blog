@@ -28,7 +28,7 @@ The project attempts to mirror the key features of Brunch, with some unique addi
 
 Dynamic Content Rendering: Articles and news are dynamically fetched using the GNEWS API and rendered using Handlebars templates.
 
-Real-time Data: Articles are stored and managed in real-time using Firebase Firestore.
+Real-time Data: Articles are stored and managed in real-time using Firebase Functions.
 
 Responsive Design: The site is fully responsive, adapting to various screen sizes and devices, thanks to SASS.
 
