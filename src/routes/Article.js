@@ -48,8 +48,6 @@ export default class Article extends Component {
 
     const articleDetail = await renderNewsDetail(title, category || date);
 
-    console.log(articleDetail);
-
     const articleContent = this.divideIntoParagraphs(articleDetail.content);
 
     articleDetail.content = articleContent;

@@ -12,7 +12,7 @@ const template = `
       <a class="keyword__item" href="#/keyword?category=entertainment"><span>K-POP & Entertainment</span></a>
       <a class="keyword__item" href="#/keyword?category=general"><span>General / Lifestyle</span></a>
       <a class="keyword__item" href="#/keyword?category=health"><span>Health & Beauty</span></a>
-      <a class="keyword__item" href="#/keyword?category=hiphop"><span>Black Culture</span></a>
+      <a class="keyword__item" href="#/keyword?category=hiphop"><span>Hip Hop</span></a>
       <a class="keyword__item" href="#/keyword?category=korea"><span>South Korea</span></a>
       <a class="keyword__item" href="#/keyword?category=meta"><span>Meta</span></a>
       <a class="keyword__item" href="#/keyword?category=nation"><span>Nation</span></a>
@@ -23,12 +23,12 @@ const template = `
       <a class="keyword__item" href="#/keyword?category=technology"><span>Technology</span></a>
       <a class="keyword__item" href="#/keyword?category=world"><span>Global News</span></a>
       <a class="keyword__item" href="#/keyword?category=youtube"><span>Youtube</span></a>
-      <a class="keyword__item" href="javascript:void(0);"><span>*</span></a>
-      <a class="keyword__item" href="javascript:void(0);"><span>*</span></a>
-      <a class="keyword__item" href="javascript:void(0);"><span>*</span></a>
-      <a class="keyword__item" href="javascript:void(0);"><span>*</span></a>
-      <a class="keyword__item" href="javascript:void(0);"><span>*</span></a>
-      <a class="keyword__item" href="javascript:void(0);"><span>*</span></a>
+      <a class="keyword__item" href="#/keyword?category=blockchain"><span>Block Chain</span></a>
+      <a class="keyword__item" href="#/keyword?category=apple"><span>Apple</span></a>
+      <a class="keyword__item" href="#/keyword?category=stock"><span>Stock</span></a>
+      <a class="keyword__item" href="#/keyword?category=meta"><span>Facebook</span></a>
+      <a class="keyword__item" href="#/keyword?category=fashion"><span>Fashion</span></a>
+      <a class="keyword__item" href="#/keyword?category=microsoft"><span>Microsoft</span></a>
     </div>
   </div>
 `;

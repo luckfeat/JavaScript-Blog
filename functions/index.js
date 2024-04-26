@@ -112,7 +112,23 @@ export const createArticles = onSchedule('0 4,12,20 * * *', async () => {
   }
   async function postSearches() {
     const baseUrl = 'https://gnews.io/api/v4/search';
-    const keywords = ['elon', 'meta', 'nft', 'crypto', 'ai', 'youtube', 'korea', 'hiphop', 'programming'];
+    const keywords = [
+      'elon',
+      'meta',
+      'nft',
+      'crypto',
+      'ai',
+      'youtube',
+      'korea',
+      'hiphop',
+      'programming',
+      'blockchain',
+      'apple',
+      'stock',
+      'meta',
+      'fashion',
+      'microsoft',
+    ];
     const batchSize = 3;
     const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
     async function requestAndPostArticles(baseUrl, search, apiKey) {

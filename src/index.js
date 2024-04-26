@@ -14,5 +14,12 @@ Handlebars.registerHelper('stripQuote', str => {
 
   return str;
 });
+Handlebars.registerHelper('stripDate', dateString => {
+  const date = new Date(dateString); // 날짜 문자열을 Date 객체로 변환
+  const options = { month: 'short', day: 'numeric', year: 'numeric' }; // 날짜 포맷 옵션
+
+  // 지정된 포맷으로 날짜 문자열을 반환하고 쉼표를 점으로 변경
+  return date.toLocaleDateString('en-US', options).replace(',', '.');
+});
 
 Router.listen();

@@ -35,9 +35,14 @@ const template = `
           <div class="article__cover-title">
             <h1>{{stripQuote this.title}}</h1>
           </div>
+          <div class="article__cover-info">
+            <span class="article__by">by</span>
+            <span class="article__author">{{this.source.name}}</span>
+            <span class="article__dot"></span>
+            <span class="article__date">{{stripDate this.publishedAt}}</span>
+          </div>
         </div>
         <div class="article__cover-inner"></div>
-        <div></div>
       </div>
     </div>
     <div class="article__body">
@@ -48,6 +53,11 @@ const template = `
           </h4>
         {{/each}}
       </div>
+    </div>
+    <div class="article__info-keyword">
+      <ul>
+        <li></li>
+      </ul>
     </div>
   </main>
   <div class="article__footer">

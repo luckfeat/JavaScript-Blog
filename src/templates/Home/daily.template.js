@@ -44,7 +44,7 @@ const template = `
                     <div class="daily__article-text">
                       <span class="daily__article-date">{{this.publishedAt}}</span>
                       <span class="daily__article-title">
-                        <strong>{{this.title}}</strong>
+                        <strong>{{stripQuote this.title}}</strong>
                         <span class="daily__article-new"></span>
                       </span>
                       <div class="daily__article-info">

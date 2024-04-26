@@ -4,6 +4,7 @@
     word-wrap: break-word;
     word-break: break-word;
   }
+
   .article__cover {
     position: fixed;
     top: 0;
@@ -13,7 +14,6 @@
     .article__cover-item {
       position: relative;
     }
-
     /* 스크롤에 따라 margin-top 변경됨*/
     .article__cover-image {
       /* 스크롤에 따라 높이가 변경됨*/
@@ -23,6 +23,7 @@
 
     .article__image {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background-position: 50%;
@@ -62,14 +63,54 @@
 
     .article__cover-info {
       /* 스크롤에 따라 opacity 변경됨*/
+      position: absolute;
+      bottom: 50px;
+      width: 700px;
+      font-size: 12px;
+      color: #fff;
+      text-align: center;
+      z-index: 9999;
+    }
 
+    .article__by {
+      margin-right: 2px;
+      display: inline-block;
+      font-family: Georgia, sans-serif;
+      font-size: 12px;
+      font-style: italic;
+      height: 14px;
+      opacity: .5;
+      width: 15px;
+    }
+
+    .article__author {
+      opacity: 0.8;
+      color: #666;
+      letter-spacing: -.05em;
+    }
+
+    .article__dot {
+      margin: 8px 7px 0;
+      opacity: .5;
+      background-color: #fff;
+      display: inline-block;
+      height: 2px;
+      width: 2px;
+      vertical-align: top;
+    }
+
+    .article__date {
+      letter-spacing: -.05em;
+      opacity: .5;
     }
   }
+
   .article__body {
     margin-top: 450px;
     background-color: #fff;
     position: relative;
   }
+
   .article__text {
     padding-bottom: 64px;
     word-wrap: break-word;
@@ -93,6 +134,28 @@
       line-height: 22pt
     }
   }
+
+  .article__info-keyword {
+    margin: 32px auto;
+    overflow: hidden;
+    padding: 10px 0 30px;
+    width: 700px;
+
+    li {
+      border: 1px solid #ddd;
+      border-radius: 28px;
+      color: #959595;
+      display: inline-block;
+      font-size: 12px;
+      height: 26px;
+      letter-spacing: -.5px;
+      line-height: 26px;
+      min-width: 14px;
+      padding: 0 10px;
+      text-align: center;
+    }
+  }
+
   .article__footer {
     display: block;
     background: #fff;
@@ -117,6 +180,7 @@
       white-space: nowrap;
     }
   }
+
   .article__prev {
     float: left;
     height: 100%;
@@ -127,6 +191,7 @@
       float: left;
     }
   }
+
   .article__next {
     float: right;
     height: 100%;
@@ -137,4 +202,5 @@
       float: right;
     }
   }
+
 }
