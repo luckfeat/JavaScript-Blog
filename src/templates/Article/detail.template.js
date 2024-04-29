@@ -61,14 +61,17 @@ const template = `
     </div>
   </main>
   <div class="article__footer">
-    <a class="article__prev" href="">
-      <span>previous article</span>
-      <strong></strong>
-    </a>
-    <a class="article__next" href="">
-      <span>next article</span>
-      <strong></strong>
-    </a>
+    <div class="article__footer-banner"></div>
+    <div class="article__footer-controller">
+      <a class="article__prev" href="">
+        <span>previous article</span>
+        <strong></strong>
+      </a>
+      <a class="article__next" href="">
+        <span>next article</span>
+        <strong></strong>
+      </a>
+    </div>
   </div>
 `;
 

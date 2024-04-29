@@ -1,3 +1,4 @@
+import { collection } from 'firebase/firestore';
 import Component from '../core/component';
 import { Detail } from '../components';
 import { renderNewsDetail } from '../store/articles';
@@ -48,11 +49,35 @@ export default class Article extends Component {
 
     const articleDetail = await renderNewsDetail(title, category || date);
 
+    function makeKeywords(content) {
+      const words = content.split(' ');
+
+      return words;
+    }
+
+    const keywordList = makeKeywords(articleDetail.content).reduce((collection, current) => {
+      const keyword = current.replace(/[^a-zA-Z0-9]/g, '');
+
+      if (keyword.length > 3 && keyword in collection) {
+        collection[keyword]++;
+      } else if (keyword.length > 3 && keyword.length < 10) {
+        collection[keyword] = 1;
+      }
+
+      return collection;
+    }, {});
+
+    /* reduce */
+    /* if 같은 단어 and word > 4, [저장된 단어] : Count++ */
+
     const articleContent = this.divideIntoParagraphs(articleDetail.content);
 
     articleDetail.content = articleContent;
 
     /* state 에서 previous or next article 가져오기 */
+    /* 1. 키워드 분류 */
+    /* 2. Article Description */
+    /* 3. Footer Banner */
 
     this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
   }
