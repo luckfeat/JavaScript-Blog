@@ -56,7 +56,14 @@ const template = `
     </div>
     <div class="article__info-keyword">
       <ul>
-        <li></li>
+        {{#each this.keywords}}
+          <li>{{this}}</li>
+        {{/each}}
+        {{#unless this.keywords}}
+          <li>article</li>
+          <li>trend</li>
+          <li>upcoming</li>
+        {{/unless}}
       </ul>
     </div>
   </main>

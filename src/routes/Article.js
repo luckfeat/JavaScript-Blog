@@ -52,32 +52,41 @@ export default class Article extends Component {
     function makeKeywords(content) {
       const words = content.split(' ');
 
-      return words;
-    }
+      const keywords = words.reduce((collection, current) => {
+        const keyword = current.replace(/[^a-zA-Z0-9]/g, '');
 
-    const keywordList = makeKeywords(articleDetail.content).reduce((collection, current) => {
-      const keyword = current.replace(/[^a-zA-Z0-9]/g, '');
+        if (keyword.length > 3 && keyword in collection) {
+          collection[keyword]++;
+        } else if (keyword.length > 3 && keyword.length < 10) {
+          collection[keyword] = 1;
+        }
 
-      if (keyword.length > 3 && keyword in collection) {
-        collection[keyword]++;
-      } else if (keyword.length > 3 && keyword.length < 10) {
-        collection[keyword] = 1;
+        return collection;
+      }, {});
+
+      for (const word in keywords) {
+        if (keywords[word] < 2) {
+          delete keywords[word];
+        }
       }
 
-      return collection;
-    }, {});
+      const keywordArray = Object.entries(keywords)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(value => value[0].toLowerCase());
 
-    /* reduce */
-    /* if 같은 단어 and word > 4, [저장된 단어] : Count++ */
+      return keywordArray;
+    }
+
+    articleDetail.keywords = makeKeywords(articleDetail.content);
 
     const articleContent = this.divideIntoParagraphs(articleDetail.content);
 
     articleDetail.content = articleContent;
 
-    /* state 에서 previous or next article 가져오기 */
-    /* 1. 키워드 분류 */
     /* 2. Article Description */
     /* 3. Footer Banner */
+    /* 4. state 에서 previous or next article 가져오기 */
 
     this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
   }
