@@ -71,10 +71,11 @@ export async function getYesterdayNewsExtended() {
 export async function getNewsDetail(title, data) {
   const [todayCollection, yesterdayCollection] = getToday();
 
+  console.log(title);
+
   try {
     const searchTitle = decodeURIComponent(title);
 
-    /* category 검색 추가 */
     if (data) {
       const docRef = doc(db, data, searchTitle);
       const querySnapshot = await getDoc(docRef);
@@ -85,6 +86,21 @@ export async function getNewsDetail(title, data) {
     const documentData =
       (await getDoc(doc(db, todayCollection, searchTitle))).data() ||
       (await getDoc(doc(db, yesterdayCollection, searchTitle))).data();
+
+    console.log(searchTitle);
+    console.log(`"${searchTitle}"`);
+
+    console.log(
+      (
+        await getDoc(
+          doc(
+            db,
+            yesterdayCollection,
+            "'Avengelyne' Starring Margot Robbie & Directed By Olivia Wilde Sold To Warners",
+          ),
+        )
+      ).data(),
+    );
 
     return documentData;
   } catch (err) {

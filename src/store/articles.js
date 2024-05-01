@@ -17,62 +17,51 @@ const articlesStore = new Store({
   keyword: {},
 });
 
+const getFireStoreData = querySnapshot => {
+  const news = [];
+
+  querySnapshot.forEach(doc => {
+    const firestoreDataObj = doc.data();
+    firestoreDataObj.id = doc.id;
+
+    news.push(firestoreDataObj);
+  });
+
+  return news;
+};
+
 export async function renderTodayNews() {
   try {
-    const news = [];
     const querySnapshot = await getTodayNews();
-    querySnapshot.forEach(doc => {
-      // articlesStore.state.articles.push(doc.data());
-      news.push(doc.data());
-    });
 
-    // return articlesStore.state.articles;
-    return news;
+    return getFireStoreData(querySnapshot);
   } catch (err) {
     console.error(err);
   }
 }
 export async function renderTodayNewsExtended() {
   try {
-    const news = [];
     const querySnapshot = await getTodayNewsExtended();
-    querySnapshot.forEach(doc => {
-      // articlesStore.state.articles.push(doc.data());
-      news.push(doc.data());
-    });
 
-    // return articlesStore.state.articles;
-    return news;
+    return getFireStoreData(querySnapshot);
   } catch (err) {
     console.error(err);
   }
 }
 export async function renderYesterdayNews() {
   try {
-    const news = [];
     const querySnapshot = await getYesterdayNews();
-    querySnapshot.forEach(doc => {
-      // articlesStore.state.articles.push(doc.data());
-      news.push(doc.data());
-    });
 
-    // return articlesStore.state.articles;
-    return news;
+    return getFireStoreData(querySnapshot);
   } catch (err) {
     console.error(err);
   }
 }
 export async function renderYesterdayNewsExtended() {
   try {
-    const news = [];
     const querySnapshot = await getYesterdayNewsExtended();
-    querySnapshot.forEach(doc => {
-      // articlesStore.state.articles.push(doc.data());
-      news.push(doc.data());
-    });
 
-    // return articlesStore.state.articles;
-    return news;
+    return getFireStoreData(querySnapshot);
   } catch (err) {
     console.error(err);
   }
@@ -86,8 +75,12 @@ export async function renderKeywordNews(category) {
     articlesStore.state = {};
     const querySnapshot = await getKeywordNews(category);
     articlesStore.state[category] = [];
+
     querySnapshot.forEach(doc => {
-      articlesStore.state[category].push(doc.data());
+      const news = doc.data();
+      news.id = doc.id;
+
+      articlesStore.state[category].push(news);
     });
 
     return articlesStore.state[category];
@@ -99,8 +92,12 @@ export async function renderKeywordNewsWithLimit(category) {
   try {
     const querySnapshot = await getKeywordNewsWithLimit(category);
     articlesStore.state[category] = [];
+
     querySnapshot.forEach(doc => {
-      articlesStore.state[category].push(doc.data());
+      const news = doc.data();
+      news.id = doc.id;
+
+      articlesStore.state[category].push(news);
     });
 
     return articlesStore.state[category];
@@ -112,8 +109,12 @@ export async function renderDateNews(date) {
   try {
     const querySnapshot = await getDateNews(date);
     articlesStore.state[date] = [];
+
     querySnapshot.forEach(doc => {
-      articlesStore.state[date].push(doc.data());
+      const news = doc.data();
+      news.id = doc.id;
+
+      articlesStore.state[date].push(news);
     });
 
     return articlesStore.state[date];
@@ -125,8 +126,12 @@ export async function renderDateNewsWithLimit(date) {
   try {
     const querySnapshot = await getDateNewsWithLimit(date);
     articlesStore.state[date] = [];
+
     querySnapshot.forEach(doc => {
-      articlesStore.state[date].push(doc.data());
+      const news = doc.data();
+      news.id = doc.id;
+
+      articlesStore.state[date].push(news);
     });
 
     return articlesStore.state[date];
