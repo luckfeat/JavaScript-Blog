@@ -1,7 +1,7 @@
 import { collection } from 'firebase/firestore';
 import Component from '../core/component';
 import { Detail } from '../components';
-import { renderNewsDetail } from '../store/articles';
+import { renderNewsDetail, renderYesterdayNewsExtendedWithLimit } from '../store/articles';
 
 export default class Article extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -12,15 +12,28 @@ export default class Article extends Component {
   // eslint-disable-next-line class-methods-use-this
   checkQueryString() {
     // eslint-disable-next-line no-restricted-globals
-    const [, queryString] = location.hash.split('?');
-    const query = queryString?.split('&').reduce((acc, cur) => {
-      const [key, value] = cur.split('=');
+    const [, ...queryString] = location.hash.split('?');
+
+    const query = queryString?.map(data => {
+      const result = [];
+      const [key, value] = data.split('=');
+
+      result.push(key);
+      result.push(value);
+
+      return result;
+    });
+
+    console.log(query);
+
+    const queryObject = query.reduce((acc, cur) => {
+      const [key, value] = cur;
       acc[key] = value;
 
       return acc;
     }, {});
 
-    return query;
+    return queryObject;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -41,14 +54,25 @@ export default class Article extends Component {
     return paragraphs;
   }
 
-  /* 기사 다음, 이전 배열 넘기기 */
+  // eslint-disable-next-line class-methods-use-this
+  formatDateString(isoDateString) {
+    // Create a Date object from the ISO string
+    const date = new Date(isoDateString);
+
+    // Extract the year, month, and day from the Date object
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth returns 0-11, so add 1 for 1-12
+    const day = date.getDate();
+
+    // Return the date in 'YYYY.M.D' format
+    return `${year}.${month}.${day}`;
+  }
 
   // eslint-disable-next-line class-methods-use-this
   async initialize() {
+    /* 여기서 title, date 변경해서 넘기기 */
     const { category, title, date } = this.checkQueryString();
-
-    const articleDetail = await renderNewsDetail(title, category || date);
-
+    const articleDetail = await renderNewsDetail(title, category || this.formatDateString(date));
     function makeKeywords(content) {
       const words = content.split(' ');
 
@@ -77,17 +101,15 @@ export default class Article extends Component {
 
       return keywordArray;
     }
-
     articleDetail.keywords = makeKeywords(articleDetail.content);
-
     const articleContent = this.divideIntoParagraphs(articleDetail.content);
-
     articleDetail.content = articleContent;
-
-    /* 2. Article Description */
+    articleDetail.recommend = await renderYesterdayNewsExtendedWithLimit();
+    const [prev, next] = articleDetail.recommend;
+    articleDetail.prev = prev;
+    articleDetail.next = next;
+    /* 2. Author */
     /* 3. Footer Banner */
-    /* 4. state 에서 previous or next article 가져오기 */
-
     this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
   }
 }

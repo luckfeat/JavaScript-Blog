@@ -75,7 +75,7 @@ const template = `
               {{else}}
                 {{#if (equalTo @index 1)}}
                 <div class="trend__article-wrap trend__article-wrap--type2">
-                <a class="trend__article" href="#/article?title={{this.title}}">
+                <a class="trend__article" href="#/article?title={{this.id}}">
                   <img class="trend__img" src="{{this.image}}" alt="{{this.title}}">
                   <div class="trend__info-wrap">
                     <div class="trend__info">

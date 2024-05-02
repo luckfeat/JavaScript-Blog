@@ -8,6 +8,7 @@ import {
   getDateNews,
   getDateNewsWithLimit,
   getYesterdayNewsExtended,
+  getYesterdayNewsExtendedWithLimit,
   getTodayNewsExtended,
 } from '../core/api/newsApi';
 
@@ -15,8 +16,10 @@ const articlesStore = new Store({
   articles: [],
   article: {},
   keyword: {},
+  trend: {},
+  prev: {},
+  next: {},
 });
-
 const getFireStoreData = querySnapshot => {
   const news = [];
 
@@ -29,7 +32,6 @@ const getFireStoreData = querySnapshot => {
 
   return news;
 };
-
 export async function renderTodayNews() {
   try {
     const querySnapshot = await getTodayNews();
@@ -66,13 +68,27 @@ export async function renderYesterdayNewsExtended() {
     console.error(err);
   }
 }
+export async function renderYesterdayNewsExtendedWithLimit() {
+  try {
+    const querySnapshot = await getYesterdayNewsExtendedWithLimit();
+
+    return getFireStoreData(querySnapshot);
+  } catch (err) {
+    console.error(err);
+  }
+}
 // eslint-disable-next-line require-await
 export function renderNewsDetail(title, data) {
-  return getNewsDetail(title, data);
+  const searchTitle = decodeURIComponent(title);
+
+  console.log(searchTitle, data);
+
+  const newsDetail = getNewsDetail(searchTitle, data);
+
+  return newsDetail;
 }
 export async function renderKeywordNews(category) {
   try {
-    articlesStore.state = {};
     const querySnapshot = await getKeywordNews(category);
     articlesStore.state[category] = [];
 
@@ -91,16 +107,17 @@ export async function renderKeywordNews(category) {
 export async function renderKeywordNewsWithLimit(category) {
   try {
     const querySnapshot = await getKeywordNewsWithLimit(category);
-    articlesStore.state[category] = [];
+    // articlesStore.state[category] = [];
+    const keywordNewsWithLimit = [];
 
     querySnapshot.forEach(doc => {
       const news = doc.data();
       news.id = doc.id;
 
-      articlesStore.state[category].push(news);
+      keywordNewsWithLimit.push(news);
     });
 
-    return articlesStore.state[category];
+    return keywordNewsWithLimit;
   } catch (err) {
     console.error(err);
   }
@@ -125,16 +142,18 @@ export async function renderDateNews(date) {
 export async function renderDateNewsWithLimit(date) {
   try {
     const querySnapshot = await getDateNewsWithLimit(date);
-    articlesStore.state[date] = [];
+    // articlesStore.state[date] = [];
+
+    const dateNewsWithLimit = [];
 
     querySnapshot.forEach(doc => {
       const news = doc.data();
       news.id = doc.id;
 
-      articlesStore.state[date].push(news);
+      dateNewsWithLimit.push(news);
     });
 
-    return articlesStore.state[date];
+    return dateNewsWithLimit;
   } catch (err) {
     console.error(err);
   }

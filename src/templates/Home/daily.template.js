@@ -40,7 +40,7 @@ const template = `
             {{#each this}}
               {{#each this}}
                 <li class="daily__item">
-                  <a class="daily__link" href="">
+                  <a class="daily__link" href="#/article?date={{this.publishedAt}}&title={{this.id}}">
                     <div class="daily__article-text">
                       <span class="daily__article-date">{{this.publishedAt}}</span>
                       <span class="daily__article-title">

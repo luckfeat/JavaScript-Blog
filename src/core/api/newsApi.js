@@ -68,39 +68,31 @@ export async function getYesterdayNewsExtended() {
 
   return yesterdayNewsExtended;
 }
+export async function getYesterdayNewsExtendedWithLimit() {
+  const [, yesterdayCollection] = getToday();
+  const fireStoreQuery = await query(collection(db, yesterdayCollection), where('success', '==', true), limit(6));
+  const yesterdayNewsExtendedWithLimit = await getDocs(fireStoreQuery);
+
+  return yesterdayNewsExtendedWithLimit;
+}
 export async function getNewsDetail(title, data) {
-  const [todayCollection, yesterdayCollection] = getToday();
-
-  console.log(title);
-
   try {
-    const searchTitle = decodeURIComponent(title);
-
     if (data) {
-      const docRef = doc(db, data, searchTitle);
+      const docRef = doc(db, data, title);
       const querySnapshot = await getDoc(docRef);
+
+      console.log(querySnapshot.data());
 
       return querySnapshot.data();
     }
 
+    /* Detail For Other Pages */
+
+    const [todayCollection, yesterdayCollection] = getToday();
+
     const documentData =
-      (await getDoc(doc(db, todayCollection, searchTitle))).data() ||
-      (await getDoc(doc(db, yesterdayCollection, searchTitle))).data();
-
-    console.log(searchTitle);
-    console.log(`"${searchTitle}"`);
-
-    console.log(
-      (
-        await getDoc(
-          doc(
-            db,
-            yesterdayCollection,
-            "'Avengelyne' Starring Margot Robbie & Directed By Olivia Wilde Sold To Warners",
-          ),
-        )
-      ).data(),
-    );
+      (await getDoc(doc(db, todayCollection, title))).data() ||
+      (await getDoc(doc(db, yesterdayCollection, title))).data();
 
     return documentData;
   } catch (err) {
@@ -128,17 +120,4 @@ export async function getDateNewsWithLimit(date) {
   const dateNews = getDocs(fireStoreQuery);
 
   return dateNews;
-}
-export async function checkForUpdate() {
-  const updatedTime = new Date((await getDocs(collection(db, 'Update'))).docs[0].data().updatedTime.seconds * 1000);
-  const currentTime = new Date();
-  const timeDifference = (currentTime - updatedTime) / (1000 * 60 * 60 * 24);
-  if (timeDifference >= 0.25) {
-    await setDoc(doc(db, 'Update', 'Update'), {
-      updatedTime: new Date(),
-    });
-    return true;
-  }
-  return false;
-  ß;
 }

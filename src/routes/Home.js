@@ -8,6 +8,7 @@ import articlesStore, {
   renderYesterdayNews,
   renderTodayNewsExtended,
   renderYesterdayNewsExtended,
+  renderYesterdayNewsExtendedWithLimit,
 } from '../store/articles';
 
 export default class Home extends Component {
@@ -52,13 +53,13 @@ export default class Home extends Component {
       { type: Recommend, tag: 'section', cls: 'recommend' },
       { type: Footer, tag: 'footer' },
     ];
+
     for (const { type, tag, cls } of components) {
       switch (type.name) {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await renderYesterdayNewsExtended();
-
-          console.log(articles);
+          // eslint-disable-next-line no-await-in-loop
           /* 여기서 장문 기사 분류해서 게시 */
           /* firebase 조건문 사용하기, success=true */
           // eslint-disable-next-line no-case-declarations

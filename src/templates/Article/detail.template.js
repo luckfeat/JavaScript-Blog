@@ -72,11 +72,11 @@ const template = `
     <div class="article__footer-controller">
       <a class="article__prev" href="">
         <span>previous article</span>
-        <strong></strong>
+        <strong>{{this.prev.title}}</strong>
       </a>
       <a class="article__next" href="">
         <span>next article</span>
-        <strong></strong>
+        <strong>{{this.next.title}}</strong>
       </a>
     </div>
   </div>
