@@ -12,9 +12,9 @@ export default class Article extends Component {
   // eslint-disable-next-line class-methods-use-this
   checkQueryString() {
     // eslint-disable-next-line no-restricted-globals
-    const [, ...queryString] = location.hash.split('?');
+    const [, queryString] = location.hash.split('?');
 
-    const query = queryString?.map(data => {
+    const query = queryString?.split('&').map(data => {
       const result = [];
       const [key, value] = data.split('=');
 
@@ -23,8 +23,6 @@ export default class Article extends Component {
 
       return result;
     });
-
-    console.log(query);
 
     const queryObject = query.reduce((acc, cur) => {
       const [key, value] = cur;
@@ -55,24 +53,22 @@ export default class Article extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  formatDateString(isoDateString) {
-    // Create a Date object from the ISO string
-    const date = new Date(isoDateString);
+  convertDateFormat(isoDateString) {
+    // 'T' 기준으로 문자열을 나누고 첫 번째 부분(날짜 부분)을 가져옵니다.
+    const datePart = isoDateString.split('T')[0];
 
-    // Extract the year, month, and day from the Date object
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // getMonth returns 0-11, so add 1 for 1-12
-    const day = date.getDate();
+    // '-'를 기준으로 연, 월, 일을 나눕니다.
+    const [year, month, day] = datePart.split('-');
 
-    // Return the date in 'YYYY.M.D' format
-    return `${year}.${month}.${day}`;
+    // 형식에 맞게 문자열을 재구성합니다.
+    return `${year}.${parseInt(month)}.${parseInt(day)}`;
   }
 
   // eslint-disable-next-line class-methods-use-this
   async initialize() {
     /* 여기서 title, date 변경해서 넘기기 */
     const { category, title, date } = this.checkQueryString();
-    const articleDetail = await renderNewsDetail(title, category || this.formatDateString(date));
+    const articleDetail = await renderNewsDetail(title, category || this.convertDateFormat(date));
     function makeKeywords(content) {
       const words = content.split(' ');
 
