@@ -81,12 +81,10 @@ export async function getNewsDetail(title, data) {
       const docRef = doc(db, data, title);
       const querySnapshot = await getDoc(docRef);
 
-      console.log(querySnapshot.data());
-
       return querySnapshot.data();
     }
 
-    /* Detail For Other Pages */
+    /* Is it necessary to use getToady function? Could it be replaced by date parameter */
 
     const [todayCollection, yesterdayCollection] = getToday();
 

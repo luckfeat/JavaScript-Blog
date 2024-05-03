@@ -79,11 +79,7 @@ export async function renderYesterdayNewsExtendedWithLimit() {
 }
 // eslint-disable-next-line require-await
 export function renderNewsDetail(title, data) {
-  const searchTitle = decodeURIComponent(title);
-
-  console.log(searchTitle, data);
-
-  const newsDetail = getNewsDetail(searchTitle, data);
+  const newsDetail = getNewsDetail(title, data);
 
   return newsDetail;
 }

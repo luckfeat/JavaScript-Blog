@@ -65,39 +65,43 @@ export default class Article extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  makeKeywords(content) {
+    const words = content.split(' ');
+
+    const keywords = words.reduce((collection, current) => {
+      const keyword = current.replace(/[^a-zA-Z0-9]/g, '');
+
+      if (keyword.length > 3 && keyword in collection) {
+        collection[keyword]++;
+      } else if (keyword.length > 3 && keyword.length < 10) {
+        collection[keyword] = 1;
+      }
+
+      return collection;
+    }, {});
+
+    for (const word in keywords) {
+      if (keywords[word] < 2) {
+        delete keywords[word];
+      }
+    }
+
+    const keywordArray = Object.entries(keywords)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(value => value[0].toLowerCase());
+
+    return keywordArray;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   async initialize() {
     /* 여기서 title, date 변경해서 넘기기 */
     const { category, title, date } = this.checkQueryString();
-    const articleDetail = await renderNewsDetail(title, category || this.convertDateFormat(date));
-    function makeKeywords(content) {
-      const words = content.split(' ');
-
-      const keywords = words.reduce((collection, current) => {
-        const keyword = current.replace(/[^a-zA-Z0-9]/g, '');
-
-        if (keyword.length > 3 && keyword in collection) {
-          collection[keyword]++;
-        } else if (keyword.length > 3 && keyword.length < 10) {
-          collection[keyword] = 1;
-        }
-
-        return collection;
-      }, {});
-
-      for (const word in keywords) {
-        if (keywords[word] < 2) {
-          delete keywords[word];
-        }
-      }
-
-      const keywordArray = Object.entries(keywords)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 3)
-        .map(value => value[0].toLowerCase());
-
-      return keywordArray;
-    }
-    articleDetail.keywords = makeKeywords(articleDetail.content);
+    const searchTitle = decodeURIComponent(title);
+    const formatDate = date ? this.convertDateFormat(date) : false;
+    const articleDetail = await renderNewsDetail(searchTitle, category || formatDate);
+    articleDetail.keywords = this.makeKeywords(articleDetail.content);
     const articleContent = this.divideIntoParagraphs(articleDetail.content);
     articleDetail.content = articleContent;
     articleDetail.recommend = await renderYesterdayNewsExtendedWithLimit();
