@@ -1,16 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import {
-  collection,
-  doc,
-  getFirestore,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  setDoc,
-  where,
-} from 'firebase/firestore';
+import { collection, doc, getFirestore, getDoc, getDocs, limit, query, where } from 'firebase/firestore';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import config from '../../../config';
 

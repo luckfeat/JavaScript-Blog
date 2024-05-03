@@ -53,15 +53,16 @@ export default class Article extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  convertDateFormat(isoDateString) {
-    // 'T' 기준으로 문자열을 나누고 첫 번째 부분(날짜 부분)을 가져옵니다.
+  convertDateFormat(isoDateString, increment) {
     const datePart = isoDateString.split('T')[0];
+    // eslint-disable-next-line prefer-const
+    let [year, month, day] = datePart.split('-');
 
-    // '-'를 기준으로 연, 월, 일을 나눕니다.
-    const [year, month, day] = datePart.split('-');
+    if (increment) {
+      day = parseInt(day, 10) + 1;
+    }
 
-    // 형식에 맞게 문자열을 재구성합니다.
-    return `${year}.${parseInt(month)}.${parseInt(day)}`;
+    return `${year}.${parseInt(month, 10)}.${parseInt(day, 10)}`;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -100,14 +101,27 @@ export default class Article extends Component {
     const { category, title, date } = this.checkQueryString();
     const searchTitle = decodeURIComponent(title);
     const formatDate = date ? this.convertDateFormat(date) : false;
-    const articleDetail = await renderNewsDetail(searchTitle, category || formatDate);
-    articleDetail.keywords = this.makeKeywords(articleDetail.content);
-    const articleContent = this.divideIntoParagraphs(articleDetail.content);
-    articleDetail.content = articleContent;
-    articleDetail.recommend = await renderYesterdayNewsExtendedWithLimit();
-    const [prev, next] = articleDetail.recommend;
-    articleDetail.prev = prev;
-    articleDetail.next = next;
+    const createDetailContent = async detail => {
+      detail.keywords = this.makeKeywords(detail.content);
+      detail.content = this.divideIntoParagraphs(detail.content);
+      detail.recommend = await renderYesterdayNewsExtendedWithLimit();
+      [detail.prev, detail.next] = detail.recommend;
+    };
+
+    let articleDetail = await renderNewsDetail(searchTitle, category || formatDate);
+
+    if (articleDetail) {
+      await createDetailContent(articleDetail);
+    } else {
+      const formatDate = date ? this.convertDateFormat(date, true) : false;
+      articleDetail = await renderNewsDetail(searchTitle, category || formatDate);
+      try {
+        await createDetailContent(articleDetail);
+      } catch (err) {
+        console.error('현재 기사에 접근할 수 없습니다.');
+      }
+    }
+
     /* 2. Author */
     /* 3. Footer Banner */
     this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
