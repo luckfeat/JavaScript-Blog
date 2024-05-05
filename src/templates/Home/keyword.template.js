@@ -1,8 +1,6 @@
 const template = `
-  <h3 class="keyword__title">BLOG KEYWORD</h3>
-  <p class="keyword__description">
-    <span></span>
-  </p>
+  <h3 class="keyword__title">KEYWORD NEWS</h3>
+  <p class="keyword__description">News Categorized By Popular Keywords</p>
   <div class="keyword__list-wrap">
     <div class="keyword__list">
       <a class="keyword__item" href="#/keyword?category=ai"><span>AI</span></a>

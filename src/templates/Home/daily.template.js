@@ -1,7 +1,7 @@
 const template = `
     <div class="daily__wrap">
-      <h3 class="daily__title">요일별 연재</h3>
-      <p class="daily__description">블로그북 오리지널 연재를 만나 보세요.</p>
+      <h3 class="daily__title">DAILY ARTICLES</h3>
+      <p class="daily__description">Don't Skip A Day On Global News</p>
       <div class="daily__week">
         <ul>
           <li>
