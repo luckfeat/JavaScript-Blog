@@ -59,9 +59,6 @@ export default class Home extends Component {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await renderYesterdayNewsExtended();
-          // eslint-disable-next-line no-await-in-loop
-          /* 여기서 장문 기사 분류해서 게시 */
-          /* firebase 조건문 사용하기, success=true */
           // eslint-disable-next-line no-case-declarations
           const gridType = [
             { type: 'trend__grid--vertical', articles: articles.slice(0, 3), vertical: true },

@@ -28,13 +28,13 @@ const template = `
         </ul>
       </div>
       <div>
-        <div class="daily__sort">
-          <div class="daily__filter">
-            <a href="">최신순</a>
-            <a href="">응원순</a>
-            <a href="">라이킷순</a>
-          </div>
-        </div>
+<!--        <div class="daily__sort">-->
+<!--          <div class="daily__filter">-->
+<!--            <a href="">최신순</a>-->
+<!--            <a href="">응원순</a>-->
+<!--            <a href="">라이킷순</a>-->
+<!--          </div>-->
+<!--        </div>-->
         <ul class="daily__news">
           {{#each this.newsArray}}
             {{#each this}}

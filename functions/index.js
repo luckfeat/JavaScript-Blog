@@ -18,7 +18,7 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const createArticles = onSchedule('0 4,12,20 * * *', async () => {
+export const createArticles = onSchedule('0 0,8,12 * * *', async () => {
   async function postArticles() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
@@ -283,7 +283,7 @@ export const createArticles = onSchedule('0 4,12,20 * * *', async () => {
   await postSearches();
   await postDates();
 });
-export const setUp = onSchedule('0 22 * * *', async () => {
+export const setUp = onSchedule('0 14 * * *', async () => {
   const getToday = () => {
     const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
     const today = new Date();

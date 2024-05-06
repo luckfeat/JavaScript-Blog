@@ -52,6 +52,8 @@ export async function getYesterdayNews() {
 }
 export async function getYesterdayNewsExtended() {
   const [, yesterdayCollection] = getToday();
+
+  console.log(yesterdayCollection);
   const fireStoreQuery = await query(collection(db, yesterdayCollection), where('success', '==', true));
   const yesterdayNewsExtended = await getDocs(fireStoreQuery);
 

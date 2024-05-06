@@ -22,11 +22,9 @@ const template = `
 <!--    </div>-->
     <div class="header__intro">
 <!--      <h3 class="header__title">작품이 되는 이야기, 블로그스토리<span></span></h3>-->
-      <h3 class="header__title">Global News, your source to</h3>
+      <h3 class="header__title">Stay ahead, Stay informed and Stay global</h3>
       <p class="header__description">
-          <span>stay Ahead,<br></span>
-          <span>stay Informed,<br></span>
-          <span>stay Global.<br></span>
+          <span>Your trusted news source.<br></span>
       </p>
       <ul class="header__notice">
         <li></li>
