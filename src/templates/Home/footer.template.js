@@ -21,7 +21,7 @@ const template = `
           <li><a>Policy</a></li>
           <li><a>History</a></li>
           <li><a>Managers</a></li>
-<!--          <li><a class="footer__policy footer__policy&#45;&#45;bold">카카오 개인정보 처리방침</a></li>-->
+          <li><a class="footer__policy footer__policy--bold">Important</a></li>
 <!--          <li><a>청소년 보호정책</a></li>-->
 <!--          <li><a>운영정책</a></li>-->
         </ul>

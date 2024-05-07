@@ -12,7 +12,6 @@ footer {
     padding: 39px 0;
     margin: 0 auto;
   }
-
   .footer__info {
     display: flex;
     padding-bottom: 45px;
@@ -32,12 +31,10 @@ footer {
       }
     }
   }
-
   .footer__quotation {
     overflow: hidden;
     margin-right: auto;
   }
-
   .footer__logo {
     display: block;
     width: 32px;
@@ -48,31 +45,24 @@ footer {
     background: url(//t1.daumcdn.net/brunch9/static/images/pc/ico_brunch_v9_230901.png) no-repeat -320px -112px;
     text-indent: -9999px;
   }
-
   .footer__slogan {
     @include footer-slogan;
     font-size: 16px;
     line-height: 20px;
   }
-
   .footer__writer {
     margin-top: 7px;
     @include footer-slogan;
     font-size: 11px;
     letter-spacing: .55px;
   }
-
   .footer__service {}
-
   .footer__policy {}
-
   .footer__policy--bold {
     font-family: "Noto Sans Medium", sans-serif;
     font-weight: bold;
   }
-
   .footer__sns {}
-
   .footer__corp {
     display: flex;
     width: 100%;
@@ -80,13 +70,11 @@ footer {
     padding-top: 22px;
     border-top: 1px solid rgb(225 255 255 / .1);
   }
-
   .footer__corp-link {
     @include footer-slogan;
     font-size: 11px;
     opacity: 0.4;
   }
-
   .footer__corp-info {
     font-family: $font-default;
     font-size: smaller;
@@ -104,7 +92,6 @@ footer {
       }
     }
   }
-
   .footer__download {
     display: flex;
     margin-right: 5px;

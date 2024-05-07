@@ -1,6 +1,6 @@
 const template = `
-      <h3 class="recommend__title">Recommended Articles</h3>
-      <p class="recommend__description">Ipsem</p>
+      <h3 class="recommend__title">RECOMMENDED ARTICLES</h3>
+      <p class="recommend__description">Explore news all over the world.</p>
       <div class="recommend__carousel-wrap">
           <ul class="recommend__carousel">
              {{#each this}}
