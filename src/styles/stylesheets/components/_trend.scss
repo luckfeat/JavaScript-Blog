@@ -10,7 +10,6 @@
     position: relative;
     margin: 0 auto;
   }
-
   .trend__carousel {
     width: 1000%;
     //transform: translateX(-480px);
@@ -22,7 +21,6 @@
       float: left;
     }
   }
-
   .trend__grid {
     overflow: hidden;
     width: 960px;
@@ -39,18 +37,14 @@
       line-height: 36px;
       @include title-ellipsis
     }
-
     &--main {}
-
     &--three {
       .trend__article-wrap {
         width: 320px;
         height: 520px;
         position: relative;
-        //float: left;
       }
     }
-
     &--four {
       .trend__article-wrap {
         width: 50%;
@@ -59,7 +53,6 @@
         //float: left;
       }
     }
-
     &--vertical {
       display: block;
 
@@ -84,7 +77,6 @@
         }
       }
     }
-
     &--horizontal {
       display: block;
 
@@ -115,7 +107,6 @@
         }
       }
     }
-
     .trend__article {
       display: block;
       overflow: hidden;
@@ -188,7 +179,6 @@
       //  vertical-align: middle;
       //}
     }
-
     .trend__mask {
       position: absolute;
       inset: 0;
@@ -197,5 +187,37 @@
       opacity: .4;
       transition: opacity .3s ease-in-out;
     }
+  }
+  .trend__button {
+    .trend__prev {
+
+    }
+    .trend__next {
+
+    }
+  }
+  .trend__pagination {
+    width: 960px;
+    margin: 22px auto 0;
+    text-align: center;
+
+    .trend__pagination-page {
+      padding: 0 11px;
+      display: inline-block;
+    }
+
+    .trend__pagination-number {
+      display: inline-block;
+      width: 13px;
+      height: 9px;
+      font-size: 9px;
+      font-weight: 900;
+      margin-top: 10px;
+      opacity: 0.4;
+
+      &--active {
+      }
+    }
+
   }
 }

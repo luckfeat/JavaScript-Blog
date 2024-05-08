@@ -1,7 +1,7 @@
 const template = `
   <div class="trend__carousel-wrap">
     <ul class="trend__carousel">
-      {{#each this}}
+      {{#each this.gridType}}
       <li>
         {{#if this.vertical}}
         <div class="trend__grid {{this.type}}">
@@ -16,7 +16,6 @@ const template = `
                       <span class="trend__description">{{this.description}}</span>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
-  <!--                  <div class='trend__align'></div>-->
                   </div>
                   <div class="trend__mask"></div>
                 </a>
@@ -31,7 +30,6 @@ const template = `
                       <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
-  <!--                  <div class='trend__align'></div>-->
                   </div>
                   <div class="trend__mask"></div>
                 </a>
@@ -45,7 +43,6 @@ const template = `
                       <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
-  <!--                  <div class='trend__align'></div>-->
                   </div>
                   <div class="trend__mask"></div>
                 </a>
@@ -67,7 +64,6 @@ const template = `
                       <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
-  <!--                  <div class='trend__align'></div>-->
                   </div>
                   <div class="trend__mask"></div>
                 </a>
@@ -82,7 +78,6 @@ const template = `
                       <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
-  <!--                  <div class='trend__align'></div>-->
                   </div>
                   <div class="trend__mask"></div>
                 </a>
@@ -97,7 +92,6 @@ const template = `
                       <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
-  <!--                  <div class='trend__align'></div>-->
                   </div>
                   <div class="trend__mask"></div>
                 </a>
@@ -111,7 +105,6 @@ const template = `
                       <strong class="trend__title">{{stripQuote this.title}}</strong>
                       <span class="trend__source"><span class="trend__by">by</span>{{this.source.name}}</span>
                     </div>
-  <!--                  <div class='trend__align'></div>-->
                   </div>
                   <div class="trend__mask"></div>
                 </a>
@@ -162,18 +155,17 @@ const template = `
         {{/if}}
       </li>
       {{/each}}
-      <li></li>
     </ul>
+  </div>
+  <div class="trend__button">
+    <a class="trend__prev" href=""></a>
+    <a class="trend__next" href=""></a>
+  </div>
+  <div class="trend__pagination">
+    {{#each this.gridPagination}}
+    <a class="trend__pagination-page" href=""><span class="trend__pagination-number trend__pagination-number--active">0{{this}}</span></a>
+    {{/each}}
   </div>
 `;
 
 export default window.Handlebars.compile(template);
-
-/*
- * if (type)
- * each
- * if (index1)
- * if (index2)
- * if (index3)
- * end
- * */

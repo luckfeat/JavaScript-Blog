@@ -1,14 +1,9 @@
 import Component from '../core/component';
-import { Nav, Header, Trend, Keyword, Daily, Writer, Recommend, Footer } from '../components';
+import { Header, Trend, Keyword, Daily, Recommend, Footer } from '../components';
 import articlesStore, {
-  renderTodayNews,
   renderDateNewsWithLimit,
-  renderKeywordNews,
   renderKeywordNewsWithLimit,
-  renderYesterdayNews,
-  renderTodayNewsExtended,
   renderYesterdayNewsExtended,
-  renderYesterdayNewsExtendedWithLimit,
 } from '../store/articles';
 
 export default class Home extends Component {
@@ -45,7 +40,6 @@ export default class Home extends Component {
   // eslint-disable-next-line require-await
   async initialize() {
     const components = [
-      // { type: Nav, tag: 'nav' },
       { type: Header, tag: 'header' },
       { type: Trend, tag: 'article', cls: 'trend' },
       { type: Keyword, tag: 'section', cls: 'keyword' },
@@ -59,6 +53,7 @@ export default class Home extends Component {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await renderYesterdayNewsExtended();
+
           // eslint-disable-next-line no-case-declarations
           const gridType = [
             { type: 'trend__grid--vertical', articles: articles.slice(0, 3), vertical: true },
@@ -72,7 +67,16 @@ export default class Home extends Component {
             { type: 'trend__grid--vertical', articles: articles.slice(27, 30), vertical: true },
           ];
 
-          this.root.appendChild(new Trend(gridType).render(tag, cls));
+          // eslint-disable-next-line no-case-declarations
+          const gridLength = gridType.filter(el => el.articles.length > 0).length;
+
+          const gridPagination = [];
+
+          for (let i = 1; i <= gridLength; i++) {
+            gridPagination.push(i);
+          }
+
+          this.root.appendChild(new Trend({ gridType, gridPagination }).render(tag, cls));
           break;
         case 'Daily':
           // eslint-disable-next-line no-case-declarations

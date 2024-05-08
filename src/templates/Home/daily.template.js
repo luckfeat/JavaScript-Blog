@@ -1,7 +1,7 @@
 const template = `
     <div class="daily__wrap">
       <h3 class="daily__title">DAILY ARTICLES</h3>
-      <p class="daily__description">Don't Skip A Day On Global News.</p>
+      <p class="daily__description">Don't skip a day on global news.</p>
       <div class="daily__week">
         <ul>
           <li>
