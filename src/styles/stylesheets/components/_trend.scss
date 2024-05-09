@@ -163,21 +163,12 @@
           white-space: nowrap;
 
           .trend__by {
-            //background-position: -38px -130px;
             font-family: Georgia, sans-serif;
             font-style: italic;
             margin-right: 2px;
           }
         }
       }
-
-      /* display: table과 연관되어 있는 것 같음, 중앙 정렬을 위해 */
-      //.trend__align {
-      //  display: inline-block;
-      //  overflow: hidden;
-      //  height: 100%;
-      //  vertical-align: middle;
-      //}
     }
     .trend__mask {
       position: absolute;
@@ -193,7 +184,48 @@
 
     }
     .trend__next {
+      position: absolute;
+      text-align: center;
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      right: 30px;
+      margin-top: -77px;
+      line-height: 50px;
+      //border-radius: 50%;
+      background-color: #eeeeee;
+      opacity: 0.6;
 
+      span {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        &::before {
+          content: '';
+          position: absolute;
+          width: 60%;
+          border-bottom: 2px solid #959595;
+          border-radius: 2px;
+          left: 20%;
+          bottom: calc(50% - 1px);
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 32.5%;
+          height: 32.5%;
+          border-top: 2px solid #959595;
+          border-right: 2px solid #959595;
+          border-radius: 2px;
+          right: calc(20% + 5px);
+          top: 50%;
+          transform: translate(0, -50%) rotate(45deg);
+          opacity: 0.8;
+        }
+      }
     }
   }
   .trend__pagination {
