@@ -5,25 +5,25 @@ const template = `
       <div class="daily__week">
         <ul>
           <li>
-            <a href="#/date?date={{this.monday}}">월</a>
+            <a href="#/date?date={{this.monday}}">Mon</a>
           </li>
           <li>
-            <a href="#/date?date={{this.tuesday}}">화</a>
+            <a href="#/date?date={{this.tuesday}}">Tue</a>
           </li>
           <li>
-            <a href="#/date?date={{this.wednesday}}">수</a>
+            <a href="#/date?date={{this.wednesday}}">Wed</a>
           </li>
           <li>
-            <a href="#/date?date={{this.thursday}}">목</a>
+            <a href="#/date?date={{this.thursday}}">Thu</a>
           </li>
           <li>
-             <a href="#/date?date={{this.friday}}">금</a>
+             <a href="#/date?date={{this.friday}}">Fri</a>
           </li>
           <li>
-            <a href="#/date?date={{this.saturday}}">토</a>
+            <a href="#/date?date={{this.saturday}}">Sat</a>
           </li>
           <li>
-            <a href="#/date?date={{this.sunday}}">일</a>
+            <a href="#/date?date={{this.sunday}}">Sun</a>
           </li>
         </ul>
       </div>
@@ -42,7 +42,7 @@ const template = `
                 <li class="daily__item">
                   <a class="daily__link" href="#/article?date={{this.publishedAt}}&title={{this.id}}">
                     <div class="daily__article-text">
-                      <span class="daily__article-date">{{stripDate this.publishedAt}}</span>
+<!--                      <span class="daily__article-date">{{stripDate this.publishedAt}}</span>-->
                       <span class="daily__article-title">
                         <strong>{{stripQuote this.title}}</strong>
                         <span class="daily__article-new"></span>

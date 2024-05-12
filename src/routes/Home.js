@@ -70,6 +70,7 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           const gridLength = gridType.filter(el => el.articles.length > 0).length;
 
+          // eslint-disable-next-line no-case-declarations
           const gridPagination = [];
 
           for (let i = 1; i <= gridLength; i++) {
@@ -81,11 +82,13 @@ export default class Home extends Component {
         case 'Daily':
           // eslint-disable-next-line no-case-declarations
           const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
+
+          console.log(wednesday);
           // eslint-disable-next-line no-case-declarations
           const daysOfWeek = [
-            { monday },
+            // { monday },
             // { tuesday },
-            // { wednesday },
+            { wednesday },
             // { thursday },
             // { friday },
             // { saturday },
@@ -99,6 +102,7 @@ export default class Home extends Component {
             const date = day[key];
             // eslint-disable-next-line no-await-in-loop
             const news = await renderDateNewsWithLimit(date);
+            console.log(news);
             newsArray.push({ [key]: news });
           }
 
