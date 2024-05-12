@@ -53,6 +53,10 @@
         transform: translate(-50%, -50%);
         opacity: 0.6;
       }
+
+      &:hover {
+        border-color: #00c6be;
+        color: #00c6be;      }
     }
   }
 }
