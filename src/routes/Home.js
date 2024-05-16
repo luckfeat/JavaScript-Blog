@@ -12,7 +12,6 @@ export default class Home extends Component {
     this.recommendIncrement = 0;
     this.recommendStart = 0;
     this.recommendEnd = 50;
-    this.carousel = null;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -70,7 +69,7 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           const gridLength = gridType.filter(el => el.articles.length > 0).length;
 
-          gridType.slice(gridLength);
+          gridType.splice(gridLength - 1);
 
           // eslint-disable-next-line no-case-declarations
           const gridPagination = [];
@@ -91,29 +90,44 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           let offset = 0;
           // eslint-disable-next-line no-case-declarations
-          const translatePixelSize = 480; // 이동할 픽셀 크기
+          let translatePixelSize = 480; // 이동할 픽셀 크기
+          // eslint-disable-next-line no-case-declarations
+          let translatePixel = 0;
+          // eslint-disable-next-line no-case-declarations
+
+          // initial = 480
 
           prevBtn.style.display = 'none';
 
           // eslint-disable-next-line no-case-declarations
-          const updateCarousel = () => {
-            const translatePixel = offset * translatePixelSize;
-            carousel.style.transform = `translateX(-${translatePixel}px)`;
+          const updateCarousel = update => {
+            if (update) {
+              translatePixel += translatePixelSize;
+              translatePixelSize = 960;
+            } else {
+              translatePixel -= translatePixelSize;
+
+              if (offset === 0) {
+                translatePixel = 0;
+              }
+            }
+
             prevBtn.style.display = offset === 0 ? 'none' : 'block';
-            nextBtn.style.display = offset === gridLength + 2 ? 'none' : 'block';
+            nextBtn.style.display = offset === gridLength - 1 ? 'none' : 'block';
+            carousel.style.transform = `translateX(-${translatePixel}px)`;
           };
 
           prevBtn.addEventListener('click', () => {
             if (offset > 0) {
               offset--;
-              updateCarousel();
+              updateCarousel(false);
             }
           });
 
           nextBtn.addEventListener('click', () => {
-            if (offset < gridLength + 2) {
+            if (offset < gridLength - 1) {
               offset++;
-              updateCarousel();
+              updateCarousel(true);
             }
           });
 
@@ -122,7 +136,6 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
 
-          console.log(wednesday);
           // eslint-disable-next-line no-case-declarations
           const daysOfWeek = [
             // { monday },
@@ -141,7 +154,6 @@ export default class Home extends Component {
             const date = day[key];
             // eslint-disable-next-line no-await-in-loop
             const news = await renderDateNewsWithLimit(date);
-            console.log(news);
             newsArray.push({ [key]: news });
           }
 
@@ -154,7 +166,60 @@ export default class Home extends Component {
           const recommendation = await renderKeywordNewsWithLimit('ai');
           this.root.appendChild(new Recommend(recommendation.slice(0, 10)).render(tag, cls));
           this.recommend = document.querySelector('.recommend');
-          this.next = document.querySelector('.next');
+
+          // eslint-disable-next-line no-case-declarations
+          const recommendCarousel = document.querySelector('.recommend__carousel');
+          // eslint-disable-next-line no-case-declarations
+          const prevBtnRecommend = document.querySelector('.recommend__prev');
+          // eslint-disable-next-line no-case-declarations
+          const nextBtnRecommend = document.querySelector('.recommend__next');
+
+          // eslint-disable-next-line no-case-declarations
+          let offsetInf = 0;
+          // eslint-disable-next-line no-case-declarations
+          const translatePixelSizeInf = 960; // 이동할 픽셀 크기
+
+          prevBtnRecommend.style.display = 'none';
+
+          // eslint-disable-next-line no-case-declarations
+          const updateRecommend = () => {
+            const translatePixel = offsetInf * translatePixelSizeInf;
+            recommendCarousel.style.transform = `translateX(-${translatePixel}px)`;
+            prevBtnRecommend.style.display = offsetInf === 0 ? 'none' : 'block';
+            nextBtnRecommend.style.display = offsetInf === 98 + 2 ? 'none' : 'block';
+          };
+
+          prevBtnRecommend.addEventListener('click', () => {
+            if (offsetInf > 0) {
+              offsetInf--;
+              updateRecommend();
+            }
+          });
+
+          nextBtnRecommend.addEventListener('click', () => {
+            if (offsetInf < 98 + 2) {
+              offsetInf++;
+              updateRecommend();
+            }
+          });
+
+          nextBtnRecommend.addEventListener('click', () => {
+            this.recommendIncrement++;
+            if (this.recommendIncrement === 8) {
+              this.recommendIncrement = 0;
+              this.recommendStart += 51;
+              this.recommendEnd += 51;
+
+              const moreArticles = articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
+
+              if (moreArticles.length === 0) {
+                return;
+              }
+
+              this.recommend.appendChild(new Recommend(moreArticles, true).render());
+            }
+          });
+
           break;
         default:
           // eslint-disable-next-line new-cap
@@ -162,22 +227,5 @@ export default class Home extends Component {
           break;
       }
     }
-
-    // this.next.addEventListener('click', () => {
-    //   this.recommendIncrement++;
-    //   if (this.recommendIncrement === 8) {
-    //     this.recommendIncrement = 0;
-    //     this.recommendStart += 51;
-    //     this.recommendEnd += 51;
-    //
-    //     const moreArticles = articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
-    //
-    //     if (moreArticles.length === 0) {
-    //       return;
-    //     }
-    //
-    //     this.recommend.appendChild(new Recommend(moreArticles, true).render());
-    //   }
-    // });
   }
 }

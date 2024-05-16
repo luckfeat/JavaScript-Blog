@@ -17,11 +17,14 @@ const template = `
             {{/each}}
           </ul>
      </div>
-<!--     <div class="recommend__button">-->
-<!--      <a class="prev" href="javascript:void(0);">이전</a>-->
-<!--      <a class="next">이후</a>-->
-<!--    </div>-->
-     
+      <div class="recommend__button">
+        <a class="recommend__prev" href="javascript:void(0)">
+          <span></span>
+        </a>
+        <a class="recommend__next" href="javascript:void(0)">
+          <span></span>
+        </a>
+      </div>
 `;
 
 export default window.Handlebars.compile(template);
