@@ -70,6 +70,8 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           const gridLength = gridType.filter(el => el.articles.length > 0).length;
 
+          gridType.slice(gridLength);
+
           // eslint-disable-next-line no-case-declarations
           const gridPagination = [];
 
@@ -78,6 +80,43 @@ export default class Home extends Component {
           }
 
           this.root.appendChild(new Trend({ gridType, gridPagination }).render(tag, cls));
+
+          // eslint-disable-next-line no-case-declarations
+          const carousel = document.querySelector('.trend__carousel');
+          // eslint-disable-next-line no-case-declarations
+          const prevBtn = document.querySelector('.trend__prev');
+          // eslint-disable-next-line no-case-declarations
+          const nextBtn = document.querySelector('.trend__next');
+
+          // eslint-disable-next-line no-case-declarations
+          let offset = 0;
+          // eslint-disable-next-line no-case-declarations
+          const translatePixelSize = 480; // 이동할 픽셀 크기
+
+          prevBtn.style.display = 'none';
+
+          // eslint-disable-next-line no-case-declarations
+          const updateCarousel = () => {
+            const translatePixel = offset * translatePixelSize;
+            carousel.style.transform = `translateX(-${translatePixel}px)`;
+            prevBtn.style.display = offset === 0 ? 'none' : 'block';
+            nextBtn.style.display = offset === gridLength + 2 ? 'none' : 'block';
+          };
+
+          prevBtn.addEventListener('click', () => {
+            if (offset > 0) {
+              offset--;
+              updateCarousel();
+            }
+          });
+
+          nextBtn.addEventListener('click', () => {
+            if (offset < gridLength + 2) {
+              offset++;
+              updateCarousel();
+            }
+          });
+
           break;
         case 'Daily':
           // eslint-disable-next-line no-case-declarations

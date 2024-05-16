@@ -158,10 +158,10 @@ const template = `
     </ul>
   </div>
   <div class="trend__button">
-    <a class="trend__prev" href="">
-    
+    <a class="trend__prev" href="javascript:void(0)">
+      <span></span>
     </a>
-    <a class="trend__next" href="">
+    <a class="trend__next" href="javascript:void(0)">
       <span></span>
     </a>
   </div>
