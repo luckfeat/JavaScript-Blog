@@ -5,6 +5,7 @@ import { getFirestore, collection, doc, setDoc, getDocs } from 'firebase/firesto
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 // eslint-disable-next-line import/extensions,import/no-extraneous-dependencies
 import { OpenAI } from 'openai';
+// eslint-disable-next-line import/extensions
 import config from './config.mjs';
 
 const firebaseConfig = {
@@ -18,7 +19,7 @@ const firebaseConfig = {
 const index = initializeApp(firebaseConfig);
 const db = getFirestore(index);
 
-export const createArticles = onSchedule('0 0,8,12 * * *', async () => {
+export const createArticles = onSchedule('0 0,4,8,12,18,20 * * *', async () => {
   async function postArticles() {
     const baseUrl = 'https://gnews.io/api/v4';
     const categories = [
@@ -33,7 +34,7 @@ export const createArticles = onSchedule('0 0,8,12 * * *', async () => {
       'health',
     ];
     const batchSize = 3;
-    const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
+    const apiKeys = [config.firstApiKey, config.secondApiKey, config.thirdApiKey];
     const date = new Date();
     const today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
 
@@ -130,7 +131,7 @@ export const createArticles = onSchedule('0 0,8,12 * * *', async () => {
       'microsoft',
     ];
     const batchSize = 3;
-    const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
+    const apiKeys = [config.firstApiKey, config.secondApiKey, config.thirdApiKey];
     async function requestAndPostArticles(baseUrl, search, apiKey) {
       const requestUrl = `${baseUrl}/?q=${search}&lang=en&country=us&apikey=${apiKey}`;
       const response = await fetch(requestUrl);
@@ -217,7 +218,7 @@ export const createArticles = onSchedule('0 0,8,12 * * *', async () => {
     const baseUrl = 'https://gnews.io/api/v4/search';
     const dates = getWeekDates();
     const batchSize = 3;
-    const apiKeys = [config.apiKey, config.secondApiKey, config.thirdApiKey];
+    const apiKeys = [config.firstApiKey, config.secondApiKey, config.thirdApiKey];
     async function requestAndPostArticles(baseUrl, date, apiKey) {
       const requestUrl = `${baseUrl}/?&q=and&from=${''}T20:00:00Z&to=${date}:T24:00:00Z&in=description,content&lang=en&country=us&apikey=${apiKey}`;
       const response = await fetch(requestUrl);
@@ -283,7 +284,7 @@ export const createArticles = onSchedule('0 0,8,12 * * *', async () => {
   await postSearches();
   await postDates();
 });
-export const setUp = onSchedule('0 14 * * *', async () => {
+export const setUp = onSchedule('0 6,22 * * *', async () => {
   const getToday = () => {
     const formatDate = date => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
     const today = new Date();

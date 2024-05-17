@@ -7,11 +7,9 @@ import articlesStore, {
 } from '../store/articles';
 
 export default class Home extends Component {
+  // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
-    this.recommendIncrement = 0;
-    this.recommendStart = 0;
-    this.recommendEnd = 50;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -52,7 +50,6 @@ export default class Home extends Component {
         case 'Trend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const articles = await renderYesterdayNewsExtended();
-
           // eslint-disable-next-line no-case-declarations
           const gridType = [
             { type: 'trend__grid--vertical', articles: articles.slice(0, 3), vertical: true },
@@ -65,7 +62,6 @@ export default class Home extends Component {
             { type: 'trend__grid--three', articles: articles.slice(24, 27) },
             { type: 'trend__grid--vertical', articles: articles.slice(27, 30), vertical: true },
           ];
-
           // eslint-disable-next-line no-case-declarations
           const gridLength = gridType.filter(el => el.articles.length > 0).length;
 
@@ -90,12 +86,9 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           let offset = 0;
           // eslint-disable-next-line no-case-declarations
-          let translatePixelSize = 480; // 이동할 픽셀 크기
+          let translatePixelSize = 480;
           // eslint-disable-next-line no-case-declarations
           let translatePixel = 0;
-          // eslint-disable-next-line no-case-declarations
-
-          // initial = 480
 
           prevBtn.style.display = 'none';
 
@@ -123,14 +116,12 @@ export default class Home extends Component {
               updateCarousel(false);
             }
           });
-
           nextBtn.addEventListener('click', () => {
             if (offset < gridLength - 1) {
               offset++;
               updateCarousel(true);
             }
           });
-
           break;
         case 'Daily':
           // eslint-disable-next-line no-case-declarations
@@ -164,20 +155,31 @@ export default class Home extends Component {
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
           const recommendation = await renderKeywordNewsWithLimit('ai');
-          this.root.appendChild(new Recommend(recommendation.slice(0, 10)).render(tag, cls));
-          this.recommend = document.querySelector('.recommend');
+          // eslint-disable-next-line no-case-declarations
+          let recommendStart = 0;
+          // eslint-disable-next-line no-case-declarations
+          let recommendEnd = 10;
+          // eslint-disable-next-line no-case-declarations
+          let recommendationNews = recommendation.slice(recommendStart, recommendEnd);
 
+          this.root.appendChild(new Recommend(recommendationNews).render(tag, cls));
+
+          // eslint-disable-next-line no-case-declarations
+          const infCarousel = document.querySelector('.recommend__carousel');
+          // eslint-disable-next-line no-case-declarations
+          let infCarouselLength = infCarousel.querySelectorAll('li').length;
           // eslint-disable-next-line no-case-declarations
           const recommendCarousel = document.querySelector('.recommend__carousel');
           // eslint-disable-next-line no-case-declarations
           const prevBtnRecommend = document.querySelector('.recommend__prev');
           // eslint-disable-next-line no-case-declarations
           const nextBtnRecommend = document.querySelector('.recommend__next');
-
           // eslint-disable-next-line no-case-declarations
           let offsetInf = 0;
           // eslint-disable-next-line no-case-declarations
           const translatePixelSizeInf = 960; // 이동할 픽셀 크기
+          // eslint-disable-next-line no-case-declarations
+          let infCarouselWidth = infCarouselLength / 5;
 
           prevBtnRecommend.style.display = 'none';
 
@@ -186,7 +188,7 @@ export default class Home extends Component {
             const translatePixel = offsetInf * translatePixelSizeInf;
             recommendCarousel.style.transform = `translateX(-${translatePixel}px)`;
             prevBtnRecommend.style.display = offsetInf === 0 ? 'none' : 'block';
-            nextBtnRecommend.style.display = offsetInf === 98 + 2 ? 'none' : 'block';
+            nextBtnRecommend.style.display = offsetInf > infCarouselWidth ? 'none' : 'block';
           };
 
           prevBtnRecommend.addEventListener('click', () => {
@@ -197,29 +199,28 @@ export default class Home extends Component {
           });
 
           nextBtnRecommend.addEventListener('click', () => {
-            if (offsetInf < 98 + 2) {
+            if (offsetInf < infCarouselWidth) {
               offsetInf++;
+              if (offsetInf === infCarouselWidth) {
+                recommendStart += 10;
+                recommendEnd += 10;
+                recommendationNews = recommendation.slice(recommendStart, recommendEnd);
+
+                if (recommendationNews) {
+                  new Recommend(recommendationNews, true)
+                    .render(tag, cls)
+                    .querySelectorAll('li')
+                    .forEach(li => {
+                      infCarousel.appendChild(li);
+                    });
+                  infCarouselLength = infCarousel.querySelectorAll('li').length;
+                  infCarouselWidth = infCarouselLength / 5;
+                  infCarousel.style.width = infCarousel.getBoundingClientRect().width * 1.15 + 'px';
+                }
+              }
               updateRecommend();
             }
           });
-
-          nextBtnRecommend.addEventListener('click', () => {
-            this.recommendIncrement++;
-            if (this.recommendIncrement === 8) {
-              this.recommendIncrement = 0;
-              this.recommendStart += 51;
-              this.recommendEnd += 51;
-
-              const moreArticles = articlesStore.state.ai.slice(this.recommendStart, this.recommendEnd);
-
-              if (moreArticles.length === 0) {
-                return;
-              }
-
-              this.recommend.appendChild(new Recommend(moreArticles, true).render());
-            }
-          });
-
           break;
         default:
           // eslint-disable-next-line new-cap
