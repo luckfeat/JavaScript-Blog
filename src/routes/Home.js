@@ -177,7 +177,7 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           let offsetInf = 0;
           // eslint-disable-next-line no-case-declarations
-          const translatePixelSizeInf = 960; // 이동할 픽셀 크기
+          const translatePixelSizeInf = 960;
           // eslint-disable-next-line no-case-declarations
           let infCarouselWidth = infCarouselLength / 5;
 
@@ -188,7 +188,7 @@ export default class Home extends Component {
             const translatePixel = offsetInf * translatePixelSizeInf;
             recommendCarousel.style.transform = `translateX(-${translatePixel}px)`;
             prevBtnRecommend.style.display = offsetInf === 0 ? 'none' : 'block';
-            nextBtnRecommend.style.display = offsetInf > infCarouselWidth ? 'none' : 'block';
+            nextBtnRecommend.style.display = offsetInf >= infCarouselWidth ? 'none' : 'block';
           };
 
           prevBtnRecommend.addEventListener('click', () => {

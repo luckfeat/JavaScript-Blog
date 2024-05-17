@@ -16,7 +16,6 @@
     display: block;
     height: 11px;
     margin: 17px 0 47px auto;
-    //margin-top: 10px;
     color: #959595;
     font-size: 12px;
     font-weight: 400;
@@ -24,7 +23,6 @@
     text-align: center;
   }
   .recommend__carousel-wrap {
-    overflow: visible;
     width: 960px;
     margin: 0 auto;
   }
@@ -32,7 +30,6 @@
     width: 7800px;
     transform: translateX(0px);
     transition: -webkit-transform 0.5s ease 0s;
-    position: relative;
     overflow: hidden;
     padding-bottom: 180px;
 
