@@ -297,8 +297,22 @@
       font-weight: 900;
       margin-top: 10px;
       opacity: 0.4;
+    }
 
-      &--active {
+    .trend__pagination-number--active {
+      position: relative;
+      padding-bottom: 15px;
+      opacity: 1;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px; /* 밑줄의 두께 */
+        width: 80%;
+        margin: auto;
+        background-color: black; /* 밑줄의 색상 */
       }
     }
 

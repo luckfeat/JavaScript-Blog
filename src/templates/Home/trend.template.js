@@ -167,7 +167,7 @@ const template = `
   </div>
   <div class="trend__pagination">
     {{#each this.gridPagination}}
-    <a class="trend__pagination-page" href=""><span class="trend__pagination-number trend__pagination-number--active">0{{this}}</span></a>
+    <a class="trend__pagination-page"><span class="trend__pagination-number">0{{this}}</span></a>
     {{/each}}
   </div>
 `;

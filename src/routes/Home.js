@@ -82,11 +82,13 @@ export default class Home extends Component {
           const prevBtn = document.querySelector('.trend__prev');
           // eslint-disable-next-line no-case-declarations
           const nextBtn = document.querySelector('.trend__next');
+          // eslint-disable-next-line no-case-declarations
+          const paginationButtons = document.querySelectorAll('.trend__pagination-number');
 
           // eslint-disable-next-line no-case-declarations
           let offset = 0;
           // eslint-disable-next-line no-case-declarations
-          let translatePixelSize = 960;
+          const translatePixelSize = 960;
           // eslint-disable-next-line no-case-declarations
           let translatePixel = 0;
 
@@ -96,7 +98,6 @@ export default class Home extends Component {
           const updateCarousel = update => {
             if (update) {
               translatePixel += translatePixelSize;
-              translatePixelSize = 960;
             } else {
               translatePixel -= translatePixelSize;
 
@@ -109,18 +110,48 @@ export default class Home extends Component {
             nextBtn.style.display = offset === gridLength - 2 ? 'none' : 'block';
             carousel.style.transform = `translateX(-${translatePixel}px)`;
           };
+          // eslint-disable-next-line no-case-declarations
+          const moveCarousel = () => {
+            translatePixel = translatePixelSize * offset;
+            prevBtn.style.display = offset === 0 ? 'none' : 'block';
+            nextBtn.style.display = offset === gridLength - 2 ? 'none' : 'block';
+            carousel.style.transform = `translateX(-${translatePixel}px)`;
+          };
+          // eslint-disable-next-line no-case-declarations
+          const changeOffSet = (currentPage, prev) => {
+            paginationButtons.forEach(btn => btn.classList.remove('trend__pagination-number--active'));
 
+            if (currentPage) {
+              offset = currentPage;
+            } else if (prev) {
+              offset--;
+            } else {
+              offset++;
+            }
+
+            paginationButtons[offset].classList.add('trend__pagination-number--active');
+          };
+
+          paginationButtons[0].classList.add('trend__pagination-number--active');
           prevBtn.addEventListener('click', () => {
             if (offset > 0) {
-              offset--;
+              // offset--;
+              changeOffSet(false, true);
               updateCarousel(false);
             }
           });
           nextBtn.addEventListener('click', () => {
             if (offset < gridLength - 1) {
-              offset++;
+              // offset++;
+              changeOffSet(false, false);
               updateCarousel(true);
             }
+          });
+          paginationButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              changeOffSet(btn.textContent - 1);
+              moveCarousel();
+            });
           });
           break;
         case 'Daily':
@@ -197,7 +228,6 @@ export default class Home extends Component {
               updateRecommend();
             }
           });
-
           nextBtnRecommend.addEventListener('click', () => {
             if (offsetInf < infCarouselWidth) {
               offsetInf++;
