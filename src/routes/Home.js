@@ -70,7 +70,7 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           const gridPagination = [];
 
-          for (let i = 1; i <= gridLength; i++) {
+          for (let i = 1; i < gridLength; i++) {
             gridPagination.push(i);
           }
 
@@ -86,7 +86,7 @@ export default class Home extends Component {
           // eslint-disable-next-line no-case-declarations
           let offset = 0;
           // eslint-disable-next-line no-case-declarations
-          let translatePixelSize = 480;
+          let translatePixelSize = 960;
           // eslint-disable-next-line no-case-declarations
           let translatePixel = 0;
 
@@ -106,7 +106,7 @@ export default class Home extends Component {
             }
 
             prevBtn.style.display = offset === 0 ? 'none' : 'block';
-            nextBtn.style.display = offset === gridLength - 1 ? 'none' : 'block';
+            nextBtn.style.display = offset === gridLength - 2 ? 'none' : 'block';
             carousel.style.transform = `translateX(-${translatePixel}px)`;
           };
 
