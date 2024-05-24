@@ -84,6 +84,7 @@ export default class Home extends Component {
           const nextBtn = document.querySelector('.trend__next');
           // eslint-disable-next-line no-case-declarations
           const paginationButtons = document.querySelectorAll('.trend__pagination-number');
+          const paginationButtonDivs = document.querySelectorAll('.trend__pagination-page');
 
           // eslint-disable-next-line no-case-declarations
           let offset = 0;
@@ -118,14 +119,14 @@ export default class Home extends Component {
             carousel.style.transform = `translateX(-${translatePixel}px)`;
           };
           // eslint-disable-next-line no-case-declarations
-          const changeOffSet = (currentPage, prev) => {
+          const changeOffSet = (currentPage, prev, next) => {
             paginationButtons.forEach(btn => btn.classList.remove('trend__pagination-number--active'));
 
-            if (currentPage) {
+            if (typeof currentPage === 'number') {
               offset = currentPage;
             } else if (prev) {
               offset--;
-            } else {
+            } else if (next) {
               offset++;
             }
 
@@ -143,13 +144,15 @@ export default class Home extends Component {
           nextBtn.addEventListener('click', () => {
             if (offset < gridLength - 1) {
               // offset++;
-              changeOffSet(false, false);
+              changeOffSet(false, false, true);
               updateCarousel(true);
             }
           });
-          paginationButtons.forEach(btn => {
+          paginationButtonDivs.forEach(btn => {
             btn.addEventListener('click', () => {
+              console.log(btn.textContent - 1);
               changeOffSet(btn.textContent - 1);
+              console.log(offset);
               moveCarousel();
             });
           });
