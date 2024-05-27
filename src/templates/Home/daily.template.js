@@ -5,25 +5,26 @@ const template = `
       <div class="daily__week">
         <ul>
           <li>
-            <a href="#/date?date={{this.monday}}">Mon</a>
+<!--            <a class="daily__pagination" href="#/date?date={{this.monday}}">Mon</a>-->
+            <a class="daily__pagination monday">Mon</a>
           </li>
           <li>
-            <a href="#/date?date={{this.tuesday}}">Tue</a>
+            <a class="daily__pagination tuesday" href="#/date?date={{this.tuesday}}">Tue</a>
           </li>
           <li>
-            <a href="#/date?date={{this.wednesday}}">Wed</a>
+            <a class="daily__pagination wednesday" href="#/date?date={{this.wednesday}}">Wed</a>
           </li>
           <li>
-            <a href="#/date?date={{this.thursday}}">Thu</a>
+            <a class="daily__pagination thursday" href="#/date?date={{this.thursday}}">Thu</a>
           </li>
           <li>
-             <a href="#/date?date={{this.friday}}">Fri</a>
+             <a class="daily__pagination friday" href="#/date?date={{this.friday}}">Fri</a>
           </li>
           <li>
-            <a href="#/date?date={{this.saturday}}">Sat</a>
+            <a class="daily__pagination saturday" href="#/date?date={{this.saturday}}">Sat</a>
           </li>
           <li>
-            <a href="#/date?date={{this.sunday}}">Sun</a>
+            <a class="daily__pagination sunday" href="#/date?date={{this.sunday}}">Sun</a>
           </li>
         </ul>
       </div>
@@ -35,8 +36,8 @@ const template = `
 <!--            <a href="">라이킷순</a>-->
 <!--          </div>-->
 <!--        </div>-->
-        <ul class="daily__news">
-          {{#each this.newsArray}}
+        {{#each this.newsArray}}
+          <ul class="daily__news {{this.day}}">
             {{#each this}}
               {{#each this}}
                 <li class="daily__item">
@@ -61,8 +62,8 @@ const template = `
                 </li>
               {{/each}}
             {{/each}}
-          {{/each}}
         </ul>
+        {{/each}}
       </div>
 <!--      <a class="daily__all" href="">All<span></span></a>-->
     </div>

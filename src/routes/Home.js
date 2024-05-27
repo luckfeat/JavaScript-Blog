@@ -84,6 +84,7 @@ export default class Home extends Component {
           const nextBtn = document.querySelector('.trend__next');
           // eslint-disable-next-line no-case-declarations
           const paginationButtons = document.querySelectorAll('.trend__pagination-number');
+          // eslint-disable-next-line no-case-declarations
           const paginationButtonDivs = document.querySelectorAll('.trend__pagination-page');
 
           // eslint-disable-next-line no-case-declarations
@@ -150,9 +151,7 @@ export default class Home extends Component {
           });
           paginationButtonDivs.forEach(btn => {
             btn.addEventListener('click', () => {
-              console.log(btn.textContent - 1);
               changeOffSet(btn.textContent - 1);
-              console.log(offset);
               moveCarousel();
             });
           });
@@ -163,14 +162,15 @@ export default class Home extends Component {
 
           // eslint-disable-next-line no-case-declarations
           const daysOfWeek = [
-            // { monday },
-            // { tuesday },
+            { monday },
+            { tuesday },
             { wednesday },
-            // { thursday },
-            // { friday },
-            // { saturday },
-            // { sunday },
+            { thursday },
+            { friday },
+            { saturday },
+            { sunday },
           ];
+
           // eslint-disable-next-line no-case-declarations
           const newsArray = [];
 
@@ -179,12 +179,30 @@ export default class Home extends Component {
             const date = day[key];
             // eslint-disable-next-line no-await-in-loop
             const news = await renderDateNewsWithLimit(date);
-            newsArray.push({ [key]: news });
+            newsArray.push({ [key]: news, day: key });
           }
 
           this.root.appendChild(
             new Daily({ monday, tuesday, wednesday, thursday, friday, saturday, sunday, newsArray }).render(tag, cls),
           );
+
+          // eslint-disable-next-line no-case-declarations
+          const dailyNewsLists = document.querySelectorAll('.daily__news');
+
+          const daysInWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+          const today = new Date().getDay();
+          const todayClass = daysInWeek[today];
+
+          dailyNewsLists.forEach(list => {
+            list.style.display = 'none';
+          });
+
+          // eslint-disable-next-line no-case-declarations
+          const todayNewsList = document.querySelector(`.${todayClass}`);
+          if (todayNewsList) {
+            todayNewsList.style.display = 'flex';
+          }
+
           break;
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop
@@ -222,7 +240,7 @@ export default class Home extends Component {
             const translatePixel = offsetInf * translatePixelSizeInf;
             recommendCarousel.style.transform = `translateX(-${translatePixel}px)`;
             prevBtnRecommend.style.display = offsetInf === 0 ? 'none' : 'block';
-            nextBtnRecommend.style.display = offsetInf >= infCarouselWidth ? 'none' : 'block';
+            nextBtnRecommend.style.display = offsetInf >= infCarouselWidth + 4 ? 'none' : 'block';
           };
 
           prevBtnRecommend.addEventListener('click', () => {
@@ -232,12 +250,17 @@ export default class Home extends Component {
             }
           });
           nextBtnRecommend.addEventListener('click', () => {
-            if (offsetInf < infCarouselWidth) {
+            if (offsetInf < infCarouselWidth + 4) {
               offsetInf++;
               if (offsetInf === infCarouselWidth) {
                 recommendStart += 10;
                 recommendEnd += 10;
-                recommendationNews = recommendation.slice(recommendStart, recommendEnd);
+
+                if (recommendEnd <= recommendation.length) {
+                  recommendationNews = recommendation.slice(recommendStart, recommendEnd);
+                } else {
+                  recommendationNews = null;
+                }
 
                 if (recommendationNews) {
                   new Recommend(recommendationNews, true)
@@ -253,6 +276,8 @@ export default class Home extends Component {
               }
               updateRecommend();
             }
+            console.log(`offset:${offsetInf}`);
+            console.log(`infCarouselWidth:${infCarouselWidth}`);
           });
           break;
         default:

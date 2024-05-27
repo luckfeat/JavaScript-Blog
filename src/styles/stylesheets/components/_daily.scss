@@ -31,19 +31,18 @@
 
       li {
         padding-right: 62px;
-
-        a {
-          /* 선택된 경우 after 요소로 하이라이트 */
-          position: relative;
-          display: inline-block;
-          padding: 0 14px 12px;
-          color: #959595;
-          font-size: 14px;
-          line-height: 22px;
-          text-decoration: none;
-        }
       }
     }
+  }
+
+  .daily__pagination {
+    position: relative;
+    display: inline-block;
+    padding: 0 14px 12px;
+    color: #959595;
+    font-size: 14px;
+    line-height: 22px;
+    text-decoration: none;
   }
   .daily__sort {
     display: flex;
