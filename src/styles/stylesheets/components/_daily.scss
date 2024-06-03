@@ -34,7 +34,6 @@
       }
     }
   }
-
   .daily__pagination {
     position: relative;
     display: inline-block;
@@ -43,6 +42,27 @@
     font-size: 14px;
     line-height: 22px;
     text-decoration: none;
+  }
+  .daily__pagination--active {
+    position: relative;
+    display: inline-block;
+    padding: 0 14px 12px;
+    color: #333333;
+    font-size: 14px;
+    line-height: 22px;
+    text-decoration: none;
+
+    &::after {
+      content: '';
+      background-color: #00c6be;
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      display: block;
+      width: 40px;
+      height: 1px;
+      transform: translate(-50%);
+    }
   }
   .daily__sort {
     display: flex;
@@ -78,7 +98,6 @@
         margin-left: 20px;
       }
     }
-
     .daily__link {
       display: flex;
       width: 100%;
@@ -90,7 +109,6 @@
       border: 1px solid #eee;
       text-decoration: none;
     }
-
     .daily__article-text {}
     .daily__article-date {}
     .daily__article-title {
@@ -127,7 +145,6 @@
       font-family: Georgia, sans-serif;
       font-style: italic;
     }
-
     .daily__article-image {
       width: 80px;
       height: 80px;

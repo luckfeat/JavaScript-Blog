@@ -159,7 +159,6 @@ export default class Home extends Component {
         case 'Daily':
           // eslint-disable-next-line no-case-declarations
           const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = this.getWeekDates();
-
           // eslint-disable-next-line no-case-declarations
           const daysOfWeek = [
             { monday },
@@ -170,7 +169,6 @@ export default class Home extends Component {
             { saturday },
             { sunday },
           ];
-
           // eslint-disable-next-line no-case-declarations
           const newsArray = [];
 
@@ -188,21 +186,37 @@ export default class Home extends Component {
 
           // eslint-disable-next-line no-case-declarations
           const dailyNewsLists = document.querySelectorAll('.daily__news');
-
+          // eslint-disable-next-line no-case-declarations
+          const dailyPaginationLists = document.querySelectorAll('.daily__pagination');
+          // eslint-disable-next-line no-case-declarations
           const daysInWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+          // eslint-disable-next-line no-case-declarations
           const today = new Date().getDay();
+          // eslint-disable-next-line no-case-declarations
           const todayClass = daysInWeek[today];
 
           dailyNewsLists.forEach(list => {
             list.style.display = 'none';
           });
 
-          // eslint-disable-next-line no-case-declarations
-          const todayNewsList = document.querySelector(`.${todayClass}`);
-          if (todayNewsList) {
-            todayNewsList.style.display = 'flex';
-          }
+          dailyPaginationLists.forEach(pagination => {
+            pagination.addEventListener('click', () => {
+              document.querySelectorAll('.daily__pagination--active').forEach(element => {
+                element.classList.remove('daily__pagination--active');
+              });
 
+              pagination.classList.add('daily__pagination--active');
+
+              dailyNewsLists.forEach(list => {
+                list.style.display = 'none';
+              });
+
+              document.querySelector(`.daily__news.${pagination.classList[1]}`).style.display = 'flex';
+            });
+          });
+
+          document.querySelector(`.daily__news.${todayClass}`).style.display = 'flex';
+          document.querySelector(`.daily__pagination.${todayClass}`).classList.add('daily__pagination--active');
           break;
         case 'Recommend':
           // eslint-disable-next-line no-case-declarations,no-await-in-loop

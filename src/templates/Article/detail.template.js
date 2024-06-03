@@ -3,27 +3,9 @@ const template = `
     <div class="detail-header__top">
       <div class="detail-header__inner">
         <div class="detail-header__inner-left">
-<!--          <button></button>-->
           <h1>
-            <a class="detail-header__logo" href=""></a>
+            <!--          here-->
           </h1>
-        </div>
-        <div class="detail-header__inner-right">
-<!--          <button type="button"></button>-->
-<!--          <div class="detail-header__button-wrap">-->
-<!--            <a class="detail-header__donation" href="">-->
-<!--              <span class="detail-header__icon"></span>-->
-<!--            </a>-->
-<!--            <a class="detail-header__like" href="">-->
-<!--              <span class="detail-header__icon"></span>-->
-<!--            </a>-->
-<!--            <a class="detail-header__comment" href="">-->
-<!--              <span class="detail-header__icon"></span>-->
-<!--            </a>-->
-<!--            <a class="detail-header__share" href="">-->
-<!--              <span class="detail-header__icon"></span>-->
-<!--            </a>-->
-<!--          </div>-->
         </div>
       </div>     
     </div>
@@ -65,6 +47,13 @@ const template = `
           <li>upcoming</li>
         {{/unless}}
       </ul>
+    </div>
+    <div class="article__source">
+      <div class="article__source-inner">
+        <strong class="article__source-name">{{this.source.name}}</strong>
+        <p class="article__source-description">{{this.description}}</p>
+        <a class="article__source-url">{{this.source.url}}</a>
+      </div>
     </div>
   </main>
   <div class="article__footer">

@@ -9,22 +9,28 @@ const template = `
             <a class="daily__pagination monday">Mon</a>
           </li>
           <li>
-            <a class="daily__pagination tuesday" href="#/date?date={{this.tuesday}}">Tue</a>
+<!--            <a class="daily__pagination tuesday" href="#/date?date={{this.tuesday}}">Tue</a>-->
+            <a class="daily__pagination tuesday">Tue</a>
           </li>
           <li>
-            <a class="daily__pagination wednesday" href="#/date?date={{this.wednesday}}">Wed</a>
+<!--            <a class="daily__pagination wednesday" href="#/date?date={{this.wednesday}}">Wed</a>-->
+            <a class="daily__pagination wednesday">Wed</a>
           </li>
           <li>
-            <a class="daily__pagination thursday" href="#/date?date={{this.thursday}}">Thu</a>
+<!--            <a class="daily__pagination thursday" href="#/date?date={{this.thursday}}">Thu</a>-->
+            <a class="daily__pagination thursday">Thu</a>
           </li>
           <li>
-             <a class="daily__pagination friday" href="#/date?date={{this.friday}}">Fri</a>
+<!--             <a class="daily__pagination friday" href="#/date?date={{this.friday}}">Fri</a>-->
+             <a class="daily__pagination friday">Fri</a>
           </li>
           <li>
-            <a class="daily__pagination saturday" href="#/date?date={{this.saturday}}">Sat</a>
+<!--            <a class="daily__pagination saturday" href="#/date?date={{this.saturday}}">Sat</a>-->
+            <a class="daily__pagination saturday">Sat</a>
           </li>
           <li>
-            <a class="daily__pagination sunday" href="#/date?date={{this.sunday}}">Sun</a>
+<!--            <a class="daily__pagination sunday" href="#/date?date={{this.sunday}}">Sun</a>-->
+            <a class="daily__pagination sunday">Sun</a>
           </li>
         </ul>
       </div>

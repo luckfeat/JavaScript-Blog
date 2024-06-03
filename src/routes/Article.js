@@ -97,7 +97,6 @@ export default class Article extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   async initialize() {
-    /* 여기서 title, date 변경해서 넘기기 */
     const { category, title, date } = this.checkQueryString();
     const searchTitle = decodeURIComponent(title);
     const formatDate = date ? this.convertDateFormat(date) : false;
@@ -118,9 +117,16 @@ export default class Article extends Component {
       try {
         await createDetailContent(articleDetail);
       } catch (err) {
-        console.error('현재 기사에 접근할 수 없습니다.');
+        /* 에러의 경우 Not Found 처리 */
+        console.alert('현재 해당 기사에 접근할 수 없습니다.');
       }
     }
+
+    window.addEventListener('scroll', () => {
+      console.log('Scrolled');
+    });
+
+    console.log(articleDetail);
 
     /* 2. Author */
     /* 3. Footer Banner */
