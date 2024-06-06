@@ -13,6 +13,7 @@ export default class Keyword extends Component {
     // eslint-disable-next-line no-restricted-globals
     const { category } = history.state;
     const keywordNews = await renderKeywordNews(category);
-    this.root.appendChild(new KeywordMain({ keywordNews, category }).render('section', 'keyword'));
+
+    this.root.appendChild(new KeywordMain({ keywordNews, category }).render('section', 'keyword-main'));
   }
 }

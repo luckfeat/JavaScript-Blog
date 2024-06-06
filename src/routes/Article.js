@@ -117,19 +117,23 @@ export default class Article extends Component {
       try {
         await createDetailContent(articleDetail);
       } catch (err) {
-        /* 에러의 경우 Not Found 처리 */
-        console.alert('현재 해당 기사에 접근할 수 없습니다.');
+        alert('현재 해당 기사에 접근할 수 없습니다.');
+        window.location.href = '';
       }
     }
 
     window.addEventListener('scroll', () => {
-      console.log('Scrolled');
+      const scrollTop = window.scrollY; // 현재 스크롤 위치
+      const windowHeight = window.innerHeight; // 뷰포트 높이
+      const documentHeight = document.body.offsetHeight; // 문서 전체 높이
+
+      let opacity = 1 - (scrollTop / (documentHeight - windowHeight)) * 1.6;
+      if (opacity < 0.6) {
+        opacity = 0.6;
+      }
+      document.querySelector('.article__cover-title').style.opacity = opacity;
     });
 
-    console.log(articleDetail);
-
-    /* 2. Author */
-    /* 3. Footer Banner */
     this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
   }
 }

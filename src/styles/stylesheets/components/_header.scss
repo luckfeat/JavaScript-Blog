@@ -1,6 +1,5 @@
 header {
   margin-top: 60px;
-
   .header__top {
     height: 60px;
   }
@@ -106,6 +105,15 @@ header {
     height: 80px;
     position: absolute;
     top: 0;
+    width: 100%;
+    z-index: 10000;
+  }
+  .detail-header__scroll {
+    height: 58px;
+    position: fixed;
+    background: hsla(0, 0%, 100%, .9);;
+    top: 0;
+    transition: background .3s ease-in 0s;
     width: 100%;
     z-index: 10000;
   }
@@ -232,5 +240,19 @@ header {
     font-size: 32px;
     letter-spacing: -.05em;
     line-height: 46px;
+  }
+}
+
+.keyword-header {
+  &__category {
+    color: #333;
+    font-size: 30px;
+    line-height: 30px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 40px 0;
+    position: relative;
+    text-align: center;
+    width: 940px;
   }
 }

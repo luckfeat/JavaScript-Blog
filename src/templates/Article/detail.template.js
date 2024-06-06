@@ -9,6 +9,7 @@ const template = `
         </div>
       </div>     
     </div>
+    <div class="detail-header__scroll"></div>
   </header>
   <main>
     <div class="article__cover">

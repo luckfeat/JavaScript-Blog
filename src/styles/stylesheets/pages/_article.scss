@@ -32,18 +32,16 @@
       position: absolute;
       left: 0;
       top: 0;
-      /* 스크롤에 따라 높이가 변경됨*/
       min-height: 528.75px;
       width: 100%;
       background-color: #000;
       opacity: .3;
     }
     .article__cover-title {
-      /* 스크롤에 따라 opacity 변경됨*/
       padding-top: 0;
-      opacity: 1;
       text-align: center;
       width: 700px;
+      //transition: opacity 0.2s ease-in-out;
 
       h1 {
         position: relative;
