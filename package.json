@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel public/index.html",
-    "dev": "parcel public/index.html",
+    "build": "parcel ./index.html",
+    "dev": "parcel ./index.html",
     "watch": "sass ./src/styles/stylesheets/main.scss:./public/styles/css/main.css --watch"
   },
   "keywords": [],
