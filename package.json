@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel public/index.html",
     "dev": "parcel public/index.html",
-    "watch": "sass ./src/styles/stylesheets/main.scss:./src/styles/dist/css/main.css --watch"
+    "watch": "sass ./src/styles/stylesheets/main.scss:./public/styles/css/main.css --watch"
   },
   "keywords": [],
   "author": "",
