@@ -111,11 +111,31 @@ header {
   .detail-header__scroll {
     height: 58px;
     position: fixed;
-    background: hsla(0, 0%, 100%, .9);;
     top: 0;
-    transition: background .3s ease-in 0s;
     width: 100%;
     z-index: 10000;
+    transition: background .2s ease-in 0s;
+    .detail-header__scroll-title {
+      margin: 20px 30px 0;
+      color: #666;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      display: none;
+    }
+    .detail-header__progress {
+      bottom: -2px;
+      height: 2px;
+      position: absolute;
+      width: 100%;
+    }
+    .detail-header__progress-bar {
+      background: #333;
+      height: 2px;
+      transition: width .2s ease-out;
+      width: 0;
+    }
+
   }
   .detail-header__inner {
     margin: 30px 30px 0;

@@ -114,6 +114,7 @@ export default class Article extends Component {
     } else {
       const formatDate = date ? this.convertDateFormat(date, true) : false;
       articleDetail = await renderNewsDetail(searchTitle, category || formatDate);
+
       try {
         await createDetailContent(articleDetail);
       } catch (err) {
@@ -121,6 +122,12 @@ export default class Article extends Component {
         window.location.href = '';
       }
     }
+
+    this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
+
+    const scrollHeader = document.querySelector('.detail-header__scroll');
+    const scrollTitle = document.querySelector('.detail-header__scroll-title');
+    const scrollBar = document.querySelector('.detail-header__progress-bar');
 
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY; // 현재 스크롤 위치
@@ -131,9 +138,25 @@ export default class Article extends Component {
       if (opacity < 0.6) {
         opacity = 0.6;
       }
+
       document.querySelector('.article__cover-title').style.opacity = opacity;
     });
 
-    this.root.appendChild(new Detail(articleDetail).render('div', 'article'));
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 448) {
+        const scrollTop = window.scrollY; // 현재 스크롤 위치
+        const windowHeight = window.innerHeight; // 뷰포트 높이
+        const documentHeight = document.body.offsetHeight; // 문서 전체 높이
+
+        scrollHeader.style.background = 'hsla(0, 0%, 100%, .9)';
+        scrollTitle.style.display = 'block';
+        scrollBar.style.display = 'block';
+        scrollBar.style.width = `${((scrollTop - 448) / (documentHeight - (windowHeight + 86 + 311))) * 100}%`;
+      } else {
+        scrollHeader.style.background = 'hsla(0, 0%, 100%, 0)';
+        scrollTitle.style.display = 'none';
+        scrollBar.style.display = 'none';
+      }
+    });
   }
 }

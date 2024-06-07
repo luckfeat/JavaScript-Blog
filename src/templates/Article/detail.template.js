@@ -9,7 +9,14 @@ const template = `
         </div>
       </div>     
     </div>
-    <div class="detail-header__scroll"></div>
+    <div class="detail-header__scroll">
+      <div class="detail-header__scroll-title">
+        <span>{{stripQuote this.title}}</span>
+      </div>
+      <div class="detail-header__progress">
+        <div class="detail-header__progress-bar"></div>
+      </div>
+    </div>
   </header>
   <main>
     <div class="article__cover">
@@ -36,8 +43,7 @@ const template = `
           </h4>
         {{/each}}
       </div>
-    </div>
-    <div class="article__info-keyword">
+      <div class="article__info-keyword">
       <ul>
         {{#each this.keywords}}
           <li>{{this}}</li>
@@ -49,12 +55,13 @@ const template = `
         {{/unless}}
       </ul>
     </div>
-    <div class="article__source">
+      <div class="article__source">
       <div class="article__source-inner">
         <strong class="article__source-name">{{this.source.name}}</strong>
         <p class="article__source-description">{{this.description}}</p>
         <a class="article__source-url">{{this.source.url}}</a>
       </div>
+    </div>
     </div>
   </main>
   <div class="article__footer">
