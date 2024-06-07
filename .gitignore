@@ -134,3 +134,10 @@ dist
 functions
 .DS_Store
 .eslintrc.cjs
+
+firebase.json
+firestore.indexes.json
+firestore.rules
+.nvmrc
+.prettierrc
+.eslintrc.cjs
