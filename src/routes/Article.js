@@ -128,30 +128,28 @@ export default class Article extends Component {
     const scrollHeader = document.querySelector('.detail-header__scroll');
     const scrollTitle = document.querySelector('.detail-header__scroll-title');
     const scrollBar = document.querySelector('.detail-header__progress-bar');
+    const windowHeight = window.innerHeight; // 뷰포트 높이
+    const documentHeight = document.body.offsetHeight; // 문서 전체 높이
+    const scrollHeight = documentHeight - (windowHeight + 86 + 311);
+
+    let scrollStart = window.scrollY - 448;
 
     window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY; // 현재 스크롤 위치
-      const windowHeight = window.innerHeight; // 뷰포트 높이
-      const documentHeight = document.body.offsetHeight; // 문서 전체 높이
+      let opacity = 1 - (window.scrollY / (documentHeight - windowHeight)) * 1.6;
 
-      let opacity = 1 - (scrollTop / (documentHeight - windowHeight)) * 1.6;
       if (opacity < 0.6) {
         opacity = 0.6;
       }
 
       document.querySelector('.article__cover-title').style.opacity = opacity;
     });
-
     window.addEventListener('scroll', () => {
       if (window.scrollY > 448) {
-        const scrollTop = window.scrollY; // 현재 스크롤 위치
-        const windowHeight = window.innerHeight; // 뷰포트 높이
-        const documentHeight = document.body.offsetHeight; // 문서 전체 높이
-
         scrollHeader.style.background = 'hsla(0, 0%, 100%, .9)';
         scrollTitle.style.display = 'block';
         scrollBar.style.display = 'block';
-        scrollBar.style.width = `${((scrollTop - 448) / (documentHeight - (windowHeight + 86 + 311))) * 100}%`;
+        scrollStart = window.scrollY - 448;
+        scrollBar.style.width = `${(scrollStart / scrollHeight) * 100}%`;
       } else {
         scrollHeader.style.background = 'hsla(0, 0%, 100%, 0)';
         scrollTitle.style.display = 'none';
