@@ -97,6 +97,12 @@ export async function getKeywordNewsWithLimit(category) {
 
   return dateNews;
 }
+export async function getKeywordNewsWithLimitTwenty(category) {
+  const fireStoreQuery = await query(collection(db, category), limit(21));
+  const dateNews = getDocs(fireStoreQuery);
+
+  return dateNews;
+}
 export async function getDateNews(date) {
   const querySnapshot = await getDocs(collection(db, date));
 

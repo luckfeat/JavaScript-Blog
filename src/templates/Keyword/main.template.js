@@ -1,6 +1,6 @@
 const template = `
   <div class="keyword-header">
-    <div class="keyword-header__category">{{category}}</div>
+    <div class="keyword-header__category">{{ toUpperCase category}}</div>
   </div>
   <div class="keyword__contents">
     <div class="keyword__contents-wrap">

@@ -290,8 +290,6 @@ export default class Home extends Component {
               }
               updateRecommend();
             }
-            console.log(`offset:${offsetInf}`);
-            console.log(`infCarouselWidth:${infCarouselWidth}`);
           });
           break;
         default:

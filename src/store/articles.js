@@ -7,6 +7,7 @@ import {
   getYesterdayNews,
   getDateNews,
   getDateNewsWithLimit,
+  getKeywordNewsWithLimitTwenty,
   getYesterdayNewsExtended,
   getYesterdayNewsExtendedWithLimit,
   getTodayNewsExtended,
@@ -103,6 +104,24 @@ export async function renderKeywordNews(category) {
 export async function renderKeywordNewsWithLimit(category) {
   try {
     const querySnapshot = await getKeywordNewsWithLimit(category);
+    // articlesStore.state[category] = [];
+    const keywordNewsWithLimit = [];
+
+    querySnapshot.forEach(doc => {
+      const news = doc.data();
+      news.id = doc.id;
+
+      keywordNewsWithLimit.push(news);
+    });
+
+    return keywordNewsWithLimit;
+  } catch (err) {
+    console.error(err);
+  }
+}
+export async function renderKeywordNewsWithLimitTwenty(category) {
+  try {
+    const querySnapshot = await getKeywordNewsWithLimitTwenty(category);
     // articlesStore.state[category] = [];
     const keywordNewsWithLimit = [];
 
