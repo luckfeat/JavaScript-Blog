@@ -108,60 +108,27 @@ header {
     width: 100%;
     z-index: 10000;
   }
-  .detail-header__scroll {
-    height: 58px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10000;
-    transition: background .2s ease-in 0s;
-    .detail-header__scroll-title {
-      margin: 20px 30px 0;
-      color: #666;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      display: none;
-    }
-    .detail-header__progress {
-      bottom: -2px;
-      height: 2px;
-      position: absolute;
-      width: 100%;
-    }
-    .detail-header__progress-bar {
-      background: #333;
-      height: 2px;
-      transition: width .2s ease-out;
-      width: 0;
-    }
-
-  }
   .detail-header__inner {
     margin: 30px 30px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: relative;
 
     .detail-header__inner-left {
-      //float: left;
-      button {
-        height: 22px;
-        width: 27px;
-        margin-right: 14px;
-        background: url(//t1.daumcdn.net/brunch/static/img/help/pc/ico_view_cover.v4_230130.png) no-repeat 0 0;
-        background-position: -30px -58px;
-        margin-top: -2px;
-      }
-      h1 {
-        display: inline-block;
-        .detail-header__logo {
-          width: 120px;
-          background: url(//t1.daumcdn.net/brunch9/static/images/pc/logo_brunch_v1_221221.png) no-repeat -120px -80px;
-          display: block;
-          height: 22px;
-          margin-top: -1px;
-        }
+      position: relative;
+      display: block;
+      width: 30px;
+      height: 30px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: rotate(45deg);
+        border-left: 2px solid white;
+        border-bottom: 2px solid white;
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
       }
     }
 
@@ -226,7 +193,35 @@ header {
       }
     }
   }
-  .detail-header {}
+  .detail-header__scroll {
+    height: 58px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    transition: background .2s ease-in 0s;
+    .detail-header__scroll-title {
+      margin: 20px 30px 0;
+      color: #666;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      display: none;
+    }
+    .detail-header__progress {
+      bottom: -2px;
+      height: 2px;
+      position: absolute;
+      width: 100%;
+    }
+    .detail-header__progress-bar {
+      background: #333;
+      height: 2px;
+      transition: width .2s ease-out;
+      width: 0;
+    }
+
+  }
   .detail-header__intro {
     width: 960px;
     margin: 0 auto;
@@ -274,5 +269,25 @@ header {
     position: relative;
     text-align: center;
     width: 940px;
+  }
+  .keyword-header__inner-left {
+    position: relative;
+    display: block;
+    transform: translateX(25px) translateY(50px);
+    width: 30px;
+    height: 30px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: rotate(45deg);
+      border-left: 2px solid black;
+      border-bottom: 2px solid black;
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
   }
 }

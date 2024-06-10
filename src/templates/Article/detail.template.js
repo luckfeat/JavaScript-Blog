@@ -2,11 +2,8 @@ const template = `
   <header class="detail-header">
     <div class="detail-header__top">
       <div class="detail-header__inner">
-        <div class="detail-header__inner-left">
-          <h1>
-            <!--          here-->
-          </h1>
-        </div>
+        <a class="detail-header__inner-left" href="javascript:history.back()">
+        </a>
       </div>     
     </div>
     <div class="detail-header__scroll">

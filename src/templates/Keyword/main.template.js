@@ -1,5 +1,6 @@
 const template = `
   <div class="keyword-header">
+    <a class="keyword-header__inner-left" href="javascript:history.back()"></a>
     <div class="keyword-header__category">{{ toUpperCase category}}</div>
   </div>
   <div class="keyword__contents">
